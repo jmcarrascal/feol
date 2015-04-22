@@ -1,0 +1,23 @@
+#abmDelitos{display:none; padding:10px; background:#fff;}    
+
+#abmDelitos input, #abmDelitos label{display: inline;}
+		
+#completarDelito {border: 2px solid #777;text-align: left;height: 90px;background-color: #ccc; padding: 10px;}
+
+#tags{ width: 450px;}
+
+#divAgregarDelito{border: 2px solid #777;text-align: center;height: 90px;background-color: #ccc; padding: 10px;}
+
+#delitoSeleccionado {width: 100%;text-align: left;font-weight: bold;}
+
+#divAgregarDelito span {width: 100%;text-align: left;display: inline-block}
+
+#delitoEnTentativa { display: inline}
+
+#tableDelitos { width: 100%;border-bottom: 2px solid #ccc }
+
+#btnPlus, #btnCancel,#btnVolver, .quitarDelito, #btnAgregarDelitos{cursor: pointer;}
+
+#btnAgregarDelitos {display: inline-block; border: 1px solid #AAAAAA}
+
+#pOtrosDelitos {margin: 0 0 20px 20px;}

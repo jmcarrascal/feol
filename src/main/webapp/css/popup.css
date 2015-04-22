@@ -1,0 +1,271 @@
+body{
+background:#fff none repeat scroll 0%;
+line-height:1;
+font-size: 12px;
+font-family:arial,sans-serif;
+margin:0pt;
+height:100%;
+}
+
+caption, th {
+font-weight:normal;
+text-align:left;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+content:"";
+}
+blockquote, q {
+quotes:"" "";
+}
+a{
+cursor: pointer;
+text-decoration:none;
+}
+br.both{
+clear:both;
+}
+#backgroundPopup{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:100%;
+width:100%;
+top:0;
+left:0;
+background:#000000;
+border:1px solid #cecece;
+z-index:10;
+}
+#popupContact{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:340px;
+width:430px;
+background:#FFFFFF;
+border:5px solid #aaa;
+z-index:20;
+padding:12px;
+font-size:13px;
+line-height: 1;
+}
+#popupContact h1{
+text-align:left;
+color:#F5802D;
+font-size:22px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:2px;
+margin-bottom:20px;
+}
+#popupContactClose{
+font-size:14px;
+line-height:14px;
+right:6px;
+top:4px;
+position:absolute;
+color:#F5802D;
+font-weight:700;
+display:block;
+}
+#button{
+text-align:center;
+margin:100px;
+}
+#backgroundPopupB{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:100%;
+width:100%;
+top:0;
+left:0;
+background:#000000;
+border:1px solid #cecece;
+z-index:10;
+}
+#popupContactB{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:260px;
+width:308px;
+background:#FFFFFF;
+border:5px solid #aaa;
+z-index:20;
+padding:12px;
+font-size:13px;
+}
+#popupContactB h1{
+text-align:left;
+color:#F5802D;
+font-size:22px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:2px;
+margin-bottom:20px;
+}
+#popupContactCloseB{
+font-size:14px;
+line-height:14px;
+right:6px;
+top:4px;
+position:absolute;
+color:#F5802D;
+font-weight:700;
+display:block;
+}
+#buttonB{
+text-align:center;
+margin:100px;
+}
+#backgroundPopupC{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:100%;
+width:100%;
+top:0;
+left:0;
+background:#000000;
+border:1px solid #cecece;
+z-index:10;
+}
+#popupContactC{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:284px;
+width:308px;
+background:#FFFFFF;
+border:2px solid #cecece;
+z-index:20;
+padding:12px;
+font-size:13px;
+}
+#popupContactC h1{
+text-align:left;
+color:#F5802D;
+font-size:22px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:2px;
+margin-bottom:20px;
+}
+#popupContactCloseC{
+font-size:14px;
+line-height:14px;
+right:6px;
+top:4px;
+position:absolute;
+color:#6fa5fd;
+font-weight:700;
+display:block;
+}
+#buttonC{
+text-align:center;
+margin:100px;
+}
+
+#backgroundPopupD{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:100%;
+width:100%;
+top:0;
+left:0;
+background:#000000;
+border:1px solid #cecece;
+z-index:10;
+}
+#popupContactD{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+/*height:384px;
+width:458px;*/
+height:340px;
+width:430px;
+background:#FFFFFF;
+border:5px solid #aaa;
+z-index:20;
+padding:12px;
+font-size:13px;
+line-height:1;
+}
+#popupContactD h1{
+text-align:left;
+color:#F5802D;
+font-size:22px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:2px;
+margin-bottom:20px;
+}
+#popupContactCloseD{
+font-size:14px;
+line-height:14px;
+right:6px;
+top:4px;
+position:absolute;
+color:#F5802D;
+font-weight:700;
+display:block;
+}
+#buttonD{
+text-align:center;
+margin:100px;
+}
+#backgroundPopupR{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:100%;
+width:100%;
+top:0;
+left:0;
+background:#000000;
+border:1px solid #cecece;
+z-index:10;
+}
+#popupContactR{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:280px;
+width:360px;
+background:#FFFFFF;
+border:5px solid #aaa;
+z-index:20;
+padding:12px;
+font-size:13px;
+line-height: 1;
+}
+#popupContactR h1{
+text-align:left;
+color:#F5802D;
+font-size:22px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:2px;
+margin-bottom:20px;
+}
+#popupContactCloseR{
+font-size:14px;
+line-height:14px;
+right:6px;
+top:4px;
+position:absolute;
+color:#F5802D;
+font-weight:700;
+display:block;
+}
+
+#nroSolicitudCarga, #idHuellasUpLoad b, #idPedidoUpLoad b, #idRechazoSolicitud b, #idLabelRechazo b, #idMsgSave b, #idMovimientosSolicitud b{
+	 color:#000;
+	 font-size: 18px;
+}
+#idPedidoUpLoad,#idRechazoSolicitud{
+	text-align: center;
+}
