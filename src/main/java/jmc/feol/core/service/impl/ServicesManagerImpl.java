@@ -194,7 +194,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				&& !empresa.getCuit().trim().equals("30713480009") && !empresa.getCuit().trim().equals("30713479108") && !empresa.getCuit().trim().equals("30712671706")
 				&& !empresa.getCuit().trim().equals("30714238589") && !empresa.getCuit().trim().equals("30655105596") && !empresa.getCuit().trim().equals("30630516389")
 				&& !empresa.getCuit().trim().equals("30709171034") && !empresa.getCuit().trim().equals("30711712824") && !empresa.getCuit().trim().equals("30710104375") 
-				&& !empresa.getCuit().trim().equals("30520946531")
+				&& !empresa.getCuit().trim().equals("30520946531") && !empresa.getCuit().trim().equals("30641408383")
 		 )
 
 		{
