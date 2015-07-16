@@ -19,7 +19,7 @@
      
     <property name="hibernateProperties">
     	<props>
-   		<prop key="hibernate.default_schema">feol_cot_herr.dbo</prop>
+   		<prop key="hibernate.default_schema">feol.dbo</prop>
 <!--     		<prop key="hibernate.default_schema">sgi</prop>-->
      		
     		<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
