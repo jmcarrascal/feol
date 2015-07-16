@@ -1972,9 +1972,9 @@ public class ServicesManagerImpl implements ServicesManager {
 										if (FileUtil.parseExtension(imagen.getName()).equalsIgnoreCase("tif")){										
 											//Convierto la Imagen
 											try {
-												byte[] cara = FormatUtil.convertJPG(imagen.getAbsoluteFile().toString(),0);
+												byte[] cara = null;//FormatUtil.convertJPG(imagen.getAbsoluteFile().toString(),0);
 												
-												byte[] contraCara = FormatUtil.convertJPG(imagen.getAbsoluteFile().toString(),1);
+												byte[] contraCara = null;//FormatUtil.convertJPG(imagen.getAbsoluteFile().toString(),1);
 												
 												byte[] cheque = FormatUtil.mergeJPG(cara, contraCara);
 												
@@ -1997,7 +1997,7 @@ public class ServicesManagerImpl implements ServicesManager {
 												BaseExternaTeso.saveImage(clave, 0, cheque, servidor, base, usr, pass, tabla, campoPK);									
 												//BaseExternaTeso.saveImage(clave, 1, contraCara, servidor, base, usr, pass, tabla, campoPK);									
 												termino = true;
-											} catch (IOException e) {
+											} catch (Exception e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
 											}

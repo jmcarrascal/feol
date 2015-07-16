@@ -12,7 +12,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,21 +23,14 @@ import javax.media.jai.NullOpImage;
 import javax.media.jai.OpImage;
 import javax.media.jai.PlanarImage;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-
-import jmc.feol.core.model.Parametrizacion;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.sun.media.jai.codec.FileSeekableStream;
-import com.sun.media.jai.codec.ImageCodec;
-import com.sun.media.jai.codec.ImageDecoder;
-import com.sun.media.jai.codec.SeekableStream;
-import com.sun.media.jai.codec.TIFFDecodeParam;
+
 
 import fexv1.dif.afip.gov.ar.ClsFEXGetCMPR;
 
@@ -271,48 +263,48 @@ public class FormatUtil {
 
 	}
 
-	public static byte[] convertJPG(String filename, int parte) throws IOException {
-
-        File file = new File(filename);
-        SeekableStream s = new FileSeekableStream(file);
-
-        TIFFDecodeParam param = null;
-                
-        
-        ImageDecoder dec = ImageCodec.createImageDecoder("tiff", s, param);
-
-        
-        
-        
-        // Which of the multiple images in the TIFF file do we want to load
-        // 0 refers to the first, 1 to the second and so on.
-        int imageToLoad = parte;
-
-        RenderedImage op =
-            new NullOpImage(dec.decodeAsRenderedImage(imageToLoad),
-                            null,
-                            OpImage.OP_IO_BOUND,
-                            null);
-        
-        
-        PlanarImage pi = PlanarImage.wrapRenderedImage(op);
-               
-        BufferedImage bi = pi.getAsBufferedImage();
-                
-        Graphics2D g = (Graphics2D)bi.getGraphics();
-        
-        g.drawLine(0,0,50,50);
-        
-        g.scale(20, 20);
-                        
-        g.dispose();
-        
-        ByteArrayOutputStream bas =	new ByteArrayOutputStream();
-		ImageIO.write(bi, "jpg", bas);
-		byte[] data = bas.toByteArray();
-		
-		return data;
-    }
+//	public static byte[] convertJPG(String filename, int parte) throws IOException {
+//
+//        File file = new File(filename);
+//        SeekableStream s = new FileSeekableStream(file);
+//
+//        TIFFDecodeParam param = null;
+//                
+//        
+//        ImageDecoder dec = ImageCodec.createImageDecoder("tiff", s, param);
+//
+//        
+//        
+//        
+//        // Which of the multiple images in the TIFF file do we want to load
+//        // 0 refers to the first, 1 to the second and so on.
+//        int imageToLoad = parte;
+//
+//        RenderedImage op =
+//            new NullOpImage(dec.decodeAsRenderedImage(imageToLoad),
+//                            null,
+//                            OpImage.OP_IO_BOUND,
+//                            null);
+//        
+//        
+//        PlanarImage pi = PlanarImage.wrapRenderedImage(op);
+//               
+//        BufferedImage bi = pi.getAsBufferedImage();
+//                
+//        Graphics2D g = (Graphics2D)bi.getGraphics();
+//        
+//        g.drawLine(0,0,50,50);
+//        
+//        g.scale(20, 20);
+//                        
+//        g.dispose();
+//        
+//        ByteArrayOutputStream bas =	new ByteArrayOutputStream();
+//		ImageIO.write(bi, "jpg", bas);
+//		byte[] data = bas.toByteArray();
+//		
+//		return data;
+//    }
 
 		
 		
