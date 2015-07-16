@@ -1,55 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
 "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans> 
-  
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName">
-			<value>com.mysql.jdbc.Driver</value>
+
+
+<beans>
+    
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass">
+			<value>net.sourceforge.jtds.jdbc.Driver</value>
 		</property>
-		<property name="url">
-			<value>jdbc:mysql://localhost:3306/feol?autoReconnect=true</value>
+		<property name="jdbcUrl">
+			<value>jdbc:jtds:sqlserver://localhost:1433</value>
 		</property>
-		<property name="username">
-			<value>root</value>
+		<property name="minPoolSize">
+			<value>1</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>20</value>
+		</property>
+		<property name="maxStatements">
+			<value>150</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>30</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>1</value>
+		</property>
+		<property name="user">
+			<value>sa</value>
 		</property>
 		<property name="password">
-			<value>root</value>
-		</property>		
+			<value>simpasak05</value>
+		</property>
 	</bean>
 
-
-    
-<!--     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"> -->
-<!-- 		<property name="driverClass"> -->
-<!-- 			<value>net.sourceforge.jtds.jdbc.Driver</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="jdbcUrl"> -->
-<!-- 			<value>jdbc:jtds:sqlserver://localhost:1433</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="minPoolSize"> -->
-<!-- 			<value>1</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="maxPoolSize"> -->
-<!-- 			<value>20</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="maxStatements"> -->
-<!-- 			<value>150</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="maxIdleTime"> -->
-<!-- 			<value>30</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="initialPoolSize"> -->
-<!-- 			<value>1</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="user"> -->
-<!-- 			<value>sa</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="password"> -->
-<!-- 			<value>mapasak05</value> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-
-
-	 
 </beans>

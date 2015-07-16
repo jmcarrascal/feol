@@ -1,8 +1,6 @@
 package jmc.feol.core.dao.impl.test;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -10,12 +8,6 @@ import javax.xml.bind.Unmarshaller;
 
 import jmc.feol.core.model.RespuestaAfip;
 import jmc.feol.util.SerializateUtil;
-
-import com.lowagie.text.Document;
-import com.lowagie.text.Font;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
 
 public class TestGenerarPDF {
 
