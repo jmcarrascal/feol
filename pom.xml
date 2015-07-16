@@ -276,7 +276,7 @@
 	<groupId>com.lowagie</groupId>
 	<artifactId>itext</artifactId>
 	<version>2.1.7</version>
-</dependency>	</dependencies>
+</dependency>		</dependencies>
 	<build>
 		<plugins>
 			<plugin>
