@@ -428,34 +428,34 @@ public class ServicesAction extends ActionSupport {
 		// Lista de Patentes
 		ActionContext.getContext().getSession().put("patenteList", patenteList);
 		
-		List<Viajes> listViajes = new ArrayList<Viajes>();
+//		List<Viajes> listViajes = new ArrayList<Viajes>();
+//		
+//		Viajes viaje = new Viajes();
+//		
+//		viaje.setChoferNr(2);
+//		viaje.setFecha(new Date(System.currentTimeMillis()));
+//		viaje.setKm(23f);
+//		viaje.setModalidad(3);
+//		viaje.setPrecio(new BigDecimal("23"));
+//		viaje.setProcesado(false);
+//		viaje.setViajeNr(413643);
+//		viaje.setZonaNr(12);
+//
+//		Viajes viaje1 = new Viajes();
+//		
+//		viaje1.setChoferNr(2);
+//		viaje1.setFecha(new Date(System.currentTimeMillis()));
+//		viaje1.setKm(23f);
+//		viaje1.setModalidad(3);
+//		viaje1.setPrecio(new BigDecimal("23"));
+//		viaje1.setProcesado(true);
+//		viaje1.setViajeNr(413644);
+//		viaje1.setZonaNr(12);
+//		
+//		listViajes.add(viaje);
+//		listViajes.add(viaje1);
 		
-		Viajes viaje = new Viajes();
-		
-		viaje.setChoferNr(2);
-		viaje.setFecha(new Date(System.currentTimeMillis()));
-		viaje.setKm(23f);
-		viaje.setModalidad(3);
-		viaje.setPrecio(new BigDecimal("23"));
-		viaje.setProcesado(false);
-		viaje.setViajeNr(413643);
-		viaje.setZonaNr(12);
-
-		Viajes viaje1 = new Viajes();
-		
-		viaje1.setChoferNr(2);
-		viaje1.setFecha(new Date(System.currentTimeMillis()));
-		viaje1.setKm(23f);
-		viaje1.setModalidad(3);
-		viaje1.setPrecio(new BigDecimal("23"));
-		viaje1.setProcesado(true);
-		viaje1.setViajeNr(413644);
-		viaje1.setZonaNr(12);
-		
-		listViajes.add(viaje);
-		listViajes.add(viaje1);
-		
-		//List<Viajes> listViajes = servicesManager.getViajesSinCot(getUsuarioSesion());
+		List<Viajes> listViajes = servicesManager.getViajesSinCot(getUsuarioSesion());
 		
 		request.setAttribute("listParametrizacion", listParametrizacion);		
 
@@ -482,13 +482,23 @@ public class ServicesAction extends ActionSupport {
 		}
 		
 		StringBuilder salida = new StringBuilder();
+		
+		System.out.println("Respuesta COT: " + respuestaCot);
 	    
 		salida.append(respuestaCot);
 
-		response.setContentType("text/html; charset=iso-8859-1");
+		response.setContentType("text/html; charset=UTF-8");
 	    //Imprime el resultado
+//	    try {
+//	    	sos.write(salida.toString().getBytes("UTF-8"));
+//			sos.print(salida.toString());
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	    
 	    try {
-			sos.print(salida.toString());
+	    	sos.write(salida.toString().getBytes("UTF-8"));
+			//sos.print(salida.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -35,12 +35,13 @@ public class TestGetCAEACoinse {
 		  CredencialAfipManagerImpl credencialAfipManagerImpl = new CredencialAfipManagerImpl();
 			try{
 			empresa.setIdEmpresa(1l);
+		
 			empresa.setCuit("30700442361");
 			empresa.setNombre("Coinse");
 			empresa.setEndpoint("https://wsaahomo.afip.gov.ar/ws/services/LoginCms");
 			empresa.setService("wsfe");
 			empresa.setDstDN("CN=wsaahomo, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-			empresa.setP12File("/Users/juanmanuelcarrascal/projects/jmc/feol/Certificados/Certificados/coinse/ks3.p12");
+			empresa.setP12File("/Users/juanmanuelcarrascal/projects/jmc/Certificados/Certificados/coinse/ks3.p12");
 			empresa.setP12pass("123456");
 			empresa.setTicketTime(36000000l);
 			empresa.setSigner("coinse");
@@ -77,7 +78,8 @@ public class TestGetCAEACoinse {
 						
 			} catch (Exception e) {			
 				e.printStackTrace();
-			}				
+			}			
+			
 		
 			
 		}

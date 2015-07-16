@@ -18,8 +18,8 @@ import javax.persistence.Table;
  */
 
 @Entity
+//@Table(name="EMPRESAC" )
 @Table(name="EMPRESAC" )
-//@Table(name="EMPRESAC" , schema = "Feol_Gamma.dbo")
 public class EmpresaC {
 	
 	private Long idEmpresaC;

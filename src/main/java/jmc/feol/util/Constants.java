@@ -74,6 +74,7 @@ public class Constants {
 	public final static Long ID_USR_SQL= 120l;	
 	public final static Long ID_PASSWORD_SQL= 130l;	
 	public final static int ID_USR_OPERADOR = 1;
+	public final static Long ID_USE_MODE_CAEA = 500l;
 	
 	//Facturacion MTX
 	public final static Long ID_FACTURA_MTX= 160l;

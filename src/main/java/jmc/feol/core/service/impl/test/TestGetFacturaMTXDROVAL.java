@@ -33,7 +33,7 @@ public class TestGetFacturaMTXDROVAL {
 			empresa.setEndpoint("https://wsaa.afip.gov.ar/ws/services/LoginCms");
 			empresa.setService("wsmtxca");
 			empresa.setDstDN("CN=wsaa, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-			empresa.setP12File("C:/Certificados/droval/droval1.p12");
+			empresa.setP12File("/Users/juanmanuelcarrascal/projects/jmc/certificados/Certificados/droval/droval1.p12");
 			empresa.setP12pass("123456");
 			empresa.setTicketTime(36000000l);
 			empresa.setSigner("droval");
@@ -60,7 +60,7 @@ public class TestGetFacturaMTXDROVAL {
 
 		feAuth.setCuitRepresentada(30699754486l);
 		
-		Long[] nros = {6474l};
+		Long[] nros = {7868l};
 		Short punto_vta = new Short("5");
 		Short tipo_comprob = new Short("6");
 		  

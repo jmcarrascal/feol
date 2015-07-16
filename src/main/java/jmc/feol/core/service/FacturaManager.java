@@ -6,6 +6,8 @@ import java.util.List;
 import jmc.feol.core.model.Empresa;
 import jmc.feol.core.model.Factura;
 import FEV1.dif.afip.gov.ar.FECAEAGetResponse;
+import FEV1.dif.afip.gov.ar.FECAEARequest;
+import FEV1.dif.afip.gov.ar.FECAEAResponse;
 import FEV1.dif.afip.gov.ar.FECAERequest;
 import FEV1.dif.afip.gov.ar.FECAEResponse;
 import FEV1.dif.afip.gov.ar.FECompConsultaResponse;
@@ -82,4 +84,5 @@ public interface FacturaManager {
 
 	public FECAEAGetResponse getCaea(String periodo, String quincena,
 			Empresa empresa);
+	public FECAEAResponse informarComprobCaeaAFIP(FECAEARequest fECAEARequest, Empresa empresa, Long nroComp) throws Exception ;
 }

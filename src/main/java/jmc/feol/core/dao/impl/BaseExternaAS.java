@@ -318,7 +318,7 @@ public class BaseExternaAS {
 			Statement stmt;
 			String sql;
 			
-			sql = "SELECT FETRCO,FETRDE, FETRBI,FETRAL,FETRIM,FESOSE FROM   WHERE FESOSE = " + fesose ;				
+			sql = "SELECT FETRCO,FETRDE, FETRBI,FETRAL,FETRIM,FESOSE FROM VTELET00 WHERE FESOSE = " + fesose ;				
 
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);

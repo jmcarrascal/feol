@@ -11,6 +11,10 @@ public class FECAEARequest  implements java.io.Serializable {
     private FEV1.dif.afip.gov.ar.FECAEACabRequest feCabReq;
 
     private FEV1.dif.afip.gov.ar.FECAEADetRequest[] feDetReq;
+    
+    private String errorFE;
+    private String numeroInterno;
+    private boolean actualizoTotal;
 
     public FECAEARequest() {
     }
@@ -21,9 +25,35 @@ public class FECAEARequest  implements java.io.Serializable {
            this.feCabReq = feCabReq;
            this.feDetReq = feDetReq;
     }
+    
+    
 
 
-    /**
+    public String getErrorFE() {
+		return errorFE;
+	}
+
+	public void setErrorFE(String errorFE) {
+		this.errorFE = errorFE;
+	}
+
+	public String getNumeroInterno() {
+		return numeroInterno;
+	}
+
+	public void setNumeroInterno(String numeroInterno) {
+		this.numeroInterno = numeroInterno;
+	}
+
+	public boolean isActualizoTotal() {
+		return actualizoTotal;
+	}
+
+	public void setActualizoTotal(boolean actualizoTotal) {
+		this.actualizoTotal = actualizoTotal;
+	}
+
+	/**
      * Gets the feCabReq value for this FECAEARequest.
      * 
      * @return feCabReq

@@ -3,7 +3,7 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-<!---->
+
       <session-factory name="hibernateDesa">
        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
        <property name="hibernate.connection.password">root</property>
@@ -17,7 +17,18 @@
 		
 		<mapping class="jmc.feol.core.model.Parametrizacion"/>		
    </session-factory>
-<!-- -->
-<!--   -->
 
+<!--    <session-factory name="hibernateDesa"> -->
+<!--        <property name="hibernate.connection.driver_class">net.sourceforge.jtds.jdbc.Driver</property> -->
+<!--        <property name="hibernate.connection.password">mapasak05</property> -->
+<!--        <property name="hibernate.connection.url">jdbc:jtds:sqlserver://localhost:1433</property> -->
+<!--        <property name="hibernate.connection.username">sa</property> -->
+<!--        <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property> -->
+<!-- 		<property name="hibernate.current_session_context_class">thread</property> -->
+<!-- 		<property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property> -->
+<!-- 		<property name="hibernate.show_sql">true</property> -->
+<!-- 		<property name="hibernate.hbm2ddl.auto">update</property>				 -->
+		
+<!-- 		<mapping class="jmc.feol.core.model.Parametrizacion"/>		 -->
+<!--    </session-factory> -->
 </hibernate-configuration>

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="CAEA" )
+@Table(name="CAEA")
 public class Caea {
 	
 	

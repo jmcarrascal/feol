@@ -20,6 +20,7 @@ import jmc.feol.util.exception.GenerationTimerException;
 import FEV1.dif.afip.gov.ar.Err;
 import FEV1.dif.afip.gov.ar.FEAuthRequest;
 import FEV1.dif.afip.gov.ar.FECAEAGetResponse;
+import FEV1.dif.afip.gov.ar.FECAEARequest;
 import FEV1.dif.afip.gov.ar.FECAEAResponse;
 import FEV1.dif.afip.gov.ar.FECAERequest;
 import FEV1.dif.afip.gov.ar.FECAEResponse;
@@ -292,6 +293,7 @@ public class FacturaManagerImpl implements FacturaManager {
 
 		return idFactura;
 	}
+	
 
 	public Long getLastNroFacturaMTX(ComprobanteType comprobanteType, Empresa empresa) throws Exception{
 
@@ -380,6 +382,42 @@ public class FacturaManagerImpl implements FacturaManager {
 			fECAERequest.getFeDetReq()[0].setDocNro(11111111);
 		
 		feResponse = service.FECAESolicitar(feAuth, fECAERequest);
+		
+		return feResponse;
+
+	}
+	
+	public FECAEAResponse informarComprobCaeaAFIP(FECAEARequest fECAEARequest, Empresa empresa, Long nroComp) throws Exception {
+
+		ServiceSoapProxy service = new ServiceSoapProxy(empresa.getUrlWebService());
+		FEAuthRequest feAuth = new FEAuthRequest();
+
+		try {
+			empresa = this.getCredencial(empresa);
+		} catch (Exception e1) {		
+			e1.printStackTrace();
+			String msg = e1.getMessage();
+			if (msg.indexOf("generationTime") != -1){
+				throw new GenerationTimerException(1);
+			}			
+		}
+		
+		//fECAEARequest.getFeDetReq()[0].setCbteDesde(nroComp);
+				
+		fECAEARequest.getFeDetReq()[0].setCbteHasta(fECAEARequest.getFeDetReq()[0].getCbteDesde());
+		
+		feAuth.setToken(empresa.getToken());
+		
+		feAuth.setSign(empresa.getSignToken());
+
+		feAuth.setCuit(Long.parseLong(empresa.getCuit()));		
+
+		FECAEAResponse feResponse = null;
+		
+		if (fECAEARequest.getFeDetReq()[0].getDocNro() == 0 && fECAEARequest.getFeDetReq()[0].getDocTipo() == 96)
+			fECAEARequest.getFeDetReq()[0].setDocNro(11111111);
+		
+		feResponse = service.FECAEARegInformativo(feAuth, fECAEARequest);
 		
 		return feResponse;
 

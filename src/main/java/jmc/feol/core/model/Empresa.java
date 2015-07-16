@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="EMPRESA" )
+@Table(name="EMPRESA")
 //@Table(name="EMPRESA" , schema = "Feol_Gamma.dbo")
 public class Empresa {
 
@@ -45,6 +45,7 @@ public class Empresa {
 	private Long idEmpresaPadre;
 	private String letra;
 	private String libAS400;
+	private String path_file_caea;
 	
 	
 	
@@ -243,7 +244,15 @@ public class Empresa {
 	}
 	public void setSigner(String signer) {
 		this.signer = signer;
+	}
+	public String getPath_file_caea() {
+		return path_file_caea;
+	}
+	public void setPath_file_caea(String path_file_caea) {
+		this.path_file_caea = path_file_caea;
 	}	
+	
+	
 	
 	
 }

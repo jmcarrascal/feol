@@ -43,6 +43,7 @@ import jmc.feol.util.DateUtil;
 import jmc.feol.util.FileUtil;
 import jmc.feol.util.FormatUtil;
 import jmc.feol.util.ParseFactura;
+import jmc.feol.util.ParseFacturaCaea;
 import jmc.feol.util.ParseFacturaExpo;
 import jmc.feol.util.SerializateUtil;
 import jmc.feol.util.TestUtil;
@@ -51,7 +52,10 @@ import jmc.feol.util.email.SendEmailThread;
 import jmc.feol.util.exception.GenerationTimerException;
 import FEV1.dif.afip.gov.ar.Cotizacion;
 import FEV1.dif.afip.gov.ar.Err;
+import FEV1.dif.afip.gov.ar.FECAEADetResponse;
 import FEV1.dif.afip.gov.ar.FECAEAGetResponse;
+import FEV1.dif.afip.gov.ar.FECAEARequest;
+import FEV1.dif.afip.gov.ar.FECAEAResponse;
 import FEV1.dif.afip.gov.ar.FECAEDetResponse;
 import FEV1.dif.afip.gov.ar.FECAERequest;
 import FEV1.dif.afip.gov.ar.FECAEResponse;
@@ -194,8 +198,15 @@ public class ServicesManagerImpl implements ServicesManager {
 				&& !empresa.getCuit().trim().equals("30713480009") && !empresa.getCuit().trim().equals("30713479108") && !empresa.getCuit().trim().equals("30712671706")
 				&& !empresa.getCuit().trim().equals("30714238589") && !empresa.getCuit().trim().equals("30655105596") && !empresa.getCuit().trim().equals("30630516389")
 				&& !empresa.getCuit().trim().equals("30709171034") && !empresa.getCuit().trim().equals("30711712824") && !empresa.getCuit().trim().equals("30710104375") 
-				&& !empresa.getCuit().trim().equals("30520946531") && !empresa.getCuit().trim().equals("30641408383")
-		 )
+				&& !empresa.getCuit().trim().equals("30520946531") && !empresa.getCuit().trim().equals("30641408383") && !empresa.getCuit().trim().equals("20139245351")
+				&& !empresa.getCuit().trim().equals("30710542321") && !empresa.getCuit().trim().equals("33600481059") && !empresa.getCuit().trim().equals("30712014950")
+				&& !empresa.getCuit().trim().equals("30710486588") && !empresa.getCuit().trim().equals("30712258396") && !empresa.getCuit().trim().equals("30711245673")
+				&& !empresa.getCuit().trim().equals("30710471637") && !empresa.getCuit().trim().equals("30712521151") && !empresa.getCuit().trim().equals("30711534616")
+				&& !empresa.getCuit().trim().equals("30626244536") && !empresa.getCuit().trim().equals("30611628532") && !empresa.getCuit().trim().equals("30714366005")
+				&& !empresa.getCuit().trim().equals("20162192974")
+				
+				
+				)
 
 		{
 			result = "El CUIT enviado no est� licenciado";
@@ -1263,6 +1274,18 @@ public class ServicesManagerImpl implements ServicesManager {
 		facturaSave.setNro_doc(feReq.getFeDetReq()[0].getDocNro());		
 		return facturaSave;						
 	}
+	private Factura generateFacturaABCaea (FECAEARequest feReq){
+		Factura facturaSave = new Factura();
+		facturaSave.setMetodoAfip("LOCAL");
+		facturaSave.setFecha_cbte(DateUtil.composeCanonicalFech(feReq.getFeDetReq()[0].getCbteFch()));
+		facturaSave.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+		facturaSave.setImp_total(feReq.getFeDetReq()[0].getImpTotal());
+		facturaSave.setTipo_cbte((feReq.getFeCabReq().getCbteTipo()));
+		facturaSave.setNumeroInterno(feReq.getNumeroInterno());
+		facturaSave.setPunto_vta(feReq.getFeCabReq().getPtoVta());
+		facturaSave.setNro_doc(feReq.getFeDetReq()[0].getDocNro());		
+		return facturaSave;						
+	}
 	
 		private Factura generateFacturaE (ClsFEXRequest feReq){
 		Factura facturaSave = new Factura();
@@ -1356,10 +1379,16 @@ public class ServicesManagerImpl implements ServicesManager {
 		                        File fileDestino = new File(rutaDefinitivo+files[i].getName());
 		                        FileUtil.copy(files[i], fileDestino);
 		                        files[i].delete();
-		                        //String userRentas = this.getUserRentas(fileDestino);
-		                        FECAERequest feReqInt = ParseFactura.parseFacturaABv1(fileDestino.getAbsolutePath());
-		                        //Proceso la Factura
-		                        procesoFacturaAB(feReqInt, fileDestino.getName());
+		                        //Pregunto si es caea
+		                        if (parametrizacionDAO.getByPrimaryKey(Constants.ID_USE_MODE_CAEA).getValor().equals("true")){
+			                        FECAEARequest feReqIntCaea = ParseFacturaCaea.parseFacturaABv1(fileDestino.getAbsolutePath());
+			                        //Proceso la Factura
+			                        procesoFacturaABCaea(feReqIntCaea, fileDestino.getName());
+		                        }else{
+			                        FECAERequest feReqInt = ParseFactura.parseFacturaABv1(fileDestino.getAbsolutePath());
+			                        //Proceso la Factura
+			                        procesoFacturaAB(feReqInt, fileDestino.getName());		                        	
+		                        }
 		                        
 		                     }   	    
 		                    }catch (Exception exp){
@@ -1376,7 +1405,7 @@ public class ServicesManagerImpl implements ServicesManager {
 			exception.printStackTrace();
 		}
 	}
-			
+	//informarComprobCaeaAFIP
 
 	private String procesoFacturaAB(FECAERequest feReq, String nombreArchivo){
 		String msg = "";
@@ -1517,6 +1546,225 @@ public class ServicesManagerImpl implements ServicesManager {
 								facturaUpdate.setCodError("");
 								facturaUpdate.setCae(feDetalleResponseA[0].getCAE() );
 								facturaUpdate.setCae_vto(feDetalleResponseA[0].getCAEFchVto());
+								try{
+									facturaUpdate.setCbt_desde(Long.parseLong(comprNr));
+									facturaUpdate.setCbt_hasta(Long.parseLong(comprNr));								
+								}catch(NumberFormatException ne){}
+								facturaUpdate.setResultado(resultado);
+								facturaUpdate.setCodError("0");
+								facturaManager.updateFactura(facturaUpdate);
+								
+								//Genero Archivo de Salida
+								String data = ParseFactura.getOutDataFactura(facturaUpdate);
+								System.out.println("Mensaje Salida: " + data);
+								FileUtil.createTempFile(data,  rutaSalida + nombreArchivo);
+								return msg;
+							}else{
+								msg =  resultado;
+								if (parametrizacionDAO.getByPrimaryKey(Constants.ID_ENVIA_MAIL).getValor().equals("true")){
+									Long numeroInterno = 0l;
+									try{
+										numeroInterno = Long.parseLong(feReq.getNumeroInterno());
+									}catch(Exception e){}
+									sendMail(resultado, numeroInterno);
+								}
+							}
+						}else{
+							msg = resultado;
+						}		
+					} catch (RemoteException e) {
+						e.printStackTrace();
+						msg =  "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";						
+						 
+						try{
+							Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);	
+							facturaUpdate.setCodError("10");
+							facturaUpdate.setResultado(msg);
+							facturaManager.updateFactura(facturaUpdate);
+							//Genero Archivo de Salida
+							String data = ParseFactura.getOutDataFactura(facturaUpdate);
+							FileUtil.createTempFile(data,  rutaSalida + nombreArchivo);
+						}catch(Exception ne){
+							ne.printStackTrace();
+						}
+						if (parametrizacionDAO.getByPrimaryKey(Constants.ID_ENVIA_MAIL).getValor().equals("true")){
+							Long numeroInterno = 0l;
+							try{
+								numeroInterno = Long.parseLong(feReq.getNumeroInterno());
+							}catch(Exception excep){}
+							sendMail(msg, numeroInterno);
+						}
+						return msg;						
+					}catch(GenerationTimerException ge){
+						ge.printStackTrace();
+						msg =  "La fecha/hora informada (" + new Timestamp(System.currentTimeMillis()) + ") no es la esperada por AFIP, actualice la fecha/hora del servidor";
+						FileUtil.createTempFile(msg,  rutaSalida + nombreArchivo);
+						return "Error de Fecha Hora";											
+					}
+				}
+			}else{
+				msg =  feReq.getErrorFE();
+			}								
+		}catch(Exception e){
+			e.printStackTrace();	
+			msg =  "Error: " + e.getMessage();
+		}	
+		//Actualizo Base Local
+		try{
+			Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);			
+			facturaUpdate.setResultado(msg);
+			facturaUpdate.setCodError("0");
+			facturaManager.updateFactura(facturaUpdate);
+			//Genero Archivo de Salida
+			String data = ParseFactura.getOutDataFactura(facturaUpdate);
+			FileUtil.createTempFile(data,  rutaSalida + nombreArchivo);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return msg;		
+	}
+
+	
+	private String procesoFacturaABCaea(FECAEARequest feReq, String nombreArchivo){
+		String msg = "";
+		String rutaSalida= (parametrizacionDAO.getByPrimaryKey(Constants.ID_CARPETA_SALIDA)).getValor();
+		try{
+
+			FECAEAResponse feRes = new FECAEAResponse(); 
+			//Controlo los errores de parseo
+			if (msg.equals("") ){
+				
+				Empresa empresa = empresaManager.getByPrimaryKey(1l);			
+				//Valido CUIT
+				if (!TestUtil.validate(empresa.getCuit())){
+					String data = "El cuit enviado no esta Licenciado";
+					FileUtil.createTempFile(data,  rutaSalida + nombreArchivo);
+					return "Error de Licenciamiento";
+				}
+				
+				Factura facturaActual = generateFacturaABCaea(feReq);
+				facturaActual.setNombreArchivo(nombreArchivo);
+				//Obtengo la Factura de base local
+				Factura factura = facturaManager.getByArchivo(nombreArchivo);
+				
+				boolean facturaProcesada = false;
+				//Si existe la factura en la base
+				if (factura != null){
+					//Si tiene CAE armo el archivo de devoluci�n
+					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
+						facturaProcesada = true;
+						msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci�n de CAE exitoso";
+						//Genero Archivo de salida con los datos de la base		
+						//Genero Archivo de Salida
+						System.out.println("FEL: La factura ya se encuentra procesada");
+						String data = ParseFactura.getOutDataFactura(factura);
+						FileUtil.createTempFile(data,  rutaSalida + nombreArchivo);
+						msg = "OK";
+						return msg;
+					} 
+					factura.setImp_total(facturaActual.getImp_total());
+					factura.setNro_doc(facturaActual.getNro_doc());
+					factura.setPunto_vta(facturaActual.getPunto_vta());
+					factura.setTipo_cbte(facturaActual.getTipo_cbte());
+					factura.setFecha_cbte(facturaActual.getFecha_cbte());
+					factura.setMetodoAfip("LOCAL");
+					facturaManager.updateFactura(factura);					
+				}else{
+					try{
+						//Persisto la Factura
+						facturaManager.saveFactura(facturaActual);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}	
+				if(!facturaProcesada){
+					try {
+						feRes = facturaManager.informarComprobCaeaAFIP(feReq, empresa, null);
+						
+						Factura facturaUpdate1 = facturaManager.getByArchivo(nombreArchivo);
+						
+						//facturaUpdate1.setRequestEnviado(feRes.getRequestEnviado());
+						
+						facturaManager.updateFactura(facturaUpdate1);
+						
+						
+						String resultado = "";
+						
+						Err[] errores = feRes.getErrors();
+											
+						if (errores == null) {
+							if (feRes.getFeDetResp() != null
+									|| feRes.getFeDetResp().length > 0) {
+								Obs[] observaciones = feRes.getFeDetResp()[0]
+										.getObservaciones();
+								if (observaciones != null) {
+									int i = 0;
+									for (Obs obs : observaciones) {
+										System.out.println(obs.getMsg());
+										if (i == 0){
+											resultado = obs.getMsg();	
+										}else{
+											resultado = resultado + "/" + obs.getMsg();
+										}
+										i++;
+										
+									}
+								}
+							}
+						} else {
+							int i = 0;
+							for (Err err : errores) {							
+								if (i == 0){
+									resultado = err.getMsg();	
+								}else{
+									resultado = resultado + "/  " + err.getMsg();
+								}
+								i++;
+								
+							}
+		
+						}
+						
+						FECAEADetResponse[] feDetalleResponseA = feRes.getFeDetResp();
+						
+						try{
+							
+							System.out.println("Respuesta CAEA");
+							
+							System.out.println("Nombre Empresa " + empresa.getNombre());
+							
+							System.out.println("Tipo de Facturacion: FEL ");
+							
+							System.out.println("CAE " + feDetalleResponseA[0].getCAEA());
+							
+							System.out.println("Tipo de Comprobante " + feRes.getFeCabResp().getCbteTipo());
+							
+							System.out.println("Comprobante " + feDetalleResponseA[0].getCbteDesde());
+							
+			
+							System.out.println("Prefijo " + feRes.getFeCabResp().getPtoVta());
+							
+							
+							
+						}catch(Exception e){
+							//e.printStackTrace();
+						}
+		
+						//Si no tengo un error en la obtencion
+						if (feDetalleResponseA != null && feDetalleResponseA[0] != null){
+							if (!feDetalleResponseA[0].getCAEA().trim().equals("")){
+								String comprNr = FormatUtil.llenoConCeros(String.valueOf(feDetalleResponseA[0].getCbteDesde()), 8);
+								//be.updateBase(transacNr, feDetalleResponseA[0].getCAE(), feDetalleResponseA[0].getCAEFchVto(), rutaBase, comprNr);
+								
+								
+								msg = "OK";
+								//Actualizo Base Local
+								Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);
+								facturaUpdate.setResultado(resultado);
+								facturaUpdate.setReproceso("N");
+								facturaUpdate.setCodError("");
+								facturaUpdate.setCae(feDetalleResponseA[0].getCAEA() );
+								//facturaUpdate.setCae_vto(feDetalleResponseA[0].getCAEFchVto());
 								try{
 									facturaUpdate.setCbt_desde(Long.parseLong(comprNr));
 									facturaUpdate.setCbt_hasta(Long.parseLong(comprNr));								
@@ -2431,6 +2679,8 @@ public class ServicesManagerImpl implements ServicesManager {
 			caea.setOrden(Integer.parseInt(response.getResultGet().getOrden()+""));
 			caea.setFchProceso(response.getResultGet().getFchProceso());
 			caeaDAO.save(caea);
+			//Genero archivo de salida
+			FileUtil.createTempFile(response.getResultGet().getCAEA(), empresa.getPath_file_caea());
 			if (empresa.getLibAS400() != null){
 				String sistema = parametrizacionDAO.getByPrimaryKey(Constants.ID_SISTEMA).getValor();
 				String bibliotecaGeneric = parametrizacionDAO.getByPrimaryKey(Constants.ID_BASE_GENERIC).getValor();
