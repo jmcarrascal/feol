@@ -22,8 +22,8 @@ public class ListenerDTAQ implements ServletContextListener {
 	/* Application Startup Event */
 	public void contextInitialized(ServletContextEvent ce) {
 		applicationInitialized = System.currentTimeMillis();
-		DTAQService ffs = new DTAQService();
-		ffs.initListener();
+		//DTAQService ffs = new DTAQService();
+		//ffs.initListener();
 	}
 
 	/* Application Shutdown Event */

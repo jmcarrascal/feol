@@ -60,7 +60,7 @@ public class TestGetFacturaMTXDROVAL {
 
 		feAuth.setCuitRepresentada(30699754486l);
 		
-		Long[] nros = {7868l};
+		Long[] nros = {8064l};
 		Short punto_vta = new Short("5");
 		Short tipo_comprob = new Short("6");
 		  
