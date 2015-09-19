@@ -13,6 +13,7 @@ public class Constants {
 	public final static Long ID_CARPETA_SALIDA=3l;
 	public final static Long ID_CARPETA_ENTRADA=4l;
 	public final static Long ID_CARPETA_ERRORES=5l;
+	public final static Long ID_RUTA_FILE_CAEA=501l;
 	
 	//ParamConnAfip
 	public final static Long ID_HOST=6l;
@@ -62,6 +63,7 @@ public class Constants {
 	public final static Long ID_USO_LISTENERCONNAFIP=72l;	
 	
 	public final static Long ID_USO_LISTENERREADFILES=140l;	
+	public static final Long ID_USO_LISTENERREADFILES_COT = 600l;
 		
 	public final static Long ID_USO_LISTENERDTAQ=150l;	
 	public final static Long ID_LISTENERCONNAFIP_TIEMPO=73l;	
@@ -100,6 +102,7 @@ public class Constants {
 	public final static Long ID_CARPETA_SALIDA_EXPOV1=403l;
 	public final static Long ID_CARPETA_ENTRADA_EXPOV1=404l;
 	public final static Long ID_CARPETA_ERRORES_EXPOV1=405l;
+	
 	  
 	//cot
 	/*

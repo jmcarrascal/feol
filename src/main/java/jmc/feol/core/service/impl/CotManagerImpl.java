@@ -12,15 +12,19 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
 import jmc.feol.core.model.cot.ParamConnRentas;
 import jmc.feol.core.service.CotManager;
 import jmc.feol.util.Manejador;
@@ -36,59 +40,81 @@ public class CotManagerImpl implements CotManager {
 	private String userRentas;
 	private String passwordRentas;
 	private File fileB;
-	
-	public CotManagerImpl(ParamConnRentas paramConnRentas, String passwordRentas,
-			File fileB, String userRentas) {		
+
+	public CotManagerImpl(ParamConnRentas paramConnRentas,
+			String passwordRentas, File fileB, String userRentas) {
 		this.setParamConnRentas(paramConnRentas);
 		this.setPasswordRentas(passwordRentas);
 		this.setFileB(fileB);
 		this.setUserRentas(userRentas);
 	}
-	
-	public List<String> getCot()  {
-		
+
+	@SuppressWarnings("restriction")
+	public List<String> getCot() throws Exception {
+
 		List<String> respuestaRentas = new ArrayList<String>();
-		try{
-			
-			System.setProperty("javax.net.ssl.keyStoreType", "JKS");
-			String filename = System.getProperty("java.home")
-					+ "/lib/security/cacerts".replace('/', File.separatorChar);
-			String password = paramConnRentas.getKeystoreJREPassword();
-			String host = paramConnRentas.getHost();
-			System.out.println("Invoco al Server: " + host);
-			Integer hostPort = paramConnRentas.getUrlPort();
-			System.setProperty("javax.net.ssl.trustStore", filename);
-			System.setProperty("javax.net.ssl.trustStorePassword", password);
-			InetAddress dir = InetAddress.getByName(host);
-			Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-			SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-			setSocket((SSLSocket) factory.createSocket(dir, hostPort));
-			this.socket.startHandshake();		
-			Writer out = new OutputStreamWriter(socket.getOutputStream(),
-					"ISO-8859-1");
-			writeln("POST " + paramConnRentas.getUrlApp() + " HTTP/1.0", out);
-			writeln("User-Agent: Mozilla/4.0 (compatible; MSIE 6.0;)", out);
-			write("Content-type: multipart/form-data; boundary=", out);
-			writeln(boundary, out);
-			writeln("Content-Length: " + Integer.toString(calcularLongitud()), out);
-			writeln(("Host:" + paramConnRentas.getHost() + ":" + paramConnRentas.getUrlPort()), out);
-			newline(out);
-			setParameter("user", this.getUserRentas(), out);
-			setParameter("password", this.getPasswordRentas(), out);
-			setParameter("file", this.getFileB(), out);
-			boundary(out);
-			write("--", out);
-			newline(out);
-			out.flush();
-			InputStream inputStream = socket.getInputStream();
-			BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-			String inputLine = "";
-			while ((inputLine = in.readLine()) != null && !(inputLine.equals("0"))) {
-				respuestaRentas.add(inputLine);
+
+		System.setProperty("javax.net.ssl.keyStoreType", "JKS");
+		String filename = System.getProperty("java.home")
+				+ "/lib/security/cacerts".replace('/', File.separatorChar);
+		String password = paramConnRentas.getKeystoreJREPassword();
+		String host = paramConnRentas.getHost();		
+		Integer hostPort = paramConnRentas.getUrlPort();
+		System.setProperty("javax.net.ssl.trustStore", filename);
+		System.setProperty("javax.net.ssl.trustStorePassword", password);
+		InetAddress dir = InetAddress.getByName(host);
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+				return null;
 			}
-		}catch(Exception e){
-			e.printStackTrace();
+
+			public void checkClientTrusted(
+					java.security.cert.X509Certificate[] certs, String authType) {
+			}
+
+			public void checkServerTrusted(
+					java.security.cert.X509Certificate[] certs, String authType) {
+			}
+		} };
+
+		// Install the all-trusting trust manager
+		SSLContext sc = null;
+		try {
+			sc = SSLContext.getInstance("SSL");
+			sc.init(null, trustAllCerts, new java.security.SecureRandom());
+			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+		} catch (Exception e) {
 		}
+
+		SSLSocketFactory factory = (SSLSocketFactory) sc.getSocketFactory();
+		setSocket((SSLSocket) factory.createSocket(dir, hostPort));
+		this.socket.startHandshake();
+		Writer out = new OutputStreamWriter(socket.getOutputStream(),
+				"ISO-8859-1");
+		writeln("POST " + paramConnRentas.getUrlApp() + " HTTP/1.0", out);
+		writeln("User-Agent: Mozilla/4.0 (compatible; MSIE 6.0;)", out);
+		write("Content-type: multipart/form-data; boundary=", out);
+		writeln(boundary, out);
+		writeln("Content-Length: " + Integer.toString(calcularLongitud()), out);
+		writeln(("Host:" + paramConnRentas.getHost() + ":" + paramConnRentas
+				.getUrlPort()),
+				out);
+		newline(out);
+		setParameter("user", this.getUserRentas(), out);
+		setParameter("password", this.getPasswordRentas(), out);
+		setParameter("file", this.getFileB(), out);
+		boundary(out);
+		write("--", out);
+		newline(out);
+		out.flush();
+		InputStream inputStream = socket.getInputStream();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				inputStream));
+		String inputLine = "";
+		while ((inputLine = in.readLine()) != null && !(inputLine.equals("0"))) {
+			respuestaRentas.add(inputLine);
+		}
+
 		return respuestaRentas;
 	}
 
@@ -296,34 +322,35 @@ public class CotManagerImpl implements CotManager {
 		return len;
 	}
 
+	public void setResultRentasXML(File archivoXML) throws Exception {
+		SAXParser parser;
+		SAXParserFactory factoria = SAXParserFactory.newInstance();
+		factoria.setNamespaceAware(true);
+		parser = factoria.newSAXParser();
+		Manejador man = new Manejador();
+		parser.parse(archivoXML.getPath(), man);
 
-	public void setResultRentasXML(File archivoXML)throws Exception{        
-        SAXParser parser;
-        SAXParserFactory factoria = SAXParserFactory.newInstance();
-        factoria.setNamespaceAware(true);
-        parser = factoria.newSAXParser();
-        Manejador man = new Manejador();
-        parser.parse(archivoXML.getPath(), man);
-        
-        if (man.sin_error){
-              //System.out.println("Todo ok " + strFecha);
-              //System.out.print(man.nombreArchivo + " - ");
-              //System.out.println(man.nro_comprobante);
-              //digecot.setCcncot(man.nro_comprobante);
-              for(int i=0; i<=(man.remito-1);i++ ){               
-                  System.out.println(man.remitos[i][0] + " Procesado: "+man.remitos[i][1]);
-              }
-        }
-        else{
-            //System.out.println("Todo mal "+ strFecha); 
-            //System.out.println("Enlace "+ archivoCot.getClaveEnlace() + " / Remito: " + archivoCot.getLetra()+ archivoCot.getNroRemito());
-            //System.out.println(man.ErrDescription);
-            //digecot.setCcresp(man.ErrDescription);
-        	//archivoCot.setNumeroCot("999999");
-            //archivoCot.setDescripcion(man.ErrDescription);
-            //digecot.setStatus("1");
-       }
-              
+		if (man.sin_error) {
+			// System.out.println("Todo ok " + strFecha);
+			// System.out.print(man.nombreArchivo + " - ");
+			// System.out.println(man.nro_comprobante);
+			// digecot.setCcncot(man.nro_comprobante);
+			for (int i = 0; i <= (man.remito - 1); i++) {
+				System.out.println(man.remitos[i][0] + " Procesado: "
+						+ man.remitos[i][1]);
+			}
+		} else {
+			// System.out.println("Todo mal "+ strFecha);
+			// System.out.println("Enlace "+ archivoCot.getClaveEnlace() +
+			// " / Remito: " + archivoCot.getLetra()+
+			// archivoCot.getNroRemito());
+			// System.out.println(man.ErrDescription);
+			// digecot.setCcresp(man.ErrDescription);
+			// archivoCot.setNumeroCot("999999");
+			// archivoCot.setDescripcion(man.ErrDescription);
+			// digecot.setStatus("1");
+		}
+
 	}
 
 	public File getFileB() {
@@ -346,8 +373,6 @@ public class CotManagerImpl implements CotManager {
 		return passwordRentas;
 	}
 
-
-
 	public void setPasswordRentas(String passwordRentas) {
 		this.passwordRentas = passwordRentas;
 	}
@@ -360,13 +385,9 @@ public class CotManagerImpl implements CotManager {
 		this.paramConnRentas = paramConnRentas;
 	}
 
-
-
 	public SSLSocket getSocket() {
 		return socket;
 	}
-
-
 
 	public void setSocket(SSLSocket socket) {
 		this.socket = socket;

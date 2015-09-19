@@ -1,222 +1,304 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<beans xmlns="http://www.springframework.org/schema/beans"   
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
-     xmlns:aop="http://www.springframework.org/schema/aop"  
-     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
-                         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">  
-   
-     <!--  Bean de la lógiga de negocio de mi aplicación de ejemplo. -->  
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+                         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<!-- Bean de la lógiga de negocio de mi aplicación de ejemplo. -->
 
 	<!-- Importa el data source -->
-	<!--<import resource="applicationContextHibernateDPIDesa.xml" />-->
-	<import resource="applicationContextHibernate.xml" />
-	
-	
-	<!-- Hibernate session factory -->
-  	<bean id="sessionFactory" 
-    	class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-   	<property name="dataSource"><ref bean="dataSource"/></property>
-     
-    <property name="hibernateProperties">
-    	<props>
-<!--    		<prop key="hibernate.default_schema">feol_cot_herr.dbo</prop> -->
-<!--     		<prop key="hibernate.default_schema">sgi</prop>-->
-     		
-<!--     		<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop> -->
-     		<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-			<prop key="hibernate.show_sql">false</prop>			
-			<!-- <prop key="hibernate.hbm2ddl.auto">create-drop</prop>-->
-			<prop key="hibernate.hbm2ddl.auto">update</prop>
-			<prop key="hibernate.autoReconnect">true</prop> 			
-			<prop key="hibernate.connection.SetBigStringTryClob">true</prop>
-			<prop key="hibernate.format_sql">true</prop>			
-			<prop key="hibernate.transaction.auto_close_session">false</prop>
-			<prop key="hibernate.generate_statistics">true</prop>
-			<prop key="hibernate.current_session_context_class">thread</prop>			
-			<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</prop>
-       	</props>
-   	</property>
-	<property name="annotatedClasses">
-    	<list>
-	  		<value>jmc.feol.core.model.Parametrizacion</value>	
-			<value>jmc.feol.core.model.Empresa</value>
-			<value>jmc.feol.core.model.Factura</value>
-			<value>jmc.feol.core.model.Usuario</value>
-			<value>jmc.feol.core.model.EquipoImagen</value>		
-			<value>jmc.feol.core.model.EmpresaC</value>		
-			<value>jmc.feol.core.model.Patente</value>
-			<value>jmc.feol.core.model.Caea</value>	
-		</list>     	
-   	</property>
- 	</bean>	   	
-  	
- 	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory">
-            <ref local="sessionFactory"/>
-        </property>
-    </bean>
+<!-- 	<import resource="applicationContextHibernateLocalMySql.xml" /> -->
+	<!-- <import resource="applicationContextHibernate.xml" /> -->
+<!-- 	<import resource="applicationContextDataSource.xml" /> -->
+	<import resource="applicationContextDataSourceMy.xml" />
 
-	<!-- Transaction Proxy Template -->
-	<bean id="transactionProxyTemplate" abstract="true" lazy-init="true" 
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="proxyTargetClass" value="true"/>
-		<property name="transactionManager"><ref local="transactionManager"/></property>
-		<property name="transactionAttributes">
+
+
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="hibernateProperties">
 			<props>
-				<prop key="get">PROPAGATION_REQUIRED,readOnly</prop>
-				<prop key="*">PROPAGATION_REQUIRED,timeout_300</prop>
-			</props> 
+<!-- 				<prop key="hibernate.default_schema">COT</prop> -->
+<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.connection.SetBigStringTryClob">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.transaction.auto_close_session">false</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>jmc.feol.core.model.Parametrizacion</value>
+				<value>jmc.feol.core.model.Empresa</value>
+				<value>jmc.feol.core.model.Factura</value>
+				<value>jmc.feol.core.model.Usuario</value>
+				<value>jmc.feol.core.model.EquipoImagen</value>
+				<value>jmc.feol.core.model.EmpresaC</value>
+				<value>jmc.feol.core.model.Patente</value>
+				<value>jmc.feol.core.model.Caea</value>
+				<value>jmc.feol.core.model.Cot</value>
+			</list>
 		</property>
 	</bean>
- 	
 
- 	<bean id="services" scope="request" class="jmc.feol.ui.struts.actions.ServicesAction" >   
- 		<property name="servicesManager" ref="ServicesManager"/>
- 		<property name="parametrizacionManager" ref="ParametrizacionManager"/> 	
- 		<property name="facturasManager" ref="FacturasManager"/> 			
-    </bean>
-        
-    
-    <bean id="login" scope="request" class="jmc.feol.ui.struts.actions.LoginAction" >   
- 		<property name="parametrizacionManager" ref="ParametrizacionManager"/>
- 		<property name="usuarioManager" ref="UsuarioManager"/>
-    </bean>    
-
-	<bean id="ServicesManager" class="jmc.feol.core.service.impl.ServicesManagerImpl" scope="request">
- 	  	<property name="parametrizacionDAO" ref="ParametrizacionDAO"/>
- 	  	<property name="facturaManager" ref="FacturaManager"/>
- 	  	<property name="empresaManager" ref="EmpresaManager"/>
- 	  	<property name="equipoImagenDAO" ref="EquipoImagenDAO"/>
- 	  	<property name="caeaDAO" ref="CaeaDAO"/>
- 	  	<property name="usuarioDAO" ref="UsuarioDAO"/>
- 	  	<property name="empresaCDAO" ref="EmpresaCDAO"/>
- 	  	<property name="extendedPatenteDAO" ref="ExtendedPatenteDAO"/>
- 	</bean>
- 	
- 	<bean id="ParametrizacionManager" class="jmc.feol.core.service.impl.ParametrizacionManagerImpl" scope="request">
- 	  	<property name="parametrizacionDAO" ref="ParametrizacionDAO"/>
- 	</bean>
- 	
- 	<bean id="EmpresaManager" class="jmc.feol.core.service.impl.EmpresaManagerImpl" scope="request">
- 	  	<property name="empresaDAO" ref="EmpresaDAO"/>
- 	</bean>
-
- 	<bean id="UsuarioManager" class="jmc.feol.core.service.impl.UsuarioManagerImpl" scope="request">
- 	  	<property name="usuarioDAO" ref="UsuarioDAO"/>
- 	</bean>
-
- 	<bean id="FacturaManager" class="jmc.feol.core.service.impl.FacturaManagerImpl" scope="request">
- 	  	<property name="parametrizacionManager" ref="ParametrizacionManager"/>
- 	  	<property name="credencialAfipManager" ref="CredencialAfipManager"/>
- 	  	<property name="empresaManager" ref="EmpresaManager"/>
- 	  	<property name="extendedFacturaDAO" ref="ExtendedFacturaDAO"/>
- 	</bean>    
-	
- 	<bean id="FacturasManager" class="jmc.feol.core.service.impl.FacturasManagerImpl" scope="request">
- 	  	<property name="parametrizacionManager" ref="ParametrizacionManager"/> 	  	
- 	  	<property name="extendedFacturaDAO" ref="ExtendedFacturaDAO"/>
- 	  	<property name="facturaManager" ref="FacturaManager"/>
- 	  	<property name="empresaManager" ref="EmpresaManager"/>
- 	</bean>    
-
- 	<bean id="CredencialAfipManager" class="jmc.feol.core.service.impl.CredencialAfipManagerImpl" scope="request"> 	  	 	  
- 	</bean>    
-
-    <bean id="ParametrizacionDAO" parent="transactionProxyTemplate" >
-		<property name="target">
-			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
-		        <constructor-arg>
-		            <value>jmc.feol.core.model.Parametrizacion</value>
-		        </constructor-arg>
-		        <property name="sessionFactory">
-		            <ref bean="sessionFactory"/>
-		        </property>
-		     </bean>   
-        </property>
-	</bean>
-	
-     <bean id="EmpresaCDAO" parent="transactionProxyTemplate" >
-		<property name="target">
-			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
-		        <constructor-arg>
-		            <value>jmc.feol.core.model.EmpresaC</value>
-		        </constructor-arg>
-		        <property name="sessionFactory">
-		            <ref bean="sessionFactory"/>
-		        </property>
-		     </bean>   
-        </property>
-	</bean>
-	
-	<bean id="EmpresaDAO" parent="transactionProxyTemplate" >
-		<property name="target">
-			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
-		        <constructor-arg>
-		            <value>jmc.feol.core.model.Empresa</value>
-		        </constructor-arg>
-		        <property name="sessionFactory">
-		            <ref bean="sessionFactory"/>
-		        </property>
-		     </bean>   
-        </property>
-	</bean>
-	
-	<bean id="UsuarioDAO" parent="transactionProxyTemplate" >
-		<property name="target">
-			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
-		        <constructor-arg>
-		            <value>jmc.feol.core.model.Usuario</value>
-		        </constructor-arg>
-		        <property name="sessionFactory">
-		            <ref bean="sessionFactory"/>
-		        </property>
-		     </bean>   
-        </property>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
 	</bean>
 
-	<bean id="EquipoImagenDAO" parent="transactionProxyTemplate" >
-		<property name="target">
-			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
-		        <constructor-arg>
-		            <value>jmc.feol.core.model.EquipoImagen</value>
-		        </constructor-arg>
-		        <property name="sessionFactory">
-		            <ref bean="sessionFactory"/>
-		        </property>
-		     </bean>   
-        </property>
-	</bean>
-	
-	<bean id="CaeaDAO" parent="transactionProxyTemplate" >
-		<property name="target">
-			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
-		        <constructor-arg>
-		            <value>jmc.feol.core.model.Caea</value>
-		        </constructor-arg>
-		        <property name="sessionFactory">
-		            <ref bean="sessionFactory"/>
-		        </property>
-		     </bean>   
-        </property>
+	<!-- Transaction Proxy Template -->
+	<bean id="transactionProxyTemplate" abstract="true" lazy-init="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="proxyTargetClass" value="true" />
+		<property name="transactionManager">
+			<ref local="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,timeout_300</prop>
+			</props>
+		</property>
 	</bean>
 
-	<bean id="ExtendedFacturaDAO" parent="transactionProxyTemplate" >
-	 	<property name="target">
-	  		<bean class="jmc.feol.core.dao.impl.FacturaDAOImpl"> 
+
+
+	<bean id="services" scope="request"
+		class="jmc.feol.ui.struts.actions.ServicesAction">
+		<property name="servicesManager" ref="ServicesManager" />
+		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+		<property name="facturasManager" ref="FacturasManager" />
+	</bean>
+
+
+	<bean id="login" scope="request" class="jmc.feol.ui.struts.actions.LoginAction">
+		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+		<property name="usuarioManager" ref="UsuarioManager" />
+	</bean>
+
+	<bean id="ServicesManager" class="jmc.feol.core.service.impl.ServicesManagerImpl"
+		scope="request">
+		<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
+		<property name="facturaManager" ref="FacturaManager" />
+		<property name="empresaManager" ref="EmpresaManager" />
+		<property name="equipoImagenDAO" ref="EquipoImagenDAO" />
+		<property name="caeaDAO" ref="CaeaDAO" />
+		<property name="usuarioDAO" ref="UsuarioDAO" />
+		<property name="empresaCDAO" ref="EmpresaCDAO" />
+		<property name="extendedPatenteDAO" ref="ExtendedPatenteDAO" />
+		<property name="extendedCotDAO" ref="ExtendedCotDAO" />
+	</bean>
+
+
+
+	<bean id="ParametrizacionManager" class="jmc.feol.core.service.impl.ParametrizacionManagerImpl"
+		scope="request">
+		<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
+	</bean>
+
+	<bean id="EmpresaManager" class="jmc.feol.core.service.impl.EmpresaManagerImpl"
+		scope="request">
+		<property name="empresaDAO" ref="EmpresaDAO" />
+	</bean>
+
+	<bean id="UsuarioManager" class="jmc.feol.core.service.impl.UsuarioManagerImpl"
+		scope="request">
+		<property name="usuarioDAO" ref="UsuarioDAO" />
+	</bean>
+
+
+	<bean id="FacturaManager" class="jmc.feol.core.service.impl.FacturaManagerImpl"
+		scope="request">
+		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+		<property name="credencialAfipManager" ref="CredencialAfipManager" />
+		<property name="empresaManager" ref="EmpresaManager" />
+		<property name="extendedFacturaDAO" ref="ExtendedFacturaDAO" />
+
+	</bean>
+
+
+
+
+
+	<bean id="FacturasManager" class="jmc.feol.core.service.impl.FacturasManagerImpl"
+		scope="request">
+		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+		<property name="extendedFacturaDAO" ref="ExtendedFacturaDAO" />
+		<property name="facturaManager" ref="FacturaManager" />
+		<property name="empresaManager" ref="EmpresaManager" />
+		<property name="extendedCotDAO" ref="ExtendedCotDAO" />
+	</bean>
+
+	<bean id="CredencialAfipManager" class="jmc.feol.core.service.impl.CredencialAfipManagerImpl"
+		scope="request">
+	</bean>
+
+	<bean id="ParametrizacionDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
+				<constructor-arg>
+					<value>jmc.feol.core.model.Parametrizacion</value>
+				</constructor-arg>
 				<property name="sessionFactory">
-					<ref bean="sessionFactory"/>
+					<ref bean="sessionFactory" />
 				</property>
-	  		</bean>
-	  	</property>
+			</bean>
+		</property>
 	</bean>
-	
-	<bean id="ExtendedPatenteDAO" parent="transactionProxyTemplate" >
-	 	<property name="target">
-	  		<bean class="jmc.feol.core.dao.impl.PatenteDAOImpl"> 
+
+	<bean id="EmpresaCDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
+				<constructor-arg>
+					<value>jmc.feol.core.model.EmpresaC</value>
+				</constructor-arg>
 				<property name="sessionFactory">
-					<ref bean="sessionFactory"/>
+					<ref bean="sessionFactory" />
 				</property>
-	  		</bean>
-	  	</property>
+			</bean>
+		</property>
 	</bean>
+
+	<bean id="EmpresaDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
+				<constructor-arg>
+					<value>jmc.feol.core.model.Empresa</value>
+				</constructor-arg>
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="UsuarioDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
+				<constructor-arg>
+					<value>jmc.feol.core.model.Usuario</value>
+				</constructor-arg>
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="EquipoImagenDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
+				<constructor-arg>
+					<value>jmc.feol.core.model.EquipoImagen</value>
+				</constructor-arg>
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="CaeaDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.GenericDAOImpl">
+				<constructor-arg>
+					<value>jmc.feol.core.model.Caea</value>
+				</constructor-arg>
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="ExtendedFacturaDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.FacturaDAOImpl">
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="ExtendedCotDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.CotDAOImpl">
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="ExtendedPatenteDAO" parent="transactionProxyTemplate">
+		<property name="target">
+			<bean class="jmc.feol.core.dao.impl.PatenteDAOImpl">
+				<property name="sessionFactory">
+					<ref bean="sessionFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+<bean id="servicesInitManager" class="jmc.feol.core.service.impl.ServicesInitManagerImpl">
+	<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
+	<property name="extendedCotDAO" ref="ExtendedCotDAO" />
+	<property name="empresaDAO" ref="EmpresaDAO" />
+</bean>
+
+
+
+<bean name="checkFileCotCron" class="org.springframework.scheduling.quartz.JobDetailBean">
+	
+	<property name="jobClass" value="jmc.feol.core.service.cron.CheckFileCotCron" />
+		
+	<property name="jobDataAsMap">
+		<map>
+			<entry key="servicesInitManager" value-ref="servicesInitManager" />
+		</map>
+	</property>
+		
+</bean>
+
+
+	
+
+	
+
+	<bean id="checkFileCotJTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="checkFileCotCron" />
+		<property name="repeatInterval" value="1000" />
+		<property name="startDelay" value="5000" />
+		
+	</bean>
+
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	<property name="jobDetails">
+	   <list>
+	      <ref bean="checkFileCotCron" />
+	   </list>
+	</property>
+		
+	<property name="triggers">
+	    <list>
+		<ref bean="checkFileCotJTrigger" />
+	    </list>
+	</property>
+   </bean>
+
 </beans>

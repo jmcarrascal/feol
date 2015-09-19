@@ -4,13 +4,11 @@ package jmc.feol.core.service.impl;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-import FEV1.dif.afip.gov.ar.FECompConsultaResponse;
-
+import jmc.feol.core.dao.CotDAO;
 import jmc.feol.core.dao.FacturaDAO;
-import jmc.feol.core.dao.GenericDAO;
+import jmc.feol.core.model.Cot;
 import jmc.feol.core.model.Empresa;
 import jmc.feol.core.model.Factura;
 import jmc.feol.core.service.EmpresaManager;
@@ -19,6 +17,7 @@ import jmc.feol.core.service.FacturasManager;
 import jmc.feol.core.service.ParametrizacionManager;
 import jmc.feol.util.Constants;
 import jmc.feol.util.FileUtil;
+import FEV1.dif.afip.gov.ar.FECompConsultaResponse;
 
 
 
@@ -32,12 +31,17 @@ public class FacturasManagerImpl implements FacturasManager{
 	private FacturaDAO extendedFacturaDAO;	 
 	private FacturaManager facturaManager;
 	private EmpresaManager empresaManager;
+	private CotDAO extendedCotDAO;
 	
 	
-	
-	
-	 
-	
+	public CotDAO getExtendedCotDAO() {
+		return extendedCotDAO;
+	}
+
+	public void setExtendedCotDAO(CotDAO extendedCotDAO) {
+		this.extendedCotDAO = extendedCotDAO;
+	}
+
 	public EmpresaManager getEmpresaManager() {
 		return empresaManager;
 	}
@@ -86,7 +90,22 @@ public class FacturasManagerImpl implements FacturasManager{
 		return facturas;
 	}
 
+	public List<Cot> getCotGrilla(String propertySort, String orderSort, String[] propertyFilter, String[] valueFilter, Integer min,  Integer max) throws Exception {
+		
+		List<Cot> cots = new ArrayList<Cot>();
+		
+		if (propertySort == null || propertySort.trim().equals("")){
+			propertySort = "fecha_creacion";
+			orderSort = "desc";
+			
+		}		
+		cots = extendedCotDAO.getCotGrilla(1l,propertySort, orderSort, propertyFilter, valueFilter, min,  max);
+		
+		
+		return cots;
+	}
 
+	
 	public void reProcesarFactura(String nombreArchivo)  {
 		//Copio el Archivo que se encuentra en la carpeta Definitivo en la carpeta provisorio
 		File fileProvisorio = new File(parametrizacionManager.getParametrizacionByPrimaryKey(Constants.ID_CARPETA_PROVISORIO).getValor() + nombreArchivo );
@@ -107,6 +126,10 @@ public class FacturasManagerImpl implements FacturasManager{
     	
 	public Long getCountFacturaGrilla() {
 		return extendedFacturaDAO.getCountFacturaGrilla(1l);
+	}
+	
+	public Long getCountCotGrilla() {
+		return extendedCotDAO.getCountCotGrilla(1l);
 	}
 
 

@@ -8,10 +8,22 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 
+<!-- 		<dependency> -->
+<!-- 		<groupId>mysql</groupId> -->
+<!-- 		<artifactId>mysql-connector-java</artifactId> -->
+<!-- 		<version>5.1.16</version> -->
+<!-- 		</dependency> -->
+
+
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.16</version>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opensymphony.quartz</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -32,6 +44,11 @@
 			<version>2.5.6</version>
 			<type>jar</type>
 			<optional>false</optional>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -98,17 +115,19 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>3.0.0.ga</version>
-		</dependency>
-		<dependency>
-			<groupId>org.ajaxtags</groupId>
-			<artifactId>ajaxtags</artifactId>
-			<version>1.3-beta-rc7</version>
-			<type>jar</type>
-			<optional>false</optional>
-		</dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>4.0.2.GA</version>
+</dependency>
+
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.ajaxtags</groupId> -->
+		<!-- <artifactId>ajaxtags</artifactId> -->
+		<!-- <version>1.3-beta-rc7</version> -->
+		<!-- <type>jar</type> -->
+		<!-- <optional>false</optional> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
@@ -230,7 +249,7 @@
 			<artifactId>axis</artifactId>
 			<version>1.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.xml</groupId>
 			<artifactId>jaxrpc</artifactId>
@@ -249,6 +268,13 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jt400.jar</systemPath>
 		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>oracle</groupId> -->
+		<!-- <artifactId>oracle</artifactId> -->
+		<!-- <version>1.0</version> -->
+		<!-- <scope>system</scope> -->
+		<!-- <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/ojdbc6.jar</systemPath> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>bcprov</groupId>
 			<artifactId>bcprov</artifactId>
@@ -263,7 +289,24 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/bcmail-jdk16-141.jar</systemPath>
 		</dependency>
-		
+		<dependency>
+			<groupId>jaxen</groupId>
+			<artifactId>jaxen</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jaxen-1.1.1.jar</systemPath>
+		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>net.sourceforge.jtds</groupId> -->
+		<!-- <artifactId>jtds</artifactId> -->
+		<!-- <version>1.2.4</version> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>jaxen</groupId> -->
+		<!-- <artifactId>jaxen</artifactId> -->
+		<!-- <version>1.1.1</version> -->
+		<!-- </dependency> -->
+
 		<dependency>
 			<groupId>commons-discovery</groupId>
 			<artifactId>commons-discovery</artifactId>
@@ -271,7 +314,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/commons-discovery-0.2.jar</systemPath>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-plugin</artifactId>
@@ -302,8 +345,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<excludes>
 						<exclude>*/.*</exclude>
 					</excludes>

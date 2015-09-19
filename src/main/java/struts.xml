@@ -37,8 +37,8 @@
 
 		<!-- Metodos de validaciones -->
 		<action name="validateMS" method="validateMS" class="login">
-			<result name="ok" type="chain">preparedListFacturas</result>
-			<result name="cot" type="chain">preparedViajesSinCot</result>
+			<result name="ok" type="tiles">blackPage</result>
+			<result name="cot" type="tiles">blackPage</result>
 			<result name="exit" type="tiles">loginPage</result>
 			<result name="failedAuth" type="tiles">failedAuthPage</result>
 		</action>
@@ -48,14 +48,18 @@
 			<result name="success" type="tiles">preparedNewPatentePage</result>
 		</action>
 		
+		<action name="saveCotTMP" method="saveCotTMP" class="services">
+			<result name="success" type="tiles">blackTMPPage</result>
+		</action>
+
+
 		<action name="deletePatente" method="deletePatente" class="services">
 			<result name="success" type="chain">preparedListPatente</result>
 		</action>
 		
 		<action name="newPatente" method="newPatente" class="services">
 			<result name="success" type="chain">preparedListPatente</result>
-		</action>
-		
+		</action>		
 		
 		
 		<action name="preparedListPatente" method="preparedListPatente" class="services">
@@ -65,6 +69,11 @@
 		<action name="preparedListFacturas" method="preparedListFacturas" class="services">
 			<result name="success" type="tiles">listFacturasPage</result>
 		</action>
+		
+		<action name="preparedListCots" method="preparedListCots" class="services">
+			<result name="success" type="tiles">listCotsPage</result>
+		</action>
+		
 		
 		<action name="switchProcesoAfip" method="switchProcesoAfip" class="services">
 			<result name="success" type="chain">preparedListFacturas</result>			
@@ -155,6 +164,9 @@
 		<action name="downloadFile" method="downloadFile" class="services">						
 		</action>
 
+		<action name="downloadFileCot" method="downloadFileCot" class="services">						
+		</action>
+
 		<action name="facturasPerdidas" method="facturasPerdidas" class="services">						
 		</action>
 	
@@ -198,6 +210,8 @@
 		<action name="checkFacturasByFileExpov1" method="checkFacturasByFileExpov1" class="services">
 		</action>
 		
+		<action name="checkCotByFile" method="checkCotByFile" class="services">
+		</action>
 		
 
 

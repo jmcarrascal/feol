@@ -3,6 +3,7 @@ package jmc.feol.core.service;
 
 import java.util.List;
 
+import jmc.feol.core.model.Cot;
 import jmc.feol.core.model.Factura;
 
 /**
@@ -22,5 +23,10 @@ public interface FacturasManager
 
 	public void reProcesarFactura(Factura facturaActual);
 
+	public Long getCountCotGrilla();
+	
+	public List<Cot> getCotGrilla(String propertySort, String orderSort, String[] propertyFilter, String[] valueFilter, Integer min,  Integer max) throws Exception;
+
+	
 	
 }

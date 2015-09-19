@@ -27,6 +27,7 @@
 	<entry><url>editParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadRequest</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadFile</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>downloadFileCot</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>facturasPerdidas</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>tablasAFIP</url><rolEnable>1,5,2</rolEnable></entry>
 			
@@ -54,10 +55,12 @@
 	<entry><url>tablas</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 	<entry><url>checkFileFacturas</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 	<entry><url>checkFacturas</url><rolEnable>0,1,5,2,4</rolEnable></entry>
-	<entry><url>checkFacturasByFile</url><rolEnable>0,1,5,2,4</rolEnable></entry>		
+	<entry><url>checkFacturasByFile</url><rolEnable>0,1,5,2,4</rolEnable></entry>
+	<entry><url>checkCotByFile</url><rolEnable>0,1,5,2,4</rolEnable></entry>			
 	<entry><url>checkFacturasByFileExpov1</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 	<entry><url>get_facturacion</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 
-	
+	<entry><url>saveCotTMP</url><rolEnable>0,1,5,2,4</rolEnable></entry>
+
 </actions>
 

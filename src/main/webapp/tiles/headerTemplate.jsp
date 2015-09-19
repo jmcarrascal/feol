@@ -30,7 +30,8 @@
 		    <ul class="menu">
 		        <li><a href="#" class="parent"><span>Reporte</span></a>
 		            <ul>
-		                <li><a href="preparedListFacturas"><span>Comprobantes Gestionados</span></a></li>
+		                <li><a href="preparedListFacturas"><span>Comprobantes (Afip) Gestionados</span></a></li>
+		                <li><a href="preparedListCots"><span>Comprobantes (Arba) Gestionados</span></a></li>
 		            </ul>
 		        </li>
 		        <li><a href="#" class="parent"><span>Gestiones AFIP Local</span></a>
