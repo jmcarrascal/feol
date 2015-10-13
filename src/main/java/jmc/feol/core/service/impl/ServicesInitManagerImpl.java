@@ -158,11 +158,17 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 			}
 			
 			for(File fileDestino : listFileAnalisis){								
-								
-								String planta = fileDestino.getName()
+							String planta = "000";
+							try{
+								planta = fileDestino.getName()
 										.substring(1, 4);
-								String secuencia = fileDestino.getName()
+							}catch(Exception e){}
+							String secuencia = "000000";
+							try{
+								secuencia = fileDestino.getName()
 										.substring(4, 10);
+							}catch(Exception e){}
+								
 								String nombreArchivo = "TB_"
 										+ em.getCuit()
 										+ "_"
@@ -200,7 +206,7 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 										resultList
 												.add("<mensajeError>Error al intentar Conectarse con el server o al mover archivos en el FileSystem</mensajeError>");
 										resultList.add("</TBError>");
-										String nombreArchivoSalida = "C"
+										String nombreArchivoSalida = "CR"
 												+ planta + secuencia + ".xml";
 										FileUtil.generateFile(
 												em.getRuta_salida_cot(),
@@ -213,7 +219,7 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 												.getName());
 										cot.setPlanta(planta);
 										cot.setSecuencia(secuencia);
-										cot.setRespuesta("NETWORK");
+										cot.setRespuesta("Error al intentar Conectarse con el server o al mover archivos en el FileSystem");
 										extendedCotDAO.save(cot);
 									} catch (Exception e_catch) {
 										e_catch.printStackTrace();
@@ -222,8 +228,6 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 								List<String> listresult = new ArrayList<String>();
 								String result = "";
 								try {
-									// new ByteArrayInputStream(
-									// builder.toString().getBytes("UTF-8") );
 									String xml = "";
 									boolean empezo = false;
 									for (String s : listS) {
@@ -233,6 +237,9 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 										if (empezo) {
 											listresult.add(s);
 											xml = xml + s;
+										}
+										if (s.indexOf("<mensajeError>") != -1) {
+											result = s.replaceAll("<mensajeError>", "");
 										}
 
 									}
@@ -246,29 +253,16 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 										// Pregunto si tiene un error y si fue
 										// procesado con Anterioridad
 										if (xml.indexOf("<TBError>") != -1) {
-											if (xml.indexOf("<codigoError>11</codigoError>") != -1) {
-												result = "El archivo recibido ya fue procesado con anterioridad.";
-											} else {
-												result = "Existe un error en la transmision del Archivo.";
-											}
-											List<String> resultList = new ArrayList<String>();
-											resultList
-													.add("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");
-											resultList.add("<TBError>");
-											resultList
-													.add("<tipoError>Cuit invalido</tipoError>");
-											resultList
-													.add("<codigoError>011</codigoError>");
-											resultList
-													.add("<mensajeError>Error al intentar conectarse con el servidor de Arba</mensajeError>");
-											resultList.add("</TBError>");
-											String nombreArchivoSalida = "C"
+											String nombreArchivoSalida = "BR"
 													+ planta + secuencia
 													+ ".xml";
+											try{
+											
+											}catch(Exception e){}
 											FileUtil.generateFile(
 													em.getRuta_salida_cot(),
 													nombreArchivoSalida,
-													resultList);
+													listresult);
 											Cot cot = new Cot();
 											cot.setFecha_creacion(new Timestamp(
 													System.currentTimeMillis()));
@@ -277,7 +271,7 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 													.getName());
 											cot.setPlanta(planta);
 											cot.setSecuencia(secuencia);
-											cot.setRespuesta("NETWORK");
+											cot.setRespuesta(result);
 											extendedCotDAO.save(cot);
 										} else {
 											RespuestaAfip ra = (RespuestaAfip) jaxbUnmarshaller
@@ -298,17 +292,18 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 															.equals("SI")) {
 														procesadoOk = true;
 													}
+													
 												}
 											} catch (Exception e) {
 												procesadoOk = false;
 											}
 											String nombreArchivoSalida = "";
 											if (procesadoOk) {
-												nombreArchivoSalida = "A"
+												nombreArchivoSalida = "AR"
 														+ planta + secuencia
 														+ ".xml";
 											} else {
-												nombreArchivoSalida = "B"
+												nombreArchivoSalida = "BR"
 														+ planta + secuencia
 														+ ".xml";
 											}

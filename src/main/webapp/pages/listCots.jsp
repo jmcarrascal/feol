@@ -50,8 +50,8 @@
 		</div>	
 </div>		
 
-<s:form action="downloadFileCot" id="downloadFileForm">
-	<s:hidden key="factura.idFactura" id="idFacturaT"/>
+<s:form action="downloadFileCot" id="downloadFileForm">	
+	<input type="hidden" name="factura.idFactura" id="idFacturaT">
 </s:form>
 
 
