@@ -69,6 +69,12 @@
 			<optional>false</optional>
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>3.3.2.GA</version>
@@ -231,7 +237,7 @@
 			<artifactId>axis</artifactId>
 			<version>1.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.xml</groupId>
 			<artifactId>jaxrpc</artifactId>
@@ -264,7 +270,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/bcmail-jdk16-141.jar</systemPath>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-discovery</groupId>
 			<artifactId>commons-discovery</artifactId>
@@ -272,7 +278,7 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/commons-discovery-0.2.jar</systemPath>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-plugin</artifactId>
@@ -298,7 +304,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		
+
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -334,7 +340,7 @@
 					<path>/FEOL</path>
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
 		<finalName>FEOL</finalName>
 	</build>
