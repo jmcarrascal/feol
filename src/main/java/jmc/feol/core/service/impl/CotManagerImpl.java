@@ -17,10 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+
 import jmc.feol.core.model.cot.ParamConnRentas;
 import jmc.feol.core.service.CotManager;
 import jmc.feol.util.Manejador;
@@ -60,10 +65,34 @@ public class CotManagerImpl implements CotManager {
 			System.setProperty("javax.net.ssl.trustStore", filename);
 			System.setProperty("javax.net.ssl.trustStorePassword", password);
 			InetAddress dir = InetAddress.getByName(host);
-			Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
-			SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-			setSocket((SSLSocket) factory.createSocket(dir, hostPort));
+			Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());				
 			this.socket.startHandshake();		
+			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+					return null;
+				}
+
+				public void checkClientTrusted(
+						java.security.cert.X509Certificate[] certs, String authType) {
+				}
+
+				public void checkServerTrusted(
+						java.security.cert.X509Certificate[] certs, String authType) {
+				}
+			} };
+
+			// Install the all-trusting trust manager
+			SSLContext sc = null;
+			try {
+				sc = SSLContext.getInstance("SSL");
+				sc.init(null, trustAllCerts, new java.security.SecureRandom());
+				HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+			} catch (Exception e) {
+			}
+
+			SSLSocketFactory factory = (SSLSocketFactory) sc.getSocketFactory();
+			setSocket((SSLSocket) factory.createSocket(dir, hostPort));
+			this.socket.startHandshake();
 			Writer out = new OutputStreamWriter(socket.getOutputStream(),
 					"ISO-8859-1");
 			writeln("POST " + paramConnRentas.getUrlApp() + " HTTP/1.0", out);
