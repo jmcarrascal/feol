@@ -257,6 +257,11 @@
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jt400.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
 			<groupId>bcprov</groupId>
 			<artifactId>bcprov</artifactId>
 			<version>1.0</version>
