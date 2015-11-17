@@ -15,6 +15,8 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.itextpdf.text.log.Logger;
+
 import jmc.feol.core.dao.CotDAO;
 import jmc.feol.core.dao.GenericDAO;
 import jmc.feol.core.model.Cot;
@@ -90,12 +92,19 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 		return paramConnRentas;
 	}
 
+	
 	public void procesarByFilesCot() {
+		List<Empresa> empresaList = empresaDAO.getAll();
+		for(Empresa empresa: empresaList){
+			procesarByFilesCotbyEmpresa(empresa);
+		}
+	
+	}
+	
+	public void procesarByFilesCotbyEmpresa(Empresa em) {
 		
 		String msg = "";
 		try {
-
-			Empresa em = empresaDAO.getByPrimaryKey(1l);
 
 			FECAEResponse feRes = new FECAEResponse();
 			FECAERequest feReq = new FECAERequest();
@@ -190,7 +199,7 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 								try {
 									
 									listS = cotManager.getCot();
-									log.info("Invoco al server de Arba, archivo: " + fileDestino.getName());
+									log.info("Invoco al server de Arba, archivo: " + fileDestino.getName() + " | Cuit Empresa: " + em.getCuit());
 								} catch (Exception e) {
 									try {
 										e.printStackTrace();
