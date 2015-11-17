@@ -2449,7 +2449,7 @@ public class ServicesManagerImpl implements ServicesManager {
 			String xml = "";
 			boolean empezo = false;
 			for(String s:listS){
-            	
+            	System.out.println(s);
             	if (s.startsWith("<?xml version='1.0'"))
 					empezo = true;
             	if (empezo)
