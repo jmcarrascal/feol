@@ -65,8 +65,7 @@ public class CotManagerImpl implements CotManager {
 			System.setProperty("javax.net.ssl.trustStore", filename);
 			System.setProperty("javax.net.ssl.trustStorePassword", password);
 			InetAddress dir = InetAddress.getByName(host);
-			Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());				
-			this.socket.startHandshake();		
+			Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());									
 			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
 				public java.security.cert.X509Certificate[] getAcceptedIssuers() {
 					return null;
