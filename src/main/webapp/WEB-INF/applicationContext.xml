@@ -80,6 +80,7 @@
 		<property name="servicesManager" ref="ServicesManager" />
 		<property name="parametrizacionManager" ref="ParametrizacionManager" />
 		<property name="facturasManager" ref="FacturasManager" />
+		<property name="empresaManager" ref="EmpresaManager" />
 	</bean>
 
 

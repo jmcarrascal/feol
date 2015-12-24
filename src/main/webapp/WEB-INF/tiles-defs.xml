@@ -95,6 +95,10 @@
    		<put-attribute name="body" value="/pages/listParametrizacion.jsp"/>
 	</definition>
 	
+	<definition name="preparedListEmpresaPage" extends="definition">
+   		<put-attribute name="body" value="/pages/empresa/listEmpresa.jsp"/>
+	</definition>
+	
 	
 	<definition name="preparedViajesSinCotPage" extends="definition">
    		<put-attribute name="body" value="/pages/cot/preparedViajesSinCot.jsp"/>
@@ -111,6 +115,15 @@
    		<put-attribute name="body" value="/pages/editParametrizacion.jsp"/>
 	</definition>
 
+	<definition name="preparedEditEmpresaPage" extends="definition">
+   		<put-attribute name="body" value="/pages/empresa/editEmpresa.jsp"/>
+	</definition>
+	
+	<definition name="preparedNewEmpresaPage" extends="definition">
+   		<put-attribute name="body" value="/pages/empresa/newEmpresa.jsp"/>
+	</definition>
+
+	
 
 
 </tiles-definitions>

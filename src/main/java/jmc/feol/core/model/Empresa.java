@@ -118,6 +118,7 @@ public class Empresa {
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+	
 	public Long getIdEmpresaPadre() {
 		return idEmpresaPadre;
 	}

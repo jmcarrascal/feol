@@ -25,6 +25,12 @@
 	<entry><url>preparedListParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>preparedEditParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>editParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>preparedListEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>preparedEditEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>preparedNewEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>newEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>removeEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>editEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadRequest</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadFile</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadFileCot</url><rolEnable>1,5,2</rolEnable></entry>

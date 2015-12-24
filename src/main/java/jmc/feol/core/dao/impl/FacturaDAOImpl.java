@@ -123,10 +123,10 @@ public class FacturaDAOImpl extends GenericDAOImpl<Factura> implements FacturaDA
 	}
 
 
-	public List<Factura> getFacturasPerdidas()throws DataAccessException{		
+	public List<Factura> getFacturasPerdidas(String fechadesde)throws DataAccessException{		
 		List<Factura> facturaList = new ArrayList<Factura>();
 			try{
-				final String queryst = "select fa from Factura fa where fa.cbt_desde is not null and fecha_cbte > '01/12/12 18:15:03' order by tipo_cbte, punto_vta, cbt_desde "; 
+				final String queryst = "select fa from Factura fa where fa.cbt_desde is not null and fecha_cbte > '"+fechadesde+" 00:00:00' order by tipo_cbte, punto_vta, cbt_desde "; 
 				facturaList = getHibernateTemplate().executeFind((new HibernateCallback() {
                     public Object doInHibernate(Session session) throws HibernateException, SQLException {
                         Query query = session.createQuery(queryst);

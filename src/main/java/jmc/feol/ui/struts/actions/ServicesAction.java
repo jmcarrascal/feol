@@ -15,11 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import jmc.feol.core.model.Caea;
 import jmc.feol.core.model.Cot;
+import jmc.feol.core.model.Empresa;
 import jmc.feol.core.model.Factura;
 import jmc.feol.core.model.Parametrizacion;
 import jmc.feol.core.model.Patente;
 import jmc.feol.core.model.Usuario;
 import jmc.feol.core.model.cot.Viajes;
+import jmc.feol.core.service.EmpresaManager;
 import jmc.feol.core.service.FacturasManager;
 import jmc.feol.core.service.ParametrizacionManager;
 import jmc.feol.core.service.ServicesManager;
@@ -30,6 +32,8 @@ import jmc.feol.util.email.Email;
 import jmc.feol.util.email.SendEmailThread;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 //import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.extremecomponents.table.context.Context;
@@ -44,9 +48,6 @@ import org.extremecomponents.table.limit.TableLimitFactory;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * @author Carrascal
  * 
@@ -60,6 +61,27 @@ public class ServicesAction extends ActionSupport {
 	private ParametrizacionManager parametrizacionManager;
 	private ServicesManager servicesManager;
 	private FacturasManager facturasManager;
+	private EmpresaManager empresaManager;
+	private Empresa empresa;
+	
+	
+	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public EmpresaManager getEmpresaManager() {
+		return empresaManager;
+	}
+
+	public void setEmpresaManager(EmpresaManager empresaManager) {
+		this.empresaManager = empresaManager;
+	}
+
 	private Factura factura;
 	private String moneda;
 	private String prefijo;
@@ -397,6 +419,25 @@ public class ServicesAction extends ActionSupport {
 		return "success";
 	}
 	
+
+	/**
+	 * Lista la empresa
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String preparedListEmpresa() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		List<Empresa> listEmpresa = empresaManager.getAll();
+		
+		request.setAttribute("listEmpresa", listEmpresa);
+		
+		return "success";
+	}
+
 	/**
 	 * Lista la Caeas
 	 * 
@@ -531,6 +572,39 @@ public class ServicesAction extends ActionSupport {
 	}
 
 	
+	/**
+	 * Edita la emprea
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String preparedEditEmpresa() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		empresa = empresaManager.getByPrimaryKey(empresa.getIdEmpresa());
+		
+		request.setAttribute("parametrizacion", parametrizacion);
+				
+		return "success";
+	}
+	
+	/**
+	 * Nueva  emprea
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String preparedNewEmpresa() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+				
+		return "success";
+	}
+	
 	public String setCheque() throws Exception {
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().getActionInvocation().getInvocationContext()
@@ -574,7 +648,66 @@ return  null;
 		return "success";
 	}
 	
+
+	/**
+	 * Se actualiza un valor 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String editEmpresa() throws Exception {
+		
+		empresaManager.updateEmpresa(empresa);
+
+		return "success";
+	}
+
+
 	
+	/**
+	 * Se actualiza un valor 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String newEmpresa() throws Exception {
+		
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		empresaManager.saveEmpresa(empresa);
+		
+		List<Empresa> listEmpresa = empresaManager.getAll();
+		
+		request.setAttribute("listEmpresa", listEmpresa);
+		
+		return "success";
+		
+	}
+	
+	/**
+	 * Se actualiza un valor 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String removeEmpresa() throws Exception {
+		
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		empresaManager.removeEmpresa(empresa);
+		
+		List<Empresa> listEmpresa = empresaManager.getAll();
+		
+		request.setAttribute("listEmpresa", listEmpresa);
+		
+		return "success";
+		
+	}
+
 	/*
 	 * M�todo que env�a mails llamando un requerimiento HTTP
 	 */
@@ -753,11 +886,18 @@ return  null;
 	 */
 	public String facturasPerdidas() {
 		
+		
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		String fechadesde = request.getParameter("fechadesde");
+		
 		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
 		
 		//byte[] arrayBytes = FileUtil.getBytesFromArrayList(facturasManager.getFacturasOrdenadas());
 		
-		byte[] arrayBytes = FormatUtil.getFacturasExcel(facturasManager.getFacturasOrdenadas());
+		byte[] arrayBytes = FormatUtil.getFacturasExcel(facturasManager.getFacturasOrdenadas(fechadesde));
 		
 		try {
 

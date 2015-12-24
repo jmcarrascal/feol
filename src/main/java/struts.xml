@@ -87,14 +87,38 @@
 			<result name="success" type="tiles">preparedListParametrizacionPage</result>			
 		</action>
 
+		<action name="preparedListEmpresa" method="preparedListEmpresa" class="services">
+			<result name="success" type="tiles">preparedListEmpresaPage</result>			
+		</action>
+
 		<action name="preparedEditParametrizacion" method="preparedEditParametrizacion" class="services">
 			<result name="success" type="tiles">preparedEditParametrizacionPage</result>			
+		</action>		
+
+		<action name="preparedEditEmpresa" method="preparedEditEmpresa" class="services">
+			<result name="success" type="tiles">preparedEditEmpresaPage</result>			
+		</action>		
+		
+		<action name="preparedNewEmpresa" method="preparedNewEmpresa" class="services">
+			<result name="success" type="tiles">preparedNewEmpresaPage</result>			
 		</action>		
 
 		<action name="editParametrizacion" method="editParametrizacion" class="services">
 			<result name="success" type="chain">preparedListParametrizacion</result>			
 		</action>		
 
+		<action name="editEmpresa" method="editEmpresa" class="services">
+			<result name="success" type="chain">preparedListEmpresa</result>			
+		</action>		
+		
+		<action name="removeEmpresa" method="removeEmpresa" class="services">
+			<result name="success" type="tiles">preparedListEmpresaPage</result>			
+		</action>		
+
+		<action name="newEmpresa" method="newEmpresa" class="services">
+			<result name="success" type="tiles">preparedListEmpresaPage</result>			
+		</action>		
+		
 		<action name="preparedCotizacion" method="preparedCotizacion" class="services">
 			<result name="success" type="tiles">preparedCotizacionPage</result>			
 		</action>
@@ -102,8 +126,6 @@
 		<action name="funcionNoLicenciada" method="funcionNoLicenciada" class="services">
 			<result name="success" type="tiles">funcionNoLicenciadaPage</result>			
 		</action>
-		
-		
 		
 		<action name="preparedCotizacionExpo" method="preparedCotizacionExpo" class="services">
 			<result name="success" type="tiles">preparedCotizacionExpoPage</result>			

@@ -19,7 +19,7 @@ public interface FacturasManager
 	
 	public Long getCountFacturaGrilla();
 
-	public List<String> getFacturasOrdenadas();
+	public List<String> getFacturasOrdenadas(String fechadesde);
 
 	public void reProcesarFactura(Factura facturaActual);
 

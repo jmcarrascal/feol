@@ -97,6 +97,20 @@ public class GenericDAOImpl<T> extends HibernateDaoSupport implements GenericDAO
 		return returnValue;
 	}
 
+	@SuppressWarnings("unchecked")
+	public T getByPrimaryKey(Integer id)throws DataAccessDPIv1Exception {
+		T returnValue = null;
+		try{
+			
+			returnValue= (T) getHibernateTemplate().get(objectType.getName(),id);
+		
+		}catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new DataAccessDPIv1Exception(DataAccessDPIv1Exception.GET_ERROR,e);
+		}
+		return returnValue;
+	}
+	
 	public void remove(T persistenceInstance) throws DataAccessDPIv1Exception{
 		try{
 		

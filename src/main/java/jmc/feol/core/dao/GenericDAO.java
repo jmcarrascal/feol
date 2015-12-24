@@ -21,6 +21,8 @@ public interface GenericDAO<T> {
 	
 	public T getByPrimaryKey(Long id)throws DataAccessException ;
 	
+	public T getByPrimaryKey(Integer id)throws DataAccessException ;
+	
 	public List<T> findByObjectCriteria(T object)throws DataAccessException;
 	
 	public List<T> findByObjectCriteria(HashMap<String, Object> res)throws DataAccessException;
