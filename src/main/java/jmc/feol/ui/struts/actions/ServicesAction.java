@@ -5,9 +5,7 @@ package jmc.feol.ui.struts.actions;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,11 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jmc.feol.core.model.Caea;
+import jmc.feol.core.model.Cot;
+import jmc.feol.core.model.Empresa;
 import jmc.feol.core.model.Factura;
 import jmc.feol.core.model.Parametrizacion;
 import jmc.feol.core.model.Patente;
 import jmc.feol.core.model.Usuario;
 import jmc.feol.core.model.cot.Viajes;
+import jmc.feol.core.service.EmpresaManager;
 import jmc.feol.core.service.FacturasManager;
 import jmc.feol.core.service.ParametrizacionManager;
 import jmc.feol.core.service.ServicesManager;
@@ -31,6 +32,9 @@ import jmc.feol.util.email.Email;
 import jmc.feol.util.email.SendEmailThread;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+//import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.extremecomponents.table.context.Context;
 import org.extremecomponents.table.context.HttpServletRequestContext;
@@ -57,6 +61,27 @@ public class ServicesAction extends ActionSupport {
 	private ParametrizacionManager parametrizacionManager;
 	private ServicesManager servicesManager;
 	private FacturasManager facturasManager;
+	private EmpresaManager empresaManager;
+	private Empresa empresa;
+	
+	
+	
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	public EmpresaManager getEmpresaManager() {
+		return empresaManager;
+	}
+
+	public void setEmpresaManager(EmpresaManager empresaManager) {
+		this.empresaManager = empresaManager;
+	}
+
 	private Factura factura;
 	private String moneda;
 	private String prefijo;
@@ -69,8 +94,7 @@ public class ServicesAction extends ActionSupport {
 	private String quincena;
 	
 	
-	
-	
+	private static final Log log = LogFactory.getLog(ServicesAction.class);	
 	
 
 	public String getPeriodo() {
@@ -395,6 +419,25 @@ public class ServicesAction extends ActionSupport {
 		return "success";
 	}
 	
+
+	/**
+	 * Lista la empresa
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String preparedListEmpresa() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		List<Empresa> listEmpresa = empresaManager.getAll();
+		
+		request.setAttribute("listEmpresa", listEmpresa);
+		
+		return "success";
+	}
+
 	/**
 	 * Lista la Caeas
 	 * 
@@ -529,6 +572,39 @@ public class ServicesAction extends ActionSupport {
 	}
 
 	
+	/**
+	 * Edita la emprea
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String preparedEditEmpresa() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		empresa = empresaManager.getByPrimaryKey(empresa.getIdEmpresa());
+		
+		request.setAttribute("parametrizacion", parametrizacion);
+				
+		return "success";
+	}
+	
+	/**
+	 * Nueva  emprea
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String preparedNewEmpresa() throws Exception {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+				
+		return "success";
+	}
+	
 	public String setCheque() throws Exception {
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().getActionInvocation().getInvocationContext()
@@ -572,7 +648,66 @@ return  null;
 		return "success";
 	}
 	
+
+	/**
+	 * Se actualiza un valor 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String editEmpresa() throws Exception {
+		
+		empresaManager.updateEmpresa(empresa);
+
+		return "success";
+	}
+
+
 	
+	/**
+	 * Se actualiza un valor 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String newEmpresa() throws Exception {
+		
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		empresaManager.saveEmpresa(empresa);
+		
+		List<Empresa> listEmpresa = empresaManager.getAll();
+		
+		request.setAttribute("listEmpresa", listEmpresa);
+		
+		return "success";
+		
+	}
+	
+	/**
+	 * Se actualiza un valor 
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public String removeEmpresa() throws Exception {
+		
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		empresaManager.removeEmpresa(empresa);
+		
+		List<Empresa> listEmpresa = empresaManager.getAll();
+		
+		request.setAttribute("listEmpresa", listEmpresa);
+		
+		return "success";
+		
+	}
+
 	/*
 	 * M�todo que env�a mails llamando un requerimiento HTTP
 	 */
@@ -751,11 +886,18 @@ return  null;
 	 */
 	public String facturasPerdidas() {
 		
+		
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		
+		String fechadesde = request.getParameter("fechadesde");
+		
 		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
 		
 		//byte[] arrayBytes = FileUtil.getBytesFromArrayList(facturasManager.getFacturasOrdenadas());
 		
-		byte[] arrayBytes = FormatUtil.getFacturasExcel(facturasManager.getFacturasOrdenadas());
+		byte[] arrayBytes = FormatUtil.getFacturasExcel(facturasManager.getFacturasOrdenadas(fechadesde));
 		
 		try {
 
@@ -897,6 +1039,64 @@ return  null;
 		return "success";
 	}
 
+	/**
+	 * Metodo para preparar los listados de cots
+	 */
+	public String preparedListCots() {
+
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().getActionInvocation().getInvocationContext()
+				.get(ServletActionContext.HTTP_REQUEST);
+		// Grilla de No registrados
+		Context context = new HttpServletRequestContext(request);
+		LimitFactory limitFactory = new TableLimitFactory(context, "notReg");
+		Limit limit = new TableLimit(limitFactory);
+
+		String propertySort = limit.getSort().getProperty();
+		String orderSort = limit.getSort().getSortOrder();
+		// Se obtienen los filtros para la grilla superior
+		Filter[] filters = limit.getFilterSet().getFilters();
+		String[] propertyFilter = new String[filters.length];
+		String[] valueFilter = new String[filters.length];
+		extractFilter(filters, propertyFilter, valueFilter);
+
+		int pageSize = 100;
+
+		String rows = context.getParameter("notReg_" + TableConstants.CURRENT_ROWS_DISPLAYED);
+
+		if (StringUtils.isNotBlank(rows)) {
+			pageSize = Integer.parseInt(rows);
+		}
+		Integer max = limit.getPage() * pageSize;
+
+		Integer min = max - pageSize;
+
+		Long regTotalRows = facturasManager.getCountCotGrilla();
+
+		List<Cot> listCot = new ArrayList<Cot>();
+		try {
+			listCot = facturasManager.getCotGrilla(propertySort,
+					orderSort, propertyFilter, valueFilter, min, pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (propertyFilter != null && propertyFilter.length > 0) {
+			// Si estan seteados los filtros se reduce la cantidad de registros
+			// a mostrar
+			limit.setRowAttributes(listCot.size(), pageSize);
+			request.setAttribute("notReg_totalRows", listCot.size());
+		} else {
+			limit.setRowAttributes(regTotalRows.intValue(), pageSize);
+			request.setAttribute("notReg_totalRows", regTotalRows.intValue());
+		}
+
+		request.setAttribute("listCot", listCot);
+		request.setAttribute("totalRows", regTotalRows.intValue());
+
+		return "success";
+	}
+	
 	/**
 	 * Reprocesa un id de Factura
 	 */
@@ -1069,6 +1269,52 @@ return  null;
 		}
 		
 	}
+	
+	/**
+	 * Prueba de COT
+	 */
+	public String saveCotTMP() {
+		// Busco facturas desde archivos
+		try{
+			servicesManager.saveCot();
+			return "success";
+		}catch(Exception e){
+			return "success";
+		}
+		
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Metodo para procesar Cot 
+	 */
+	public String checkCotByFile() {
+		// Busco facturas desde archivos
+		log.info("Inicio el proceso de archivos arba");
+		
+		while(true){
+			try {
+				servicesManager.procesarFacturaByFilesCot();
+			} catch (Exception e) {
+				e.printStackTrace();				
+			}
+			
+
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+	}
+	
+	
 
 	
 	/**
@@ -1126,10 +1372,12 @@ return  null;
 	 */
 	public String getCaea() {
 
-		String mensaje = "No se ha podido consultar la cotizaci�n";
+		String mensaje = "No se ha podido consultar la cotización";
 		Usuario usuario = getUsuarioSesion();
 		try {
 			mensaje = servicesManager.getCaea(periodo,quincena, usuario.getEmpresa());
+			//Generar archivo de CAEA
+			FileUtil.createTempFile(mensaje,parametrizacionManager.getParametrizacionByPrimaryKey(Constants.ID_RUTA_FILE_CAEA).getValor());
 		} catch (Exception e1) {			
 			e1.printStackTrace();
 		}
@@ -1449,6 +1697,53 @@ return  null;
 				sos = response.getOutputStream();		
 					
 			response.setHeader("Content-disposition", "attachment; filename=" + facturaActual.getNombreArchivo());        
+			response.setHeader("Pragma", "Public");        
+			response.setContentType("text/txt; charset=UTF-8");   
+			//response.setContentLength(bytes.length);
+			sos.write(bytes);
+			sos.flush();
+			sos.close();	
+			
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e1) {
+
+			e1.printStackTrace();
+		}
+			
+			
+			
+		
+		return null;
+
+	}
+
+
+	/**
+	 * Este metodo devuelve el documento subido por el usuario
+	 * @return 
+	 * @author Carrascal
+	 */
+	public String downloadFileCot(){
+				 
+		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
+
+		Cot cotActual = servicesManager.getCotById(factura.getIdFactura());
+		String rutaDefinitivo = "";
+		Usuario usuario = getUsuarioSesion();
+		
+		rutaDefinitivo = usuario.getEmpresa().getRuta_definitivo_cot();
+		
+		byte[] bytes = null;
+		try {
+			bytes = FileUtil.getBytesFromFile(new File(rutaDefinitivo + cotActual.getNombreArchivoEntrada()));
+			
+			ServletOutputStream sos;
+			try {
+				sos = response.getOutputStream();		
+					
+			response.setHeader("Content-disposition", "attachment; filename=" + cotActual.getNombreArchivoEntrada());        
 			response.setHeader("Pragma", "Public");        
 			response.setContentType("text/txt; charset=UTF-8");   
 			//response.setContentLength(bytes.length);

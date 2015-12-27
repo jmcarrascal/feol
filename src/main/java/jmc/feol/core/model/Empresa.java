@@ -45,10 +45,14 @@ public class Empresa {
 	private Long idEmpresaPadre;
 	private String letra;
 	private String libAS400;
+	
 	private String path_file_caea;
-	
-	
-	
+	private String ruta_provisorio_cot;
+	private String ruta_definitivo_cot;
+	private String ruta_entrada_cot;
+	private String user_cot;
+	private String pass_cot;
+	private String ruta_salida_cot;
 	
 	
 	public String getLibAS400() {
@@ -114,6 +118,7 @@ public class Empresa {
 	public void setCodigoPostal(String codigoPostal) {
 		this.codigoPostal = codigoPostal;
 	}
+	
 	public Long getIdEmpresaPadre() {
 		return idEmpresaPadre;
 	}
@@ -248,8 +253,44 @@ public class Empresa {
 	public String getPath_file_caea() {
 		return path_file_caea;
 	}
+	public String getRuta_provisorio_cot() {
+		return ruta_provisorio_cot;
+	}
+	public void setRuta_provisorio_cot(String ruta_provisorio_cot) {
+		this.ruta_provisorio_cot = ruta_provisorio_cot;
+	}
+	public String getRuta_definitivo_cot() {
+		return ruta_definitivo_cot;
+	}
+	public void setRuta_definitivo_cot(String ruta_definitivo_cot) {
+		this.ruta_definitivo_cot = ruta_definitivo_cot;
+	}
 	public void setPath_file_caea(String path_file_caea) {
 		this.path_file_caea = path_file_caea;
+	}
+	public String getRuta_entrada_cot() {
+		return ruta_entrada_cot;
+	}
+	public void setRuta_entrada_cot(String ruta_entrada_cot) {
+		this.ruta_entrada_cot = ruta_entrada_cot;
+	}
+	public String getUser_cot() {
+		return user_cot;
+	}
+	public void setUser_cot(String user_cot) {
+		this.user_cot = user_cot;
+	}
+	public String getPass_cot() {
+		return pass_cot;
+	}
+	public void setPass_cot(String pass_cot) {
+		this.pass_cot = pass_cot;
+	}
+	public String getRuta_salida_cot() {
+		return ruta_salida_cot;
+	}
+	public void setRuta_salida_cot(String ruta_salida_cot) {
+		this.ruta_salida_cot = ruta_salida_cot;
 	}	
 	
 	

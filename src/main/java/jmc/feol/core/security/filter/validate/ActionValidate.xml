@@ -25,8 +25,15 @@
 	<entry><url>preparedListParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>preparedEditParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>editParametrizacion</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>preparedListEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>preparedEditEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>preparedNewEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>newEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>removeEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>editEmpresa</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadRequest</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>downloadFile</url><rolEnable>1,5,2</rolEnable></entry>
+	<entry><url>downloadFileCot</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>facturasPerdidas</url><rolEnable>1,5,2</rolEnable></entry>
 	<entry><url>tablasAFIP</url><rolEnable>1,5,2</rolEnable></entry>
 			
@@ -54,10 +61,12 @@
 	<entry><url>tablas</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 	<entry><url>checkFileFacturas</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 	<entry><url>checkFacturas</url><rolEnable>0,1,5,2,4</rolEnable></entry>
-	<entry><url>checkFacturasByFile</url><rolEnable>0,1,5,2,4</rolEnable></entry>		
+	<entry><url>checkFacturasByFile</url><rolEnable>0,1,5,2,4</rolEnable></entry>
+	<entry><url>checkCotByFile</url><rolEnable>0,1,5,2,4</rolEnable></entry>			
 	<entry><url>checkFacturasByFileExpov1</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 	<entry><url>get_facturacion</url><rolEnable>0,1,5,2,4</rolEnable></entry>
 
-	
+	<entry><url>saveCotTMP</url><rolEnable>0,1,5,2,4</rolEnable></entry>
+
 </actions>
 

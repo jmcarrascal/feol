@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import jmc.feol.core.model.Caea;
+import jmc.feol.core.model.Cot;
 import jmc.feol.core.model.Empresa;
 import jmc.feol.core.model.Factura;
 import jmc.feol.core.model.Patente;
@@ -76,5 +77,13 @@ public interface ServicesManager {
 	public String getCaea(String periodo, String quincena, Empresa empresa);
 
 	public List<Caea> getCAEAbyEmpresa(Empresa empresa);
+
+	public void procesarFacturaByFilesCot();
+
+	public Cot getCotById(Long idFactura);
+
+	public void printMe();
+
+	public void saveCot();
 	
 }

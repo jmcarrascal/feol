@@ -54,7 +54,7 @@ public class GenerateHqlFilterAndSort {
 		else{
 			result = result + " order by " + prefixSort + ".idFactura desc";
 		}
-		System.out.println(result);
+		
 		return result;		
 	}
 	
@@ -136,7 +136,6 @@ public class GenerateHqlFilterAndSort {
 		}
 		
 		
-		System.out.println(method.getReturnType().getName());
 		return isNumeric(method.getReturnType().getName());
 		
 	}
@@ -172,7 +171,6 @@ public class GenerateHqlFilterAndSort {
 					Class.forName(className);
 					return className;
 				} catch (ClassNotFoundException e) {
-					System.out.println("Pruebo proximo paquete posible");
 				}		
 			}
 		}
@@ -216,7 +214,7 @@ public class GenerateHqlFilterAndSort {
 
 	
 	/*
-	 * Este método devuelve el objeto Class a partir del nombre de la clase incial y considerando que 
+	 * Este mï¿½todo devuelve el objeto Class a partir del nombre de la clase incial y considerando que 
 	 * la propiedad propertyFilter puede contener referencias a otras clases (siendo la ultima parte 
 	 * realmente una propiedad)
 	 * */

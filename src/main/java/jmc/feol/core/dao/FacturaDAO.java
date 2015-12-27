@@ -26,7 +26,7 @@ public interface FacturaDAO extends GenericDAO<Factura> {
 	
 	public Factura getByArchivo(String nombreArchivo);
 
-	public List<Factura> getFacturasPerdidas()throws DataAccessException;
+	public List<Factura> getFacturasPerdidas(String fechadesde)throws DataAccessException;
 
 	public String getByPKAfip(Integer prefijo, Integer comprobanteTipo,
 			Long nroComprobante);

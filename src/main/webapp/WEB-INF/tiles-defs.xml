@@ -5,29 +5,19 @@
 <tiles-definitions>
  	
 	<definition name="definitionLogin" template="/tiles/defaultTemplate.jsp">
-  		<put-attribute name="title" value="FE - Coinse" />
+  		<put-attribute name="title" value="FE/COT - Leaf" />
 		<put-attribute name="header" value="/tiles/headerTemplateLogin.jsp" />		
-  		<put-attribute name="body" value="/pages/login.jsp" /> 
   		<put-attribute name="footer" value="/tiles/footer.jsp" />
  	</definition>
 
 	<definition name="definition" template="/tiles/defaultTemplate.jsp">
-  		<put-attribute name="title" value="FE - Coinse " />
+  		<put-attribute name="title" value="FE/COT - Leaf " />
 		<put-attribute name="header" value="/tiles/headerTemplate.jsp" />		
   		<put-attribute name="body" value="/pages/listFacturas.jsp" />
   		<put-attribute name="footer" value="/tiles/footer.jsp" /> 
  	</definition>
  	
 
-<!--
-	<definition name="solicitudDefault" extends="defaultTemplate">	  		
-  			<put-attribute name="header" value="/tiles/headerTemplate.jsp" />
-	  		<put-attribute name="body" value="/tiles/defaultTemplate.jsp" />
-	</definition>
- 	<definition name="solicitudMain" extends="defaultTemplate">
-	  		<put-attribute name="body" value="/pages/solicitudDefault.jsp" />
-	</definition>
-	 -->	
 
 	<definition name="loginPage" extends="definitionLogin">
    		<put-attribute name="body" value="/pages/login.jsp"/>
@@ -41,8 +31,20 @@
 	<definition name="listFacturasPage" extends="definition">
    		<put-attribute name="body" value="/pages/listFacturas.jsp"/>
 	</definition>
-
 	
+	<definition name="blackPage" extends="definition">
+   		<put-attribute name="body" value="/pages/blank.jsp"/>
+	</definition>
+	
+	<definition name="blackTMPPage" extends="definitionLogin">
+   		<put-attribute name="body" value="/pages/blank.jsp"/>
+	</definition>
+	
+	
+	
+	<definition name="listCotsPage" extends="definition">
+   		<put-attribute name="body" value="/pages/listCots.jsp"/>
+	</definition>
 	
 	<definition name="preparedListPatentePage" extends="definition">
    		<put-attribute name="body" value="/pages/cot/preparedListPatente.jsp"/>
@@ -93,6 +95,10 @@
    		<put-attribute name="body" value="/pages/listParametrizacion.jsp"/>
 	</definition>
 	
+	<definition name="preparedListEmpresaPage" extends="definition">
+   		<put-attribute name="body" value="/pages/empresa/listEmpresa.jsp"/>
+	</definition>
+	
 	
 	<definition name="preparedViajesSinCotPage" extends="definition">
    		<put-attribute name="body" value="/pages/cot/preparedViajesSinCot.jsp"/>
@@ -109,6 +115,15 @@
    		<put-attribute name="body" value="/pages/editParametrizacion.jsp"/>
 	</definition>
 
+	<definition name="preparedEditEmpresaPage" extends="definition">
+   		<put-attribute name="body" value="/pages/empresa/editEmpresa.jsp"/>
+	</definition>
+	
+	<definition name="preparedNewEmpresaPage" extends="definition">
+   		<put-attribute name="body" value="/pages/empresa/newEmpresa.jsp"/>
+	</definition>
+
+	
 
 
 </tiles-definitions>

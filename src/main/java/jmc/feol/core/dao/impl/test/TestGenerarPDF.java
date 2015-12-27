@@ -16,15 +16,18 @@ public class TestGenerarPDF {
 	 */
 	public static void main(String[] args) {
         
-		File file = new File("C:\\viaje.xml");
+		File file = new File("/tmp/viaje.xml");
 		JAXBContext jaxbContext;
 		try {
 			jaxbContext = JAXBContext.newInstance(RespuestaAfip.class);
 		
  
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-		RespuestaAfip ra = (RespuestaAfip) jaxbUnmarshaller.unmarshal(file);
-		SerializateUtil.generateRemitoPdf(ra, "c:\\viaje1.pdf");
+		
+		
+		RespuestaAfip ra = (RespuestaAfip) jaxbUnmarshaller.unmarshal(new File("/tmp/viaje.xml"));
+		ra.getCodigoIntegridad();
+		//SerializateUtil.generateRemitoPdf(ra, "c:\\viaje1.pdf");
 		
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

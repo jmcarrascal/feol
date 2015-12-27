@@ -10,11 +10,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import jmc.feol.core.dao.CotDAO;
 import jmc.feol.core.dao.GenericDAO;
 import jmc.feol.core.dao.PatenteDAO;
 import jmc.feol.core.dao.impl.BaseExterna;
@@ -24,6 +26,7 @@ import jmc.feol.core.dao.impl.BaseExternaE;
 import jmc.feol.core.dao.impl.BaseExternaMTX;
 import jmc.feol.core.dao.impl.BaseExternaTeso;
 import jmc.feol.core.model.Caea;
+import jmc.feol.core.model.Cot;
 import jmc.feol.core.model.Empresa;
 import jmc.feol.core.model.EmpresaC;
 import jmc.feol.core.model.EquipoImagen;
@@ -31,6 +34,7 @@ import jmc.feol.core.model.Factura;
 import jmc.feol.core.model.Parametrizacion;
 import jmc.feol.core.model.Patente;
 import jmc.feol.core.model.RespuestaAfip;
+import jmc.feol.core.model.RespuestaAfipRemito;
 import jmc.feol.core.model.Usuario;
 import jmc.feol.core.model.cot.ParamConnRentas;
 import jmc.feol.core.model.cot.Viajes;
@@ -72,6 +76,12 @@ import fexv1.dif.afip.gov.ar.ClsFEXResponse_Ctz;
 import fexv1.dif.afip.gov.ar.FEXResponseAuthorize;
 import fexv1.dif.afip.gov.ar.FEXResponse_Ctz;
 
+
+
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class ServicesManagerImpl implements ServicesManager {
 
 	private GenericDAO<Parametrizacion> parametrizacionDAO;
@@ -85,6 +95,19 @@ public class ServicesManagerImpl implements ServicesManager {
 	private GenericDAO<Usuario> usuarioDAO;
 	private PatenteDAO extendedPatenteDAO;
 	private GenericDAO<Caea> caeaDAO;
+	private CotDAO extendedCotDAO;
+	
+	public ServicesManagerImpl(){
+		super();			
+	}
+	
+	public CotDAO getExtendedCotDAO() {
+		return extendedCotDAO;
+	}
+
+	public void setExtendedCotDAO(CotDAO extendedCotDAO) {
+		this.extendedCotDAO = extendedCotDAO;
+	};
 	
 	
 	
@@ -203,7 +226,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				&& !empresa.getCuit().trim().equals("30710486588") && !empresa.getCuit().trim().equals("30712258396") && !empresa.getCuit().trim().equals("30711245673")
 				&& !empresa.getCuit().trim().equals("30710471637") && !empresa.getCuit().trim().equals("30712521151") && !empresa.getCuit().trim().equals("30711534616")
 				&& !empresa.getCuit().trim().equals("30626244536") && !empresa.getCuit().trim().equals("30611628532") && !empresa.getCuit().trim().equals("30714366005")
-				&& !empresa.getCuit().trim().equals("20162192974") && !empresa.getCuit().trim().equals("30714778885") 
+				&& !empresa.getCuit().trim().equals("20162192974") && !empresa.getCuit().trim().equals("30714778885") && !empresa.getCuit().trim().equals("30714403407") 
 				
 				
 				)
@@ -2439,7 +2462,12 @@ public class ServicesManagerImpl implements ServicesManager {
 		
 		CotManager cotManager = new CotManagerImpl(buildParamConnRentas(),passCot,fileB, cuit);
 		
-		List<String> listS = cotManager.getCot();
+		List<String> listS = new ArrayList<String>();
+		try{
+			listS = cotManager.getCot();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
 		String carpetaSalida = parametrizacionDAO.getByPrimaryKey(Constants.ID_CARPETA_SALIDA).getValor();
 		
@@ -2492,7 +2520,7 @@ public class ServicesManagerImpl implements ServicesManager {
 	
 	private ParamConnRentas buildParamConnRentas() {
 	   	ParamConnRentas paramConnRentas = new ParamConnRentas();
-	   	paramConnRentas.setFolderEntrada((parametrizacionDAO.getByPrimaryKey(Constants.ID_CARPETA_ENTRADA)).getValor());
+	   	//paramConnRentas.setFolderEntrada((parametrizacionDAO.getByPrimaryKey(Constants.ID_CARPETA_ENTRADA)).getValor());
     	paramConnRentas.setHost((parametrizacionDAO.getByPrimaryKey(Constants.ID_HOST)).getValor());
 		paramConnRentas.setProxyPort(Integer.parseInt((parametrizacionDAO.getByPrimaryKey(Constants.ID_PROXY_PORT)).getValor()));
 		paramConnRentas.setProxyUrl((parametrizacionDAO.getByPrimaryKey(Constants.ID_PROXY_URL)).getValor());
@@ -2718,6 +2746,220 @@ public class ServicesManagerImpl implements ServicesManager {
 		List<Caea> listCaea = caeaDAO.findByObjectCriteria(parameters);
 		return listCaea;
 	}
+
+	@Override
+	public void procesarFacturaByFilesCot() {
+		String msg = "";
+		try{
+
+			
+			Empresa em = empresaManager.getByPrimaryKey(1l);
+			
+			FECAEResponse feRes = new FECAEResponse(); 
+			FECAERequest feReq = new FECAERequest();
+
+			File dir = new File(em.getRuta_provisorio_cot());
+			
+			File[] files = dir.listFiles();
+	        
+	        int countFiles = files.length;        
+			int i = 0;
+				        
+	        while(i < countFiles){
+		        if (files[i].isFile()){
+		        	if(files[i].canWrite()){                                    
+		                try{                
+		                    if (files[i].getName().startsWith("B")){
+		                        // Borro cualquier archivo con el mismo nombre en el destino
+		                        File borrado = new File(em.getRuta_definitivo_cot()+files[i].getName());
+		                        borrado.delete();
+		                        // muevo el archivo                              
+		                        File fileDestino = new File(em.getRuta_definitivo_cot()+files[i].getName());
+		                        FileUtil.copy(files[i], fileDestino);
+		                        files[i].delete();
+		                        String planta = fileDestino.getName().substring(1, 4);
+		                		String secuencia = fileDestino.getName().substring(4, 10);
+		            			String nombreArchivo = "TB_" + em.getCuit() + "_"+planta+ "001"+"_" + DateUtil.getCanonicalFech(new Date(System.currentTimeMillis())) + "_" + secuencia + ".txt";
+		            			File fileDestinoEntrada = new File(em.getRuta_entrada_cot()+nombreArchivo);
+		            			FileUtil.copy(fileDestino, fileDestinoEntrada);
+		                        CotManager cotManager = new CotManagerImpl(buildParamConnRentas(),em.getPass_cot(), fileDestinoEntrada, em.getUser_cot());
+		                        List<String> listS =  new ArrayList<String>();
+		                        try{
+		                        	listS = cotManager.getCot();
+		                        }catch(Exception e){
+		                        	try{
+		                        	e.printStackTrace();
+		                        	//Crear archivo de Error generico
+		                        	List<String> resultList = new ArrayList<String>();
+		                        	resultList.add("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>"); 
+		                        	resultList.add("<TBError>");
+		                        	resultList.add("<tipoError>NETWORK</tipoError>");
+		                        	resultList.add("<codigoError>001</codigoError>");
+		                        	resultList.add("<mensajeError>Error al intentar conectarse con el servidor de Arba</mensajeError>");
+		                        	resultList.add("</TBError>");
+	                				String nombreArchivoSalida = "C"+planta+secuencia+".xml";
+	                				FileUtil.generateFile(em.getRuta_salida_cot(), nombreArchivoSalida, resultList);
+	                				Cot cot = new Cot();
+	                				cot.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+	                				cot.setNombreArchivo(nombreArchivoSalida);
+	                				cot.setNombreArchivoEntrada(fileDestino.getName());
+	                				cot.setPlanta(planta);
+	                				cot.setSecuencia(secuencia);
+	                				cot.setRespuesta("NETWORK");
+	                				extendedCotDAO.save(cot);	
+		                        	}catch(Exception e_catch){
+		                        		e_catch.printStackTrace();
+		                        	}
+		                        }
+		                        List<String> listresult = new ArrayList<String>();
+		                        String result = "";
+		                        try {		            	            
+		                			//new ByteArrayInputStream( builder.toString().getBytes("UTF-8") );
+		                			String xml = "";
+		                			boolean empezo = false;
+		                			for(String s:listS){
+		                            	
+		                            	if (s.startsWith("<?xml version='1.0'"))
+		                					empezo = true;
+		                            	if (empezo){
+		                            		listresult.add(s);
+		                            		xml = xml + s;
+		                            	}
+		                            	
+		                    		}
+		                			//String nombreArchivoPdf = carpetaSalida +System.getProperty("file.separator") + viajeNr + ".pdf";
+		                			
+		                			JAXBContext jaxbContext;
+		                			try {
+		                				jaxbContext = JAXBContext.newInstance(RespuestaAfip.class);
+		                			
+		                	 
+		                			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		                			//Pregunto si tiene un error y si fue procesado con Anterioridad
+		                			if (xml.indexOf("<TBError>") != -1){
+		                				if (xml.indexOf("<codigoError>11</codigoError>") != -1){
+		                					result = "El archivo recibido ya fue procesado con anterioridad.";
+		                				}else{
+		                					result = "Existe un error en la transmision del Archivo.";
+		                				}
+		                				List<String> resultList = new ArrayList<String>();
+			                        	resultList.add("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>"); 
+			                        	resultList.add("<TBError>");
+			                        	resultList.add("<tipoError>Cuit invalido</tipoError>");
+			                        	resultList.add("<codigoError>011</codigoError>");
+			                        	resultList.add("<mensajeError>Error al intentar conectarse con el servidor de Arba</mensajeError>");
+			                        	resultList.add("</TBError>");
+		                				String nombreArchivoSalida = "C"+planta+secuencia+".xml";
+		                				FileUtil.generateFile(em.getRuta_salida_cot(), nombreArchivoSalida, resultList);
+		                				Cot cot = new Cot();
+		                				cot.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+		                				cot.setNombreArchivo(nombreArchivoSalida);
+		                				cot.setNombreArchivoEntrada(fileDestino.getName());
+		                				cot.setPlanta(planta);
+		                				cot.setSecuencia(secuencia);
+		                				cot.setRespuesta("NETWORK");
+		                				extendedCotDAO.save(cot);
+		                			}else{
+		                				RespuestaAfip ra = (RespuestaAfip) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream( xml.getBytes("UTF-8") ));
+		                				//SerializateUtil.generateRemitoPdf(ra, nombreArchivoPdf );
+		                				Boolean procesadoOk =false;
+		                				try{
+			                				for(RespuestaAfipRemito rr: ra.getValidacionesRemitos().getRemito()){
+			                					System.out.println(rr.getProcesado());
+			                					if (rr.getProcesado().equals("NO")){
+			                						procesadoOk = false;
+			                					}else if(rr.getProcesado().equals("SI")){
+			                						procesadoOk = true;
+			                					}		                					
+			                				}
+		                				}catch(Exception e){
+		                					procesadoOk =false;
+		                				}
+		                				String nombreArchivoSalida = "";
+		                				if (procesadoOk){
+		                					nombreArchivoSalida = "A"+planta+secuencia+".xml";
+		                				}else{
+		                					nombreArchivoSalida = "B"+planta+secuencia+".xml";
+		                				}		                				
+		                				FileUtil.generateFile(em.getRuta_salida_cot(), nombreArchivoSalida, listresult);
+		                				Cot cot = new Cot();
+		                				cot.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+		                				cot.setNombreArchivo(nombreArchivoSalida);
+		                				cot.setNombreArchivoEntrada(fileDestino.getName());
+		                				cot.setPlanta(planta);
+		                				cot.setSecuencia(secuencia);
+		                				cot.setRespuesta(xml);
+		                				extendedCotDAO.save(cot);
+		                			}
+		                			} catch (JAXBException e) {
+		                				// TODO Auto-generated catch block
+		                				e.printStackTrace();
+		                			}
+
+		                	        } catch (Exception e) {
+
+		                	            e.printStackTrace();
+		                	        }
+		                     }   	    
+		                    }catch (Exception exp){
+			                	exp.printStackTrace();
+		                }
+		                
+		        	}                
+		        }else{
+		        	i++;
+		        }
+		        
+			}
+		}catch(Exception exception){
+			exception.printStackTrace();
+		}
+		
+	}
+	/**
+	 * Returns a pseudo-random number between min and max, inclusive.
+	 * The difference between min and max can be at most
+	 * <code>Integer.MAX_VALUE - 1</code>.
+	 *
+	 * @param min Minimum value
+	 * @param max Maximum value.  Must be greater than min.
+	 * @return Integer between min and max, inclusive.
+	 * @see java.util.Random#nextInt(int)
+	 */
+	public static int randInt(int min, int max) {
+
+	    // NOTE: Usually this should be a field rather than a method
+	    // variable so that it is not re-seeded every call.
+	    Random rand = new Random();
+
+	    // nextInt is normally exclusive of the top value,
+	    // so add 1 to make it inclusive
+	    int randomNum = rand.nextInt((max - min) + 1) + min;
+
+	    return randomNum;
+	}
+
 	
+	public Cot getCotById(Long idFactura) {
+		return extendedCotDAO.getByPrimaryKey(idFactura);
+	}
+
+	
+	public void printMe() {
+		System.out.println("POR FIN!!!!");
+		
+	}
+
+	
+	public void saveCot() {
+		Cot cot = new Cot();
+		cot.setFecha_creacion(new Timestamp(System.currentTimeMillis()));
+		cot.setNombreArchivo("Test Prueba");
+		cot.setNombreArchivoEntrada("Nombre de archivo salida Test");
+		cot.setPlanta("001");
+		cot.setRespuesta("Respuesta");
+		cot.setSecuencia("001");
+		extendedCotDAO.save(cot);
+	}
 }
 	
