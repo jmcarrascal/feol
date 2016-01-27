@@ -5,13 +5,13 @@
   
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName">
-			<value>oracle.jdbc.driver.OracleDriver</value>
+			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="url">
-			<value>jdbc:oracle:thin:@192.168.0.103:1521:ba1</value>
+			<value>jdbc:mysql://localhost:3306/feol?autoReconnect=true</value>
 		</property>
 		<property name="username">
-			<value>SYSTEM</value>
+			<value>root</value>
 		</property>
 		<property name="password">
 			<value>root</value>

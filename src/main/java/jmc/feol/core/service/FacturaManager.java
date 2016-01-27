@@ -85,4 +85,6 @@ public interface FacturaManager {
 	public FECAEAGetResponse getCaea(String periodo, String quincena,
 			Empresa empresa);
 	public FECAEAResponse informarComprobCaeaAFIP(FECAEARequest fECAEARequest, Empresa empresa, Long nroComp) throws Exception ;
+	
+	public Long getLastNroFacturaMTX(ComprobanteType comprobanteType, Empresa empresa) throws Exception;
 }

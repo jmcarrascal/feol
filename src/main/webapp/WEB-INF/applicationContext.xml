@@ -7,9 +7,9 @@
 	<!-- Bean de la lógiga de negocio de mi aplicación de ejemplo. -->
 
 	<!-- Importa el data source -->
-<!-- 	<import resource="applicationContextHibernateLocalMySql.xml" /> -->
+	<import resource="applicationContextHibernateLocalMySql.xml" />
 	<!-- <import resource="applicationContextHibernate.xml" /> -->
-	<import resource="applicationContextDataSource.xml" />
+<!-- 	<import resource="applicationContextDataSource.xml" /> -->
 <!-- 	<import resource="applicationContextDataSourceMy.xml" /> -->
 
 
@@ -23,9 +23,9 @@
 
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.default_schema">COT</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop> -->
+<!-- 				<prop key="hibernate.default_schema">COT</prop> -->
+<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.hbm2ddl.auto">none</prop>
 				<prop key="hibernate.connection.SetBigStringTryClob">true</prop>

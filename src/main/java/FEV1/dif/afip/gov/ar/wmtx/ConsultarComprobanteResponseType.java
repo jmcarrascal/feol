@@ -15,8 +15,20 @@ public class ConsultarComprobanteResponseType  implements java.io.Serializable {
     private FEV1.dif.afip.gov.ar.wmtx.CodigoDescripcionType[] arrayErrores;
 
     private FEV1.dif.afip.gov.ar.wmtx.CodigoDescripcionType evento;
+    
+    private byte[] xmlResponse;
+    
+    
 
-    public ConsultarComprobanteResponseType() {
+    public byte[] getXmlResponse() {
+		return xmlResponse;
+	}
+
+	public void setXmlResponse(byte[] xmlResponse) {
+		this.xmlResponse = xmlResponse;
+	}
+
+	public ConsultarComprobanteResponseType() {
     }
 
     public ConsultarComprobanteResponseType(

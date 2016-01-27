@@ -230,7 +230,8 @@ public class FacturasManagerImpl implements FacturasManager {
 		nroComprobanteAdd++;
 
 		try {
-			if (empresa.getService().equals("wsmtxca")) {
+			if (parametrizacionManager.getParametrizacionByPrimaryKey(Constants.ID_FACTURA_MTX).getValor().equals("true")){
+				empresa = empresaManager.getByPrimaryKey(3l);
 				ConsultarComprobanteResponseType feRes = facturaManager
 						.getFacturaMTX(nroComprobante,
 								comprobanteTipo, prefijo, empresa);
@@ -245,6 +246,7 @@ public class FacturasManagerImpl implements FacturasManager {
 						+ feRes.getComprobante().getFechaEmision();
 				
 			} else {
+				empresa = empresaManager.getByPrimaryKey(1l);
 				FECompConsultaResponse feRes = facturaManager
 						.getComprobanteByPrimary(nroComprobante,
 								comprobanteTipo, prefijo, empresa);

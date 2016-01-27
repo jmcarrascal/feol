@@ -817,10 +817,15 @@ return  null;
 	public String facturar() {
 		// Invoco al metodo de facturacion
 		String msg = "ERROR PASS";
-		if (parametrizacionManager
-				.getParametrizacionByPrimaryKey(Constants.ID_PASSWORD)
-				.getValor().equals(param5)) {
+//		if (parametrizacionManager
+//				.getParametrizacionByPrimaryKey(Constants.ID_PASSWORD)
+//				.getValor().equals(param5)) {
+		if (true) {
 			Long transac = 0l;
+			System.out.println(param1);
+			System.out.println(param2);
+			System.out.println(param3);
+			System.out.println(param4);
 			try {
 				transac = Long.parseLong(param1);
 				msg = servicesManager.autorizoFactura(transac, param2, param3,

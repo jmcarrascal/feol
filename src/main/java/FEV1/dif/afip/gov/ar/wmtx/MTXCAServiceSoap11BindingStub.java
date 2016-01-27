@@ -1276,14 +1276,25 @@ public class MTXCAServiceSoap11BindingStub extends org.apache.axis.client.Stub i
         setRequestHeaders(_call);
         setAttachments(_call);
  try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {parameters});
+ MessageContext messageContext = _call.getMessageContext(); 
+ ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	try {
+		 
+		XMLUtils.PrettyElementToStream(messageContext.getResponseMessage().getSOAPEnvelope().getAsDOM(), bos);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
         }
         else {
             extractAttachments(_call);
+            ConsultarComprobanteResponseType consultarComprobanteResponseType = null;
             try {
-                return (FEV1.dif.afip.gov.ar.wmtx.ConsultarComprobanteResponseType) _resp;
+            	consultarComprobanteResponseType = (FEV1.dif.afip.gov.ar.wmtx.ConsultarComprobanteResponseType) _resp;
+            	consultarComprobanteResponseType.setXmlResponse(bos.toByteArray());
+            	return consultarComprobanteResponseType;
             } catch (java.lang.Exception _exception) {
                 return (FEV1.dif.afip.gov.ar.wmtx.ConsultarComprobanteResponseType) org.apache.axis.utils.JavaUtils.convert(_resp, FEV1.dif.afip.gov.ar.wmtx.ConsultarComprobanteResponseType.class);
             }
