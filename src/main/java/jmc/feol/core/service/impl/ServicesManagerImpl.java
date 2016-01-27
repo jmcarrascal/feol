@@ -79,6 +79,8 @@ import fexv1.dif.afip.gov.ar.FEXResponse_Ctz;
 
 
 
+
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -227,7 +229,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				&& !empresa.getCuit().trim().equals("30710471637") && !empresa.getCuit().trim().equals("30712521151") && !empresa.getCuit().trim().equals("30711534616")
 				&& !empresa.getCuit().trim().equals("30626244536") && !empresa.getCuit().trim().equals("30611628532") && !empresa.getCuit().trim().equals("30714366005")
 				&& !empresa.getCuit().trim().equals("20162192974") && !empresa.getCuit().trim().equals("30714778885") && !empresa.getCuit().trim().equals("30714403407") 
-				
+				&& !empresa.getCuit().trim().equals("30715019120")
 				
 				)
 
@@ -1905,14 +1907,26 @@ public class ServicesManagerImpl implements ServicesManager {
 
 	public byte[] getFactura(long cbteNroLong, int cbteTipoInt, int prefijoInt) {
 		
-		Empresa empresa = empresaManager.getByPrimaryKey(1l);
+		Empresa empresa = null;
 		
 		byte[] result = null;
-		
-		try {
-			result = facturaManager.getFactura(cbteNroLong, cbteTipoInt, prefijoInt, empresa);
-		} catch (Exception e) {			
-			e.printStackTrace();
+		if (parametrizacionDAO.getByPrimaryKey(Constants.ID_FACTURA_MTX).getValor().equals("true")){
+			empresa = empresaManager.getByPrimaryKey(3l);
+			try {
+				result = facturaManager.getFacturaMTX(cbteNroLong, cbteTipoInt, prefijoInt, empresa).getXmlResponse();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}else{			
+			try {
+				empresa = empresaManager.getByPrimaryKey(1l);
+				result = facturaManager.getFactura(cbteNroLong, cbteTipoInt, prefijoInt, empresa);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		return result;
@@ -1932,8 +1946,20 @@ public class ServicesManagerImpl implements ServicesManager {
 	
 	public long getLastNroCompr(int prefijoInt, int cbteTipoInt)
 			throws Exception {
-		Empresa empresa = empresaManager.getByPrimaryKey(1l);
-		return facturaManager.getLastNroFacturaByPyC(prefijoInt,cbteTipoInt,empresa);
+		Empresa empresa = null;
+		if (parametrizacionDAO.getByPrimaryKey(Constants.ID_FACTURA_MTX).getValor().equals("true")){
+			empresa = empresaManager.getByPrimaryKey(3l);
+			ComprobanteType comprobanteType = new ComprobanteType();
+			comprobanteType.setCodigoTipoComprobante(Short.parseShort(String.valueOf(cbteTipoInt)));			
+			comprobanteType.setNumeroPuntoVenta(Short.parseShort(String.valueOf(prefijoInt)));
+			return facturaManager.getLastNroFacturaMTX(comprobanteType,empresa) -1;
+		}else{
+			empresa = empresaManager.getByPrimaryKey(1l);
+			return facturaManager.getLastNroFacturaByPyC(prefijoInt,cbteTipoInt,empresa);
+		}
+		
+		
+		
 	}
 
 	private List<File> filterCarpetas(File[] listadoCarpeta, String fecha){
