@@ -94,9 +94,11 @@ public class ServicesInitManagerImpl implements ServicesInitManager {
 
 	
 	public void procesarByFilesCot() {
-		List<Empresa> empresaList = empresaDAO.getAll();
-		for(Empresa empresa: empresaList){
-			procesarByFilesCotbyEmpresa(empresa);
+		if (parametrizacionDAO.getByPrimaryKey(Constants.ID_USO_LISTENERREADFILES_COT).getValor().equals("true")){
+			List<Empresa> empresaList = empresaDAO.getAll();
+			for(Empresa empresa: empresaList){
+				procesarByFilesCotbyEmpresa(empresa);
+			}			
 		}
 	
 	}
