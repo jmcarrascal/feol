@@ -537,15 +537,15 @@ public class FacturaManagerImpl implements FacturaManager {
 		ServiceSoapProxy service = new ServiceSoapProxy(empresa.getUrlWebService());
 		FEAuthRequest feAuth = new FEAuthRequest();
 
-		try {
-			empresa = this.getCredencial(empresa);
-		} catch (Exception e1) {		
-			e1.printStackTrace();
-			String msg = e1.getMessage();
-			if (msg.indexOf("generationTime") != -1){
-				throw new GenerationTimerException(1);
-			}			
-		}
+//		try {
+//			empresa = this.getCredencial(empresa);
+//		} catch (Exception e1) {		
+//			e1.printStackTrace();
+//			String msg = e1.getMessage();
+//			if (msg.indexOf("generationTime") != -1){
+//				throw new GenerationTimerException(1);
+//			}			
+//		}
 		
 		feAuth.setToken(empresa.getToken());
 		

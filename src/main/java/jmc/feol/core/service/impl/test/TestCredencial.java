@@ -18,15 +18,15 @@ public class TestCredencial {
 		try{
 		Empresa empresa = new Empresa();
 		empresa.setIdEmpresa(1l);
-		empresa.setCuit("30586412732");
+		empresa.setCuit("30712014950");
 		empresa.setNombre("SIMPA");
 		empresa.setEndpoint("https://wsaa.afip.gov.ar/ws/services/LoginCms");
 		empresa.setService("wsfe");
 		empresa.setDstDN("CN=wsaa, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-		empresa.setP12File("/Users/juanmanuelcarrascal/projects/jmc/certificados/mapsa2/mapsa1.p12");
+		empresa.setP12File("/Users/juanmanuelcarrascal/projects/jmc/certificados/tejisur/tejisur1.p12");
 		empresa.setP12pass("123456");
 		empresa.setTicketTime(36000000l);
-		empresa.setSigner("mp");
+		empresa.setSigner("tejisur");
 		
 		empresa.setRutaArchivoConfigAfip("c:/FacturaElectronica/wsaa_client_kila.properties");
 		empresa = credencialAfipManagerImpl.getCredencial(empresa);
