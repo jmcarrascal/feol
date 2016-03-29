@@ -81,6 +81,7 @@ import fexv1.dif.afip.gov.ar.FEXResponse_Ctz;
 
 
 
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -98,6 +99,7 @@ public class ServicesManagerImpl implements ServicesManager {
 	private PatenteDAO extendedPatenteDAO;
 	private GenericDAO<Caea> caeaDAO;
 	private CotDAO extendedCotDAO;
+	
 	
 	public ServicesManagerImpl(){
 		super();			
@@ -234,14 +236,14 @@ public class ServicesManagerImpl implements ServicesManager {
 				)
 
 		{
-			result = "El CUIT enviado no est� licenciado";
+			result = "El CUIT enviado no esta licenciado";
 		}else{
 
 			try{
 
 				String baseComun="";
 				String baseArticulo="";
-				
+				System.out.println("[DEGUG FACTURAR] Abro conn a Base de datos  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 				BaseExterna be = null;
 				//Clasifico la Factura
 				int ubicador = rutaBase.indexOf("|");  
@@ -297,9 +299,10 @@ public class ServicesManagerImpl implements ServicesManager {
 		try{
 			FECAEResponse feRes = new FECAEResponse(); 
 			FECAERequest feReq = new FECAERequest();
+			System.out.println("[DEGUG FACTURAR] Busco Comprob en SKSOFT  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 			try{
 				feReq = be.getFacturaExt(transacNr, rutaBase);
-	
+				System.out.println("[DEGUG FACTURAR] Encontre Comprob en SKSOFT  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 			}catch(Exception e){
 				e.printStackTrace();
 				msg =  e.getMessage();
@@ -309,8 +312,9 @@ public class ServicesManagerImpl implements ServicesManager {
 				
 				Empresa empresa = empresaManager.getByPrimaryKey(1l);			
 				//Obtengo la Factura de base local
+				System.out.println("[DEGUG FACTURAR] Busco Factura en FEOL  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 				Factura factura = facturaManager.getFacturaByTransac(transacNr);
-				
+				System.out.println("[DEGUG FACTURAR] Encontre Factura en FEOL  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 				boolean facturaProcesada = false;
 				//Si no existe la factura en la base la creo
 				if (factura == null){
@@ -321,10 +325,10 @@ public class ServicesManagerImpl implements ServicesManager {
 						e.printStackTrace();
 					}
 				}else{					
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
-						//msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci�n de CAE exitoso";						
+						//msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci_n de CAE exitoso";						
 						be.updateBase(transacNr, factura.getCae() ,factura.getCae_vto() , rutaBase, String.valueOf(FormatUtil.llenoConCeros(String.valueOf(factura.getCbt_desde()), 8)), factura.getImp_total(), feReq.isActualizoTotal());												
 						msg = "OK";
 						return msg;
@@ -349,7 +353,7 @@ public class ServicesManagerImpl implements ServicesManager {
 					//Recuperar la factura desde la AFIP
 						feResponse = facturaManager.getComprobanteByPrimary(facturaRecuperada.getCbt_desde(), facturaRecuperada.getTipo_cbte(), facturaRecuperada.getPunto_vta(), empresa);
 					}catch(Exception e){
-						msg ="Existi� un Error con la conexi�n a la AFIP, por favor intente nuevamente";
+						msg ="Existi_ un Error con la conexi_n a la AFIP, por favor intente nuevamente";
 						return msg;						
 					}
 					try{
@@ -383,7 +387,7 @@ public class ServicesManagerImpl implements ServicesManager {
 							facturaALiberar.setReproceso(null);
 							facturaManager.updateFactura(facturaRecuperada);
 							facturaProcesada = false;
-							msg ="Existi� un Error con la conexi�n a la AFIP, por favor intente nuevamente";
+							msg ="Existi_ un Error con la conexi_n a la AFIP, por favor intente nuevamente";
 							return msg;
 						}
 					}catch(Exception e){
@@ -393,7 +397,7 @@ public class ServicesManagerImpl implements ServicesManager {
 						facturaALiberar.setReproceso(null);
 						facturaManager.updateFactura(facturaRecuperada);
 						facturaProcesada = false;
-						msg ="Existi� un Error con la conexi�n a la AFIP, por favor intente nuevamente";
+						msg ="Existi_ un Error con la conexi_n a la AFIP, por favor intente nuevamente";
 						return msg;						
 					}
 
@@ -403,7 +407,8 @@ public class ServicesManagerImpl implements ServicesManager {
 					
 					if(!facturaProcesada){
 						try {
-							//Obtengo los datos que voy a pedir para la factura							
+							//Obtengo los datos que voy a pedir para la factura	
+							System.out.println("[DEGUG FACTURAR] Invoco WS el ultimo comprobante  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 							Long nroComp = facturaManager.getLastNroFactura(feReq, empresa);
 							//Persisto en la base el nroComp
 							Factura facturaUpdateNroComp = facturaManager.getFacturaByTransac(transacNr);
@@ -414,8 +419,9 @@ public class ServicesManagerImpl implements ServicesManager {
 							facturaManager.updateFactura(facturaUpdateNroComp);
 							
 							//Pido facturacion AFIP
+							System.out.println("[DEGUG FACTURAR] Invoco WS el facturar comprobante  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 							feRes = facturaManager.facturacionAFIP(feReq, empresa, nroComp);							
-							
+							System.out.println("[DEGUG FACTURAR] Teng respuesta WS  facturar comprobante  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 							Factura facturaUpdate1 = facturaManager.getFacturaByTransac(transacNr);
 							facturaUpdate1.setRequestEnviado(feRes.getRequestEnviado());	
 							facturaManager.updateFactura(facturaUpdate1);
@@ -504,7 +510,9 @@ public class ServicesManagerImpl implements ServicesManager {
 									facturaManager.updateFactura(facturaUpdate);
 									 
 									try{
+										System.out.println("[DEGUG FACTURAR] Llamo a actualizo transac  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 										be.updateBase(transacNr, cae , feDetalleResponseA[0].getCAEFchVto(), rutaBase, comprNr, feReq.getFeDetReq()[0].getImpTotal(), feReq.isActualizoTotal());
+										System.out.println("[DEGUG FACTURAR] actuzlicé transac  - " + new Timestamp(System.currentTimeMillis()) + " - " + transacNr);
 									}catch(Exception e){
 										e.printStackTrace();
 										msg="Error al guardar el registro en SKSoft, intente nuevamente";
@@ -523,7 +531,7 @@ public class ServicesManagerImpl implements ServicesManager {
 							}		
 						} catch (RemoteException e) {
 							e.printStackTrace();
-							msg =  "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";
+							msg =  "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";
 							//Hay que cargar la factura el la cola para volver a cargarla
 							try{
 								Factura facturaUpdate = facturaManager.getFacturaByTransac(transacNr);	
@@ -605,7 +613,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				boolean facturaProcesada = false;
 				//Si existe la factura en la base
 				if (factura != null){
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
 						
@@ -613,7 +621,7 @@ public class ServicesManagerImpl implements ServicesManager {
 							be.updateBase(transacNr, factura.getCae() , Long.parseLong(factura.getCae_vto()), factura.getCbt_desde(), "OK");
 						}catch(Exception eee){
 							eee.printStackTrace();
-						}//msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci�n de CAE exitoso";
+						}//msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci_n de CAE exitoso";
 						msg = "OK";
 						return msg;
 					} 
@@ -663,7 +671,7 @@ public class ServicesManagerImpl implements ServicesManager {
 						facturaALiberar.setReproceso(null);
 						facturaManager.updateFactura(facturaRecuperada);
 						facturaProcesada = false;
-						//msg ="Existi� un Error con la conexi�n a la AFIP, por favor intente nuevamente";
+						//msg ="Existi_ un Error con la conexi_n a la AFIP, por favor intente nuevamente";
 						//return msg;
 					}
 					
@@ -773,7 +781,7 @@ public class ServicesManagerImpl implements ServicesManager {
 						}		
 					} catch (RemoteException e) {
 						e.printStackTrace();
-						msg =  "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";
+						msg =  "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";
 						//Hay que cargar la factura el la cola para volver a cargarla
 						try{
 							Factura facturaUpdate = facturaManager.getFacturaByTransacLetra(transacNr, letra);	
@@ -883,7 +891,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				boolean facturaProcesada = false;
 				//Si existe la factura en la base
 				if (factura != null){
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
 						msg = "OK";
@@ -949,7 +957,7 @@ public class ServicesManagerImpl implements ServicesManager {
 							}
 					} catch (RemoteException e) {
 						e.printStackTrace();
-						msg = "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";
+						msg = "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";
 						//Hay que cargar la factura el la cola para volver a cargarla
 						try{
 							Factura facturaUpdate = facturaManager.getFacturaByTransac(transacNr);	
@@ -978,7 +986,7 @@ public class ServicesManagerImpl implements ServicesManager {
 											
 					}catch (Exception e) {
 						e.printStackTrace();
-						msg =  "Existe alg�n dato que no se corresponde con el tipo de dato requerido";
+						msg =  "Existe alg_n dato que no se corresponde con el tipo de dato requerido";
 					}
 				}
 			}else{
@@ -1060,7 +1068,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				boolean facturaProcesada = false;
 				//Si existe la factura en la base
 				if (factura != null){
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
 						msg = "OK";
@@ -1134,7 +1142,7 @@ public class ServicesManagerImpl implements ServicesManager {
 		
 					} catch (RemoteException e) {
 						e.printStackTrace();
-						msg = "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";
+						msg = "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";
 						//Hay que cargar la factura el la cola para volver a cargarla
 						try{
 							Factura facturaUpdate = facturaManager.getFacturaByTransac(transacNr);	
@@ -1164,7 +1172,7 @@ public class ServicesManagerImpl implements ServicesManager {
 					}catch (Exception e) {
 
 						e.printStackTrace();
-						msg =  "Existe alg�n dato que no se corresponde con el tipo de dato requerido";
+						msg =  "Existe alg_n dato que no se corresponde con el tipo de dato requerido";
 					}
 				}
 			}else{
@@ -1219,7 +1227,7 @@ public class ServicesManagerImpl implements ServicesManager {
 	private void sendMail(String error, Long transacNr){
 		//Cargo los datos del EMail				
 		String mailAdminitrador = parametrizacionDAO.getByPrimaryKey(Constants.ID_MAIL_ADMNISTRADOR).getValor();
-		Email email = new Email("Error en la Autorizacion de una Factura en la Transacci�n : " + transacNr,error,null, mailAdminitrador);
+		Email email = new Email("Error en la Autorizacion de una Factura en la Transacci_n : " + transacNr,error,null, mailAdminitrador);
 		Properties props = getPropertiesEmail();		
 		SendEmailThread emailManager = new SendEmailThread(props,email);		
 		emailManager.start();
@@ -1457,10 +1465,10 @@ public class ServicesManagerImpl implements ServicesManager {
 				boolean facturaProcesada = false;
 				//Si existe la factura en la base
 				if (factura != null){
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
-						msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci�n de CAE exitoso";
+						msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci_n de CAE exitoso";
 						//Genero Archivo de salida con los datos de la base		
 						//Genero Archivo de Salida
 						System.out.println("FEL: La factura ya se encuentra procesada");
@@ -1599,7 +1607,7 @@ public class ServicesManagerImpl implements ServicesManager {
 						}		
 					} catch (RemoteException e) {
 						e.printStackTrace();
-						msg =  "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";						
+						msg =  "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";						
 						 
 						try{
 							Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);	
@@ -1675,10 +1683,10 @@ public class ServicesManagerImpl implements ServicesManager {
 				boolean facturaProcesada = false;
 				//Si existe la factura en la base
 				if (factura != null){
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
-						msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci�n de CAE exitoso";
+						msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci_n de CAE exitoso";
 						//Genero Archivo de salida con los datos de la base		
 						//Genero Archivo de Salida
 						System.out.println("FEL: La factura ya se encuentra procesada");
@@ -1818,7 +1826,7 @@ public class ServicesManagerImpl implements ServicesManager {
 						}		
 					} catch (RemoteException e) {
 						e.printStackTrace();
-						msg =  "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";						
+						msg =  "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";						
 						 
 						try{
 							Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);	
@@ -2171,10 +2179,10 @@ public class ServicesManagerImpl implements ServicesManager {
 				boolean facturaProcesada = false;
 				//Si existe la factura en la base
 				if (factura != null){
-					//Si tiene CAE armo el archivo de devoluci�n
+					//Si tiene CAE armo el archivo de devoluci_n
 					if (factura.getCae() != null && !factura.getCae().trim().equals("")){
 						facturaProcesada = true;
-						//msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci�n de CAE exitoso";
+						//msg = factura.getCae() + "|" + factura.getCae_vto() + "|" + factura.getCbt_desde() + "|" + "La factura ya se encuentra Procesada con la obtenci_n de CAE exitoso";
 						//Genero Archivo de salida con los datos de la base			
 						System.out.println("FEX: La factura ya se encuentra procesada");
 						String data = ParseFacturaExpo.getOutDataFactura(factura);
@@ -2264,7 +2272,7 @@ public class ServicesManagerImpl implements ServicesManager {
 		
 					} catch (RemoteException e) {
 						e.printStackTrace();
-						msg = "No se ha podido realizar la comunicaci�n con el servidor de AFIP, cuando el sistema tenga acceso enviar� la factura automaticamente";
+						msg = "No se ha podido realizar la comunicaci_n con el servidor de AFIP, cuando el sistema tenga acceso enviar_ la factura automaticamente";
 						//Hay que cargar la factura el la cola para volver a cargarla
 						try{
 							Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);			
@@ -2294,7 +2302,7 @@ public class ServicesManagerImpl implements ServicesManager {
 						}
 					}catch (Exception e) {
 						e.printStackTrace();
-						msg =  "Existe alg�n dato que no se corresponde con el tipo de dato requerido";
+						msg =  "Existe alg_n dato que no se corresponde con el tipo de dato requerido";
 						try{
 							Factura facturaUpdate = facturaManager.getByArchivo(nombreArchivo);			
 							facturaUpdate.setResultado(msg);
@@ -2452,7 +2460,7 @@ public class ServicesManagerImpl implements ServicesManager {
 			
 			
 			String viajeNrStr = String.valueOf(viajeNr);
-			//Saco el �ltimo valor de la empresa
+			//Saco el _ltimo valor de la empresa
 			int tamano = viajeNrStr.length();
 			viajeNrStr = viajeNrStr.substring(0,tamano -1);
 			if (viajeNrStr.length() > 6){
@@ -2523,7 +2531,7 @@ public class ServicesManagerImpl implements ServicesManager {
 				if (xml.indexOf("<codigoError>11</codigoError>") != -1){
 					result = "El archivo recibido ya fue procesado con anterioridad.";
 				}else{
-					result = "Existe un error en la transmisi�n del Archivo.";
+					result = "Existe un error en la transmisi_n del Archivo.";
 				}
 			}else{
 				RespuestaAfip ra = (RespuestaAfip) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream( xml.getBytes("UTF-8") ));

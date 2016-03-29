@@ -375,10 +375,10 @@ public class BaseExterna {
 			}
 					
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ingresos brutos del campo 'retib'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ingresos brutos del campo 'retib'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ingresos brutos del campo 'retib'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ingresos brutos del campo 'retib'";
 			e.printStackTrace();
 		}
 
@@ -394,10 +394,10 @@ public class BaseExterna {
 			}
 					
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Internos del campo 'internos'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Internos del campo 'internos'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Internos del campo 'internos'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Internos del campo 'internos'";
 			e.printStackTrace();
 		}
 
@@ -412,10 +412,10 @@ public class BaseExterna {
 			}
 				
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Iva del campo 'retiva'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Iva del campo 'retiva'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Iva del campo 'retiva'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Iva del campo 'retiva'";
 			e.printStackTrace();
 		}
 
@@ -430,10 +430,10 @@ public class BaseExterna {
 			}
 							
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ganancias del campo 'retgan'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ganancias del campo 'retgan'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ganancias del campo 'retgan'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ganancias del campo 'retgan'";
 			e.printStackTrace();
 		}
 
@@ -448,10 +448,10 @@ public class BaseExterna {
 			}
 				
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Cargas Sociales del campo 'RetCargasSoc'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Cargas Sociales del campo 'RetCargasSoc'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Cargas Sociales del campo 'RetCargasSoc'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Cargas Sociales del campo 'RetCargasSoc'";
 			e.printStackTrace();
 		}			
 		
@@ -691,12 +691,13 @@ public class BaseExterna {
 			Statement stmt;
 			String sql;
 
+			
 			if (useSQL){
 				sql = "SELECT Stock.IvaGravado, Items.Precio, Items.Cant1, Items.Bonif, Items.TransacNr, "
 					+ "Gente.Cuit, Transac.Fecha, Transac.TipoComprob, Transac.NrComprob, "
 					+ "Transac.Prefijo, Transac.Vencim1, Transac.Total, Impuestos.Alicuota " +
-					"FROM (Transac INNER JOIN (("+ rutaArticulo +".Stock as Stock INNER JOIN Items ON Stock.Clave = Items.Articulo COLLATE DATABASE_DEFAULT) " +
-					"INNER JOIN "+ rutaComun +".Gente as Gente ON Items.GenteNr = Gente.GenteNr) ON (Gente.GenteNr = Transac.GenteNr) " +
+					"FROM (Transac WITH (NOLOCK) INNER JOIN (("+ rutaArticulo +".Stock as Stock WITH (NOLOCK) INNER JOIN Items WITH (NOLOCK)  ON Stock.Clave = Items.Articulo) " +
+					"INNER JOIN "+ rutaComun +".Gente as Gente WITH (NOLOCK) ON Items.GenteNr = Gente.GenteNr) ON (Gente.GenteNr = Transac.GenteNr) " +
 					"AND (Transac.TransacNr = Items.TransacNr)) INNER JOIN Impuestos ON Stock.IvaGravado = " +
 					"Impuestos.Nr WHERE (((Items.TransacNr)="+transacNr+"))";
 			}else{

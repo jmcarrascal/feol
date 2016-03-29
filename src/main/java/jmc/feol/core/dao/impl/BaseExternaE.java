@@ -558,7 +558,7 @@ public class BaseExternaE {
 				sql = "SELECT Stock.UniVenta, Stock.Descripcion, Stock.IvaGravado, Items.Precio, Items.Cant1, Items.bonif,Items.TransacNr, "
 					+ "Gente.Cuit, Transac.Fecha, Transac.TipoComprob, Transac.NrComprob, "
 					+ "Transac.Prefijo, Transac.Vencim1, Transac.Total, Impuestos.Alicuota " +
-					"FROM (Transac INNER JOIN (("+ rutaArticulo +".Stock as Stock INNER JOIN Items ON Stock.Clave = Items.Articulo COLLATE DATABASE_DEFAULT) " +
+					"FROM (Transac INNER JOIN (("+ rutaArticulo +".Stock as Stock INNER JOIN Items ON Stock.Clave = Items.Articulo) " +
 					"INNER JOIN "+ rutaComun +".Gente as Gente ON Items.GenteNr = Gente.GenteNr) ON (Gente.GenteNr = Transac.GenteNr) " +
 					"AND (Transac.TransacNr = Items.TransacNr)) INNER JOIN Impuestos ON Stock.IvaGravado = " +
 					"Impuestos.Nr WHERE (((Items.TransacNr)="+transacNr+"))";				
