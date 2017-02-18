@@ -30,15 +30,15 @@ public static Empresa getCredencial(){
 		try{
 		Empresa empresa = new Empresa();
 		empresa.setIdEmpresa(1l);
-		empresa.setCuit("30713480009");
-		empresa.setNombre("Salmun");
+		empresa.setCuit("33708983409");
+		empresa.setNombre("Janin_credito_b");
 		empresa.setEndpoint("https://wsaa.afip.gov.ar/ws/services/LoginCms");
 		empresa.setService("wsfe");
 		empresa.setDstDN("CN=wsaa, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-		empresa.setP12File("C:/Certificados/playdon/playdon1.p12");
+		empresa.setP12File("/Users/juanmanuelcarrascal/projects/ERP/Certificados/janin/janin1.p12");
 		empresa.setP12pass("123456");
 		empresa.setTicketTime(36000000l);
-		empresa.setSigner("playdon");
+		empresa.setSigner("janin");
 		
 		
 		empresa = credencialAfipManagerImpl.getCredencial(empresa);
@@ -62,7 +62,7 @@ public static Empresa getCredencial(){
 		Empresa empresa = new Empresa();
 		empresa = getCredencial();
 		// Hago un loop sobre el punto de venta
-		int punto_venta = 2;
+		int punto_venta = 4;
 		boolean end_facturacion = false; 
 		Long nro_comprob = 1l;
 		 //Se crea el libro Excel
@@ -92,22 +92,17 @@ public static Empresa getCredencial(){
 		lista[0]=8;
         for(Integer tipo_comprob : lista){
 			end_facturacion = false;
-			nro_comprob = 1122l;
+			nro_comprob = 525l;
 			while(!end_facturacion){
 				FECompConsResponse res = getFactura(empresa.getToken(), empresa.getSignToken(), Long.parseLong(empresa.getCuit()),nro_comprob, tipo_comprob,punto_venta);
 				if (res != null){		
 					nro_comprob ++;
-					//if (nro_comprob>3){
-					//	end_facturacion = true;
-					//}
+					
 					try{
 						Long fecha = Long.parseLong(res.getFchProceso());
 						//if (true){
 						System.out.println(fecha);
-//						if (fecha > 20140318000000l){
-//							end_facturacion = true;
-//						}
-						//if (fecha > 20111231000000l && fecha < 20140319000000l){
+//						
 							if(true){
 							 try
 						        {
@@ -147,7 +142,7 @@ public static Empresa getCredencial(){
 		  //Escribimos los resultados a un fichero Excel
         FileOutputStream fileOut;
 		try {
-			fileOut = new FileOutputStream("c://ventas_2012_"  + empresa.getNombre() + ".xls");
+			fileOut = new FileOutputStream("/Users/juanmanuelcarrascal/Documents/ventas_2012_"  + empresa.getNombre() + ".xls");
 			 wb.write(fileOut);
 		     fileOut.close();
 		} catch (FileNotFoundException e) {

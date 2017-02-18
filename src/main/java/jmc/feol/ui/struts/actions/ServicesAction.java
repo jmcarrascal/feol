@@ -709,7 +709,7 @@ return  null;
 	}
 
 	/*
-	 * M�todo que env�a mails llamando un requerimiento HTTP
+	 * Metodo que envia mails llamando un requerimiento HTTP
 	 */
 	public String sendMail() {
 

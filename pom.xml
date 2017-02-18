@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Feolv1</groupId>
@@ -9,9 +9,9 @@
 	<dependencies>
 
 		<dependency>
-		<groupId>mysql</groupId>
-		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.16</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.16</version>
 		</dependency>
 
 		<dependency>
@@ -24,6 +24,13 @@
 			<artifactId>quartz</artifactId>
 			<version>1.6.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.bouncycastle</groupId> -->
+<!-- 			<artifactId>bcprov-jdk15on</artifactId> -->
+<!-- 			<version>1.54</version> -->
+<!-- 		</dependency> -->
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -292,11 +299,11 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jaxen-1.1.1.jar</systemPath>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>net.sourceforge.jtds</groupId> -->
-		<!-- <artifactId>jtds</artifactId> -->
-		<!-- <version>1.2.4</version> -->
-		<!-- </dependency> -->
+		<dependency>
+			<groupId>net.sourceforge.jtds</groupId>
+			<artifactId>jtds</artifactId>
+			<version>1.2.4</version>
+		</dependency>
 		<!-- <dependency> -->
 		<!-- <groupId>jaxen</groupId> -->
 		<!-- <artifactId>jaxen</artifactId> -->

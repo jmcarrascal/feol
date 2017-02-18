@@ -33,10 +33,10 @@ public class TestGetFacturaMTXONCO {
 			empresa.setEndpoint("https://wsaa.afip.gov.ar/ws/services/LoginCms");
 			empresa.setService("wsmtxca");
 			empresa.setDstDN("CN=wsaa, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-			empresa.setP12File("C:/Certificados/oncolife/oncolife1.p12");
+			empresa.setP12File("/Users/juanmanuelcarrascal/projects/ERP/Certificados/oncolife/oncolife1.p12");
 			empresa.setP12pass("123456");
 			empresa.setTicketTime(36000000l);
-			empresa.setSigner("oncolife");
+			empresa.setSigner("onco");
 			
 			//empresa.setRutaArchivoConfigAfip("c:/FacturaElectronica/wsaa_client_kila.properties");
 			empresa = credencialAfipManagerImpl.getCredencial(empresa);

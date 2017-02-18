@@ -157,7 +157,7 @@ public class Empresa {
 	public void setCuit(String cuit) {
 		this.cuit = cuit;
 	}
-	
+	@Column(name = "token", length = 3000)
 	public String getToken() {
 		return token;
 	}

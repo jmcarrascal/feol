@@ -20,13 +20,13 @@ public class TestCredencial {
 		empresa.setIdEmpresa(1l);
 		empresa.setCuit("30586412732");
 		empresa.setNombre("SIMPA");
-		empresa.setEndpoint("https://wsaa.afip.gov.ar/ws/services/LoginCms");
+		empresa.setEndpoint("https://wsaahomo.afip.gov.ar/ws/services/LoginCms");
 		empresa.setService("wsfe");
-		empresa.setDstDN("CN=wsaa, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-		empresa.setP12File("/Users/juanmanuelcarrascal/projects/jmc/certificados/mapsa2/mapsa1.p12");
+		empresa.setDstDN("CN=wsaahomo, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
+		empresa.setP12File("/Users/juanmanuelcarrascal/projects/ERP/Certificados/testjmc/testjmc1.p12");
 		empresa.setP12pass("123456");
 		empresa.setTicketTime(36000000l);
-		empresa.setSigner("mp");
+		empresa.setSigner("jmc");
 		
 		empresa.setRutaArchivoConfigAfip("c:/FacturaElectronica/wsaa_client_kila.properties");
 		empresa = credencialAfipManagerImpl.getCredencial(empresa);

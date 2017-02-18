@@ -212,30 +212,32 @@ public class ServicesManagerImpl implements ServicesManager {
 		
 		String result = "Error al leer la base de datos " + rutaBase;
 		Empresa empresa = empresaManager.getByPrimaryKey(1l);
-		if (!empresa.getCuit().trim().equals("30708661321") && !empresa.getCuit().trim().equals("30710339828") && !empresa.getCuit().trim().equals("30502795844") 
-				&& !empresa.getCuit().trim().equals("30708417668") && !empresa.getCuit().trim().equals("33708983409") && !empresa.getCuit().trim().equals("33613036879")  	
-				&& !empresa.getCuit().trim().equals("33709732949") && !empresa.getCuit().trim().equals("30612476000") && !empresa.getCuit().trim().equals("30686204797") 
-				&& !empresa.getCuit().trim().equals("30707601392") && !empresa.getCuit().trim().equals("30700442361") && !empresa.getCuit().trim().equals("30708182849")
-				&& !empresa.getCuit().trim().equals("30636228385") && !empresa.getCuit().trim().equals("33710828259") && !empresa.getCuit().trim().equals("30709071943")
-				&& !empresa.getCuit().trim().equals("30528127610") && !empresa.getCuit().trim().equals("30663753025") && !empresa.getCuit().trim().equals("30628323603")
-				&& !empresa.getCuit().trim().equals("30680810946") && !empresa.getCuit().trim().equals("30686262312") && !empresa.getCuit().trim().equals("30609484124")
-				&& !empresa.getCuit().trim().equals("30586412732") && !empresa.getCuit().trim().equals("30686869098") && !empresa.getCuit().trim().equals("30710954786")
-				&& !empresa.getCuit().trim().equals("30708351586") && !empresa.getCuit().trim().equals("30694541581") && !empresa.getCuit().trim().equals("30708142286")
-				&& !empresa.getCuit().trim().equals("30710925735") && !empresa.getCuit().trim().equals("30707416528") && !empresa.getCuit().trim().equals("30710836597")
-				&& !empresa.getCuit().trim().equals("30713480009") && !empresa.getCuit().trim().equals("30713479108") && !empresa.getCuit().trim().equals("30712671706")
-				&& !empresa.getCuit().trim().equals("30714238589") && !empresa.getCuit().trim().equals("30655105596") && !empresa.getCuit().trim().equals("30630516389")
-				&& !empresa.getCuit().trim().equals("30709171034") && !empresa.getCuit().trim().equals("30711712824") && !empresa.getCuit().trim().equals("30710104375") 
-				&& !empresa.getCuit().trim().equals("30520946531") && !empresa.getCuit().trim().equals("30641408383") && !empresa.getCuit().trim().equals("20139245351")
-				&& !empresa.getCuit().trim().equals("30710542321") && !empresa.getCuit().trim().equals("33600481059") && !empresa.getCuit().trim().equals("30712014950")
-				&& !empresa.getCuit().trim().equals("30710486588") && !empresa.getCuit().trim().equals("30712258396") && !empresa.getCuit().trim().equals("30711245673")
-				&& !empresa.getCuit().trim().equals("30710471637") && !empresa.getCuit().trim().equals("30712521151") && !empresa.getCuit().trim().equals("30711534616")
-				&& !empresa.getCuit().trim().equals("30626244536") && !empresa.getCuit().trim().equals("30611628532") && !empresa.getCuit().trim().equals("30714366005")
-				&& !empresa.getCuit().trim().equals("20162192974") && !empresa.getCuit().trim().equals("30714778885") && !empresa.getCuit().trim().equals("30714403407") 
-				&& !empresa.getCuit().trim().equals("30715019120")
-				
-				)
-
-		{
+//		if (!empresa.getCuit().trim().equals("30708661321") && !empresa.getCuit().trim().equals("30710339828") && !empresa.getCuit().trim().equals("30502795844") 
+//				&& !empresa.getCuit().trim().equals("30708417668") && !empresa.getCuit().trim().equals("33708983409") && !empresa.getCuit().trim().equals("33613036879")  	
+//				&& !empresa.getCuit().trim().equals("33709732949") && !empresa.getCuit().trim().equals("30612476000") && !empresa.getCuit().trim().equals("30686204797") 
+//				&& !empresa.getCuit().trim().equals("30707601392") && !empresa.getCuit().trim().equals("30700442361") && !empresa.getCuit().trim().equals("30708182849")
+//				&& !empresa.getCuit().trim().equals("30636228385") && !empresa.getCuit().trim().equals("33710828259") && !empresa.getCuit().trim().equals("30709071943")
+//				&& !empresa.getCuit().trim().equals("30528127610") && !empresa.getCuit().trim().equals("30663753025") && !empresa.getCuit().trim().equals("30628323603")
+//				&& !empresa.getCuit().trim().equals("30680810946") && !empresa.getCuit().trim().equals("30686262312") && !empresa.getCuit().trim().equals("30609484124")
+//				&& !empresa.getCuit().trim().equals("30586412732") && !empresa.getCuit().trim().equals("30686869098") && !empresa.getCuit().trim().equals("30710954786")
+//				&& !empresa.getCuit().trim().equals("30708351586") && !empresa.getCuit().trim().equals("30694541581") && !empresa.getCuit().trim().equals("30708142286")
+//				&& !empresa.getCuit().trim().equals("30710925735") && !empresa.getCuit().trim().equals("30707416528") && !empresa.getCuit().trim().equals("30710836597")
+//				&& !empresa.getCuit().trim().equals("30713480009") && !empresa.getCuit().trim().equals("30713479108") && !empresa.getCuit().trim().equals("30712671706")
+//				&& !empresa.getCuit().trim().equals("30714238589") && !empresa.getCuit().trim().equals("30655105596") && !empresa.getCuit().trim().equals("30630516389")
+//				&& !empresa.getCuit().trim().equals("30709171034") && !empresa.getCuit().trim().equals("30711712824") && !empresa.getCuit().trim().equals("30710104375") 
+//				&& !empresa.getCuit().trim().equals("30520946531") && !empresa.getCuit().trim().equals("30641408383") && !empresa.getCuit().trim().equals("20139245351")
+//				&& !empresa.getCuit().trim().equals("30710542321") && !empresa.getCuit().trim().equals("33600481059") && !empresa.getCuit().trim().equals("30712014950")
+//				&& !empresa.getCuit().trim().equals("30710486588") && !empresa.getCuit().trim().equals("30712258396") && !empresa.getCuit().trim().equals("30711245673")
+//				&& !empresa.getCuit().trim().equals("30710471637") && !empresa.getCuit().trim().equals("30712521151") && !empresa.getCuit().trim().equals("30711534616")
+//				&& !empresa.getCuit().trim().equals("30626244536") && !empresa.getCuit().trim().equals("30611628532") && !empresa.getCuit().trim().equals("30714366005")
+//				&& !empresa.getCuit().trim().equals("20162192974") && !empresa.getCuit().trim().equals("30714778885") && !empresa.getCuit().trim().equals("30714403407") 
+//				&& !empresa.getCuit().trim().equals("30715019120") && !empresa.getCuit().trim().equals("30576816673") && !empresa.getCuit().trim().equals("20124984220")
+//				&& !empresa.getCuit().trim().equals("30711134766") && !empresa.getCuit().trim().equals("30710253893") && !empresa.getCuit().trim().equals("30619738396") 
+//				)
+//			
+//
+//		{
+		if(false){
 			result = "El CUIT enviado no esta licenciado";
 		}else{
 
