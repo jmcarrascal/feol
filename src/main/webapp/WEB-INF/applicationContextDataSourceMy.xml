@@ -5,7 +5,7 @@
   	
 <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
     <property name="jndiName">
-        <value>java:jboss/jdbc/COTMY</value>
+        <value>java:jboss/datasources/COT</value>
     </property>
 </bean>
 	 

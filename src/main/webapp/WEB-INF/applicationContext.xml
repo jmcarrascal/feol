@@ -7,9 +7,10 @@
 	<!-- Bean de la lógiga de negocio de mi aplicación de ejemplo. -->
 
 	<!-- Importa el data source -->
-<!-- 	<import resource="applicationContextHibernateLocalMySql.xml" /> -->
+<!-- 	<import resource="applicationContextDataSourceMy.xml" /> -->
 	<!-- <import resource="applicationContextHibernate.xml" /> -->
 	<import resource="applicationContextDataSource.xml" />
+		
 <!-- 	<import resource="applicationContextDataSourceMy.xml" /> -->
 
 

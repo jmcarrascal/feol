@@ -83,7 +83,8 @@ public class LoginAction extends ActionSupport  {
 	 * y valida contra el WS a validez del mismo contra el Login unico
 	 * Se invoca solo para usuarios del Ministerio de Justicia
 	 */
-	public String validateMS() throws Exception {	    
+	public String validateMS() throws Exception {
+		System.out.println("ENTROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 		Usuario user = null;
 		try {
 			user = usuarioManager.getUsuarioByUsernamePassword(usuario, password);			
