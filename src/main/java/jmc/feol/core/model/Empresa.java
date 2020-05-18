@@ -53,7 +53,9 @@ public class Empresa {
 	private String user_cot;
 	private String pass_cot;
 	private String ruta_salida_cot;
-	
+	private Boolean usePKCS12;
+	private String privateKeyFile;
+	private String certFile;
 	
 	public String getLibAS400() {
 		return libAS400;
@@ -102,10 +104,25 @@ public class Empresa {
 	
 	
 	
-	
 
-	
-
+	public String getPrivateKeyFile() {
+		return privateKeyFile;
+	}
+	public void setPrivateKeyFile(String privateKeyFile) {
+		this.privateKeyFile = privateKeyFile;
+	}
+	public String getCertFile() {
+		return certFile;
+	}
+	public void setCertFile(String certFile) {
+		this.certFile = certFile;
+	}
+	public Boolean getUsePKCS12() {
+		return usePKCS12;
+	}
+	public void setUsePKCS12(Boolean usePKCS12) {
+		this.usePKCS12 = usePKCS12;
+	}
 	public String getProvincia() {
 		return provincia;
 	}

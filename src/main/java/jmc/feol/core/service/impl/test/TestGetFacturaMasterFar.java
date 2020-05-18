@@ -19,7 +19,7 @@ import FEV1.dif.afip.gov.ar.wmtx.MTXCAServicePortTypeProxy;
 import FEV1.dif.afip.gov.ar.wmtx.SubtotalIVAType;
 
 
-public class TestGetFacturaMTXDROVAL {
+public class TestGetFacturaMasterFar {
 
 
 	  public static void main (String args[]) {
@@ -28,16 +28,12 @@ public class TestGetFacturaMTXDROVAL {
 		  CredencialAfipManagerImpl credencialAfipManagerImpl = new CredencialAfipManagerImpl();
 			try{
 			empresa.setIdEmpresa(1l);
-			empresa.setCuit("30699754486");
+			empresa.setCuit("30716163748");
 			empresa.setNombre("VASA");
 			empresa.setEndpoint("https://wsaa.afip.gov.ar/ws/services/LoginCms");
-			empresa.setService("wsmtxca");
+			empresa.setService("wsfe");
 			empresa.setDstDN("CN=wsaa, O=AFIP, C=AR, SERIALNUMBER=CUIT 33693450239");
-			empresa.setP12File("/Users/juanmanuelcarrascal/projects/ERP/Certificados/droval/2019/ks.p12");
-			
-			empresa.setPrivateKeyFile("/Users/juanmanuelcarrascal/projects/ERP/Certificados/droval/2019/private.der");
-			empresa.setCertFile("/Users/juanmanuelcarrascal/projects/ERP/Certificados/droval/2019/droval.crt");
-			empresa.setUsePKCS12(true);
+			empresa.setP12File("");
 			empresa.setP12pass("123456");
 			empresa.setTicketTime(36000000l);
 			empresa.setSigner("droval");
@@ -64,7 +60,7 @@ public class TestGetFacturaMTXDROVAL {
 
 		feAuth.setCuitRepresentada(30699754486l); 
 		
-		Long[] nros = {39707l,39796l,39977l};
+		Long[] nros = {39173l};
 		Short punto_vta = new Short("5");
 		Short tipo_comprob = new Short("6");
 		  

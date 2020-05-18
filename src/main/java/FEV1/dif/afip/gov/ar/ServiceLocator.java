@@ -27,7 +27,7 @@ public class ServiceLocator extends org.apache.axis.client.Service implements FE
     }
 
     // Use to get a proxy class for ServiceSoap
-    private java.lang.String ServiceSoap_address = "https://wswhomo.afip.gov.ar/wsfev1/service.asmx";
+    private java.lang.String ServiceSoap_address = "https://servicios1.afip.gov.ar/wsfev1/service.asmx";
 
     public java.lang.String getServiceSoapAddress() {
         return ServiceSoap_address;
