@@ -372,10 +372,10 @@ public class BaseExternaMTX {
 			}
 					
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ingresos brutos del campo 'retib'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ingresos brutos del campo 'retib'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ingresos brutos del campo 'retib'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ingresos brutos del campo 'retib'";
 			e.printStackTrace();
 		}
 
@@ -391,10 +391,10 @@ public class BaseExternaMTX {
 			}
 					
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Internos del campo 'internos'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Internos del campo 'internos'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Internos del campo 'internos'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Internos del campo 'internos'";
 			e.printStackTrace();
 		}
 
@@ -409,10 +409,10 @@ public class BaseExternaMTX {
 			}
 				
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Iva del campo 'retiva'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Iva del campo 'retiva'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Iva del campo 'retiva'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Iva del campo 'retiva'";
 			e.printStackTrace();
 		}
 
@@ -427,10 +427,10 @@ public class BaseExternaMTX {
 			}
 							
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ganancias del campo 'retgan'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ganancias del campo 'retgan'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Ganancias del campo 'retgan'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Ganancias del campo 'retgan'";
 			e.printStackTrace();
 		}
 
@@ -445,10 +445,10 @@ public class BaseExternaMTX {
 			}
 				
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Cargas Sociales del campo 'RetCargasSoc'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Cargas Sociales del campo 'RetCargasSoc'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Cargas Sociales del campo 'RetCargasSoc'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Cargas Sociales del campo 'RetCargasSoc'";
 			e.printStackTrace();
 		}			
 		
@@ -463,10 +463,10 @@ public class BaseExternaMTX {
 			}
 				
 		} catch (NumberFormatException e) {
-			errorParseo = "No se ha podido obtener la percepción de Cargas Sociales del campo 'IvaRni'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Cargas Sociales del campo 'IvaRni'";
 			e.printStackTrace();
 		} catch (SQLException e) {
-			errorParseo = "No se ha podido obtener la percepción de Cargas Sociales del campo 'IvaRni'";
+			errorParseo = "No se ha podido obtener la percepciï¿½n de Cargas Sociales del campo 'IvaRni'";
 			e.printStackTrace();
 		}			
 

@@ -15,7 +15,7 @@ public static List<Booleano> getListBooleano(){
 	no.setNombre("false");
 	no.setValor("No");
 	si.setNombre("true");
-	si.setValor("Sí");
+	si.setValor("SÃ­");
 	listBooleano.add(no);
 	listBooleano.add(si);
 	return listBooleano;

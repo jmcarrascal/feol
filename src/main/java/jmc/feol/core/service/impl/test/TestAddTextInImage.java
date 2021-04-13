@@ -31,16 +31,16 @@ public class TestAddTextInImage {
 			//Tomo imagen y la convierto en byte[]
 			//byte[] data = FileUtil.getBytesFromFile(new File("C:/SGI/archivos/huellas/h_81.jpg"));
 			
-			//System.out.println("Tamaño imagen original " + data.length);
+			//System.out.println("Tamaï¿½o imagen original " + data.length);
 			
 			//Objeto Image  
 			//Image reference = new ImageIcon(data).getImage();
 			
-			//Tomo Tamaño de la imagen
+			//Tomo Tamaï¿½o de la imagen
 			//int widthImg = reference.getWidth(null);
 			//int heightImg = reference.getHeight(null);
 
-			//Creo imagen del mismo tamaño
+			//Creo imagen del mismo tamaï¿½o
 			BufferedImage bimg = new BufferedImage(500, 400,BufferedImage.TYPE_INT_RGB);
 
 			
@@ -109,16 +109,16 @@ public class TestAddTextInImage {
 			//Tomo imagen y la convierto en byte[]
 			byte[] data = FileUtil.getBytesFromFile(new File(archivoOrig));
 			
-			//System.out.println("Tamaño imagen original " + data.length);
+			//System.out.println("Tamaï¿½o imagen original " + data.length);
 			
 			//Objeto Image  
 			Image reference = new ImageIcon(data).getImage();
 			
-			//Tomo Tamaño de la imagen
+			//Tomo Tamaï¿½o de la imagen
 			int widthImg = reference.getWidth(null);
 			int heightImg = reference.getHeight(null);
 
-			//Creo imagen del mismo tamaño
+			//Creo imagen del mismo tamaï¿½o
 			BufferedImage bimg = new BufferedImage(widthImg, heightImg,BufferedImage.TYPE_INT_RGB);
 
 			//Convierto imagen nueva en obbjeto Graphics2D 

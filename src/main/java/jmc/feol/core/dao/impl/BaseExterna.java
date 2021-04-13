@@ -1,25 +1,26 @@
 package jmc.feol.core.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
-import jmc.feol.core.model.Usuario;
-import jmc.feol.core.service.impl.FacturaManagerImpl;
-import jmc.feol.util.DateUtil;
-import jmc.feol.util.FormatUtil;
 import FEV1.dif.afip.gov.ar.AlicIva;
+import FEV1.dif.afip.gov.ar.CbteAsoc;
 import FEV1.dif.afip.gov.ar.FECAECabRequest;
 import FEV1.dif.afip.gov.ar.FECAEDetRequest;
 import FEV1.dif.afip.gov.ar.FECAERequest;
 import FEV1.dif.afip.gov.ar.FECompConsultaResponse;
 import FEV1.dif.afip.gov.ar.Tributo;
+import jmc.feol.core.model.Usuario;
+import jmc.feol.core.service.impl.FacturaManagerImpl;
+import jmc.feol.util.DateUtil;
+import jmc.feol.util.FormatUtil;
 
 public class BaseExterna {
 	private Boolean actualizoBase = Boolean.FALSE;
@@ -266,25 +267,7 @@ public class BaseExterna {
 			e.printStackTrace();
 		}
 		
-		int tipoCompAfip = 0;
-		if (tipoComp == 1 && letra.trim().equals("A")){
-			tipoCompAfip = 1;
-		}
-		if (tipoComp == 1 && letra.trim().equals("B")){
-			tipoCompAfip = 6;
-		}
-		if (tipoComp == 2 && letra.trim().equals("A")){
-			tipoCompAfip = 3;
-		}
-		if (tipoComp == 2 && letra.trim().equals("B")){
-			tipoCompAfip = 8;
-		}
-		if (tipoComp == 7 && letra.trim().equals("A")){
-			tipoCompAfip = 2;
-		}
-		if (tipoComp == 7 && letra.trim().equals("B")){
-			tipoCompAfip = 7;
-		}
+		int tipoCompAfip = getTipoComprobAfip(tipoComp, letra);
 		
 				
 		feCabecera.setCbteTipo(tipoCompAfip);
@@ -336,6 +319,7 @@ public class BaseExterna {
 			errorParseo = "No se ha podido obtener CUIT o el tipo de documento del campo 'cuit'";
 			e.printStackTrace();						
 		}
+		
 		
 
 		//Moneda Fija pedido por sk
@@ -472,6 +456,8 @@ public class BaseExterna {
 			e.printStackTrace();
 		}
 		
+		
+		
 		Double impTotal = feReq.getFeDetReq()[0].getImpTotal();
 		
 		//totalTributo = (FormatUtil.redondearEn2(impTotal));
@@ -483,6 +469,60 @@ public class BaseExterna {
 		feReq.getFeDetReq()[0].setImpTotal(FormatUtil.redondearEn2(totalTributo + impTotal));
 		
 		Double totalSk =  rs.getDouble("total");
+		
+		
+		try {
+			Integer tipoCompAso = rs.getInt("TipoComprobAso");
+			
+			String letraAso = rs.getString("LetraAso");
+			
+			int tipoCompAfipAso = getTipoComprobAfip(tipoCompAso, letraAso);
+			
+			String nrComprobAso = rs.getString("NrComprobAso");
+			
+			String prefijoAso = rs.getString("PrefijoAso");
+						
+			CbteAsoc cbteAsoc = new CbteAsoc();
+			cbteAsoc.setTipo(tipoCompAfipAso);
+			
+			cbteAsoc.setPtoVta(Integer.parseInt(prefijoAso));
+		
+			cbteAsoc.setNro(Long.parseLong(nrComprobAso));
+			
+			CbteAsoc[] cbtesAsoc = new CbteAsoc[1];
+			cbtesAsoc[0] = cbteAsoc;
+			feReq.getFeDetReq()[0].setCbtesAsoc(cbtesAsoc);
+			
+			System.out.println("Tiene Comprobante Asociado: " + prefijoAso + " - " + nrComprobAso);
+			
+		} catch (Exception e) {
+			System.out.println("No tiene Comprobante Asociado");			
+		}
+
+		try {
+			letra = rs.getString("Letra");
+		} catch (SQLException e) {
+			errorParseo = "No se ha podido obtener el Tipo de Comprobante del campo 'TipoComprob'";
+			e.printStackTrace();
+		}
+		
+		
+		
+				
+		feCabecera.setCbteTipo(tipoCompAfip);
+		
+		try {
+			feCabecera.setPtoVta(Integer.parseInt(rs.getString("Prefijo")));
+		} catch (NumberFormatException e) {
+			errorParseo = "No se ha podido obtener el Punto de Venta del campo 'Prefijo'";
+			e.printStackTrace();
+		} catch (SQLException e) {
+			errorParseo = "No se ha podido obtener el Punto de Venta del campo 'Prefijo'";
+			e.printStackTrace();
+		}
+		
+		
+		
 		
 		System.out.println("Total Generador por SKS: " + totalSk + " TransacNr: " + transac);
 		
@@ -501,8 +541,34 @@ public class BaseExterna {
 		
 		feReq.setErrorFE(errorParseo);
 		
+		
+		
+		
 		return feReq;
 
+	}
+
+	private int getTipoComprobAfip(int tipoComp, String letra) {
+		int tipoCompAfip = 0;
+		if (tipoComp == 1 && letra.trim().equals("A")){
+			tipoCompAfip = 1;
+		}
+		if (tipoComp == 1 && letra.trim().equals("B")){
+			tipoCompAfip = 6;
+		}
+		if (tipoComp == 2 && letra.trim().equals("A")){
+			tipoCompAfip = 3;
+		}
+		if (tipoComp == 2 && letra.trim().equals("B")){
+			tipoCompAfip = 8;
+		}
+		if (tipoComp == 7 && letra.trim().equals("A")){
+			tipoCompAfip = 2;
+		}
+		if (tipoComp == 7 && letra.trim().equals("B")){
+			tipoCompAfip = 7;
+		}
+		return tipoCompAfip;
 	}
 	
 	public void updateBase(Long transacNr, String cae, String vencimiento, String rutaBase, String nrComprob) throws SQLException{
@@ -577,10 +643,12 @@ public class BaseExterna {
 			 */
 			sql = "SELECT Transac.TipoComprob, Transac.NrComprob, Transac.internos,Transac.RetIb, Transac.RetIva,Transac.Total, Transac.RetGan, Transac.RetCargasSoc, "
 				+ " Transac.Prefijo, Gente.Cuit, Transac.Fecha, Gente.tipoIva, "
-				+ "Transac.TransacNr, Transac.Letra FROM Transac INNER JOIN "+ rutaComun +".Gente as Gente "
-				+ "ON Transac.GenteNr = Gente.GenteNr WHERE (((Transac.TransacNr)="
+				+ "Transac.TransacNr, Transac.Letra, Transac1.NrComprob as NrComprobAso, Transac1.Prefijo as PrefijoAso, Transac1.TipoComprob as TipoComprobAso, Transac1.Letra as LetraAso FROM Transac INNER JOIN "+ rutaComun +".Gente as Gente "
+				+ "ON Transac.GenteNr = Gente.GenteNr LEFT JOIN  Transac as Transac1  ON Transac.TranFactCred = Transac1.TransacNr WHERE (((Transac.TransacNr)="
 				+ transacNr + "))";
 
+			
+			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 

@@ -10,16 +10,16 @@ public class TestParseCamposCertificado {
 
 	public static void main(String[] args){
 		String c = "AR";
-		String o = "Ministerio Público de la Provincia de Buenos Aires";
-		String ou = "Se desempeña como Oficial 4 en la oficina FISCALIA GENERAL - Oficina de Archivo";
+		String o = "Ministerio Pï¿½blico de la Provincia de Buenos Aires";
+		String ou = "Se desempeï¿½a como Oficial 4 en la oficina FISCALIA GENERAL - Oficina de Archivo";
 		String cn = "Carlos Gomez";
 		String e = "cgomez@mpba.gov.ar";
 		
-		String sn = "C=AR, O=Ministerio Público de la Provincia de Buenos Aires, OU=Se desempeña como Oficial 4 en la oficina FISCALIA GENERAL - Oficina de Archivo, CN=Carlos Gomez, EMAILADDRESS=cgomez@mpba.gov.ar";
+		String sn = "C=AR, O=Ministerio Pï¿½blico de la Provincia de Buenos Aires, OU=Se desempeï¿½a como Oficial 4 en la oficina FISCALIA GENERAL - Oficina de Archivo, CN=Carlos Gomez, EMAILADDRESS=cgomez@mpba.gov.ar";
 		/*
 		 
-		 Validar que el usuario se desempeña en la oficina "A"		 
-		 1- validar que el texto primero es "Se desempeña como "
+		 Validar que el usuario se desempeï¿½a en la oficina "A"		 
+		 1- validar que el texto primero es "Se desempeï¿½a como "
 		 2- validar que el texto segundo es " en la oficina "
 		
 		*/
@@ -92,7 +92,7 @@ public class TestParseCamposCertificado {
 	private static Usuario integridadOrganismoOrganizacional(String ou) {
 		Usuario usuario = new Usuario();
 		try{
-			String[] parrafos = ou.split("Se desempeña como ");
+			String[] parrafos = ou.split("Se desempeï¿½a como ");
 			String[] titulos = parrafos[1].split("en la oficina ");
 			usuario.setCargo(titulos[0].trim());
 			usuario.setOficina(titulos[1].trim());

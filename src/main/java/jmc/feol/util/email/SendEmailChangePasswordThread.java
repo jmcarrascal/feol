@@ -1,55 +1,3 @@
-/*
-
- * Copyright 2008 Dirección Provincial de Informática de la Provincia de Buenos Aires.  All Rights Reserved
-
- * Dirección Provincial de Informática de la Provincia de Buenos Aires Proprietary and Confidential.
-
- *
-
- * You agree to use Your best efforts to protect the software and documentation
-
- * from unauthorized copy or use. The software source code represents and embodies
-
- * trade secrets of Dirección Provincial de Informática de la Provincia de Buenos Aires and/or its licensors.
-
- * The source code and embodied trade secrets are not licensed to you and any modification,
-
- * addition or deletion is strictly prohibited. You agree not to disassemble, decompile,
-
- * or otherwise reverse engineer the software in order to discover the source code and/or
-
- * the trade secrets contained in the source code.
-
- *
-
- *
-
- * Derecho de autor 2008 Dirección Provincial de Informática de la Provincia de Buenos Aires.  Todos los derechos reservados.
-
- * Propiedad de Dirección Provincial de Informática de la Provincia de Buenos Aires y Confidencial.
-
- *
-
- * Por la presente acuerdo hacer mi mayor esfuerzo para proteger el software y la documentación
-
- * de la copia o el uso no autorizados. El código fuente del software representa e incluye
-
- * secretos comerciales de Dirección Provincial de Informática de la Provincia de Buenos Aires y/o sus licenciantes. 
-
- * No se le otorga licencia del código fuente ni los secretos comerciales incluidos;
-
- * y cualquier modificación, agregado o eliminación se encuentra estrictamente prohibida.
-
- * Asimismo, por la presente me comprometo a no desarmar, descompilar, o de alguna forma utilizar
-
- * técnicas de ingeniería inversa sobre el software para descubrir su fuente y/o los
-
- * secretos comerciales contenidos en el código fuente.
-
- *
-
- */
-
 package jmc.feol.util.email;
 
 
@@ -75,7 +23,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
-import jmc.feol.util.FileUtil;
 
 
 /**
@@ -94,7 +41,7 @@ public class SendEmailChangePasswordThread extends Thread{
 		
 	}
 
-	//Arma las propiedades de la conexión 
+	//Arma las propiedades de la conexiï¿½n 
 	private Properties getPropertiesConnection(){
 		Properties props = new Properties();
 		
@@ -102,7 +49,7 @@ public class SendEmailChangePasswordThread extends Thread{
         //getLocation().toString().substring(6);
 		
 
-		String webAppPath = FileUtil.getWebappsPath();
+		String webAppPath = "";
 		String sep = System.getProperty("file.separator");
 		//String path = webAppPath + sep + "RepositorioWeb" +sep+ "WEB-INF"+sep+"classes"+"\\jmc\\util\\email\\connection.properties";
 		String path = "C:\\connection.properties";

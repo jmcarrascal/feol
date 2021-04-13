@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
                          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
 
 	<!-- Bean de la lógiga de negocio de mi aplicación de ejemplo. -->
 
 	<!-- Importa el data source -->
-	<import resource="applicationContextHibernateLocalMySql.xml" />
-	<!-- <import resource="applicationContextHibernate.xml" /> -->
-<!-- 	<import resource="applicationContextDataSource.xml" /> -->
-<!-- 	<import resource="applicationContextDataSourceMy.xml" /> -->
+<!-- 	<import resource="applicationContextHibernateLocalMySql.xml" /> -->
+	<import resource="applicationContextHibernate.xml" />
+	<!-- <import resource="applicationContextDataSource.xml" /> -->
+	<!-- <import resource="applicationContextDataSourceMy.xml" /> -->
 
 
 
@@ -23,11 +24,11 @@
 
 		<property name="hibernateProperties">
 			<props>
-<!-- 				<prop key="hibernate.default_schema">COT</prop> -->
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> -->
+				<!-- <prop key="hibernate.default_schema">COT</prop> -->
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> -->
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
 				<prop key="hibernate.connection.SetBigStringTryClob">true</prop>
 				<prop key="hibernate.format_sql">false</prop>
 				<prop key="hibernate.transaction.auto_close_session">false</prop>
@@ -59,7 +60,8 @@
 	</bean>
 
 	<!-- Transaction Proxy Template -->
-	<bean id="transactionProxyTemplate" abstract="true" lazy-init="true"
+	<bean id="transactionProxyTemplate" abstract="true"
+		lazy-init="true"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 		<property name="proxyTargetClass" value="true" />
 		<property name="transactionManager">
@@ -78,19 +80,22 @@
 	<bean id="services" scope="request"
 		class="jmc.feol.ui.struts.actions.ServicesAction">
 		<property name="servicesManager" ref="ServicesManager" />
-		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+		<property name="parametrizacionManager"
+			ref="ParametrizacionManager" />
 		<property name="facturasManager" ref="FacturasManager" />
 		<property name="empresaManager" ref="EmpresaManager" />
 	</bean>
 
 
-	<bean id="login" scope="request" class="jmc.feol.ui.struts.actions.LoginAction">
-		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+	<bean id="login" scope="request"
+		class="jmc.feol.ui.struts.actions.LoginAction">
+		<property name="parametrizacionManager"
+			ref="ParametrizacionManager" />
 		<property name="usuarioManager" ref="UsuarioManager" />
 	</bean>
 
-	<bean id="ServicesManager" class="jmc.feol.core.service.impl.ServicesManagerImpl"
-		scope="request">
+	<bean id="ServicesManager"
+		class="jmc.feol.core.service.impl.ServicesManagerImpl" scope="request">
 		<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
 		<property name="facturaManager" ref="FacturaManager" />
 		<property name="empresaManager" ref="EmpresaManager" />
@@ -104,26 +109,29 @@
 
 
 
-	<bean id="ParametrizacionManager" class="jmc.feol.core.service.impl.ParametrizacionManagerImpl"
+	<bean id="ParametrizacionManager"
+		class="jmc.feol.core.service.impl.ParametrizacionManagerImpl"
 		scope="request">
 		<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
 	</bean>
 
-	<bean id="EmpresaManager" class="jmc.feol.core.service.impl.EmpresaManagerImpl"
-		scope="request">
+	<bean id="EmpresaManager"
+		class="jmc.feol.core.service.impl.EmpresaManagerImpl" scope="request">
 		<property name="empresaDAO" ref="EmpresaDAO" />
 	</bean>
 
-	<bean id="UsuarioManager" class="jmc.feol.core.service.impl.UsuarioManagerImpl"
-		scope="request">
+	<bean id="UsuarioManager"
+		class="jmc.feol.core.service.impl.UsuarioManagerImpl" scope="request">
 		<property name="usuarioDAO" ref="UsuarioDAO" />
 	</bean>
 
 
-	<bean id="FacturaManager" class="jmc.feol.core.service.impl.FacturaManagerImpl"
-		scope="request">
-		<property name="parametrizacionManager" ref="ParametrizacionManager" />
-		<property name="credencialAfipManager" ref="CredencialAfipManager" />
+	<bean id="FacturaManager"
+		class="jmc.feol.core.service.impl.FacturaManagerImpl" scope="request">
+		<property name="parametrizacionManager"
+			ref="ParametrizacionManager" />
+		<property name="credencialAfipManager"
+			ref="CredencialAfipManager" />
 		<property name="empresaManager" ref="EmpresaManager" />
 		<property name="extendedFacturaDAO" ref="ExtendedFacturaDAO" />
 
@@ -133,16 +141,18 @@
 
 
 
-	<bean id="FacturasManager" class="jmc.feol.core.service.impl.FacturasManagerImpl"
-		scope="request">
-		<property name="parametrizacionManager" ref="ParametrizacionManager" />
+	<bean id="FacturasManager"
+		class="jmc.feol.core.service.impl.FacturasManagerImpl" scope="request">
+		<property name="parametrizacionManager"
+			ref="ParametrizacionManager" />
 		<property name="extendedFacturaDAO" ref="ExtendedFacturaDAO" />
 		<property name="facturaManager" ref="FacturaManager" />
 		<property name="empresaManager" ref="EmpresaManager" />
 		<property name="extendedCotDAO" ref="ExtendedCotDAO" />
 	</bean>
 
-	<bean id="CredencialAfipManager" class="jmc.feol.core.service.impl.CredencialAfipManagerImpl"
+	<bean id="CredencialAfipManager"
+		class="jmc.feol.core.service.impl.CredencialAfipManagerImpl"
 		scope="request">
 	</bean>
 
@@ -255,51 +265,57 @@
 	</bean>
 
 
-<bean id="servicesInitManager" class="jmc.feol.core.service.impl.ServicesInitManagerImpl">
-	<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
-	<property name="extendedCotDAO" ref="ExtendedCotDAO" />
-	<property name="empresaDAO" ref="EmpresaDAO" />
-</bean>
+	<bean id="servicesInitManager"
+		class="jmc.feol.core.service.impl.ServicesInitManagerImpl">
+		<property name="parametrizacionDAO" ref="ParametrizacionDAO" />
+		<property name="extendedCotDAO" ref="ExtendedCotDAO" />
+		<property name="empresaDAO" ref="EmpresaDAO" />
+	</bean>
 
 
 
-<bean name="checkFileCotCron" class="org.springframework.scheduling.quartz.JobDetailBean">
-	
-	<property name="jobClass" value="jmc.feol.core.service.cron.CheckFileCotCron" />
-		
-	<property name="jobDataAsMap">
-		<map>
-			<entry key="servicesInitManager" value-ref="servicesInitManager" />
-		</map>
-	</property>
-		
-</bean>
+	<bean name="checkFileCotCron"
+		class="org.springframework.scheduling.quartz.JobDetailBean">
+
+		<property name="jobClass"
+			value="jmc.feol.core.service.cron.CheckFileCotCron" />
+
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="servicesInitManager"
+					value-ref="servicesInitManager" />
+			</map>
+		</property>
+
+	</bean>
 
 
-	
 
-	
 
-	<bean id="checkFileCotJTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+
+
+	<bean id="checkFileCotJTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 		<property name="jobDetail" ref="checkFileCotCron" />
 		<property name="repeatInterval" value="1000" />
 		<property name="startDelay" value="5000" />
-		
+
 	</bean>
 
-	
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-	<property name="jobDetails">
-	   <list>
-	      <ref bean="checkFileCotCron" />
-	   </list>
-	</property>
-		
-	<property name="triggers">
-	    <list>
-		<ref bean="checkFileCotJTrigger" />
-	    </list>
-	</property>
-   </bean>
+
+	<bean
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="checkFileCotCron" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+				<ref bean="checkFileCotJTrigger" />
+			</list>
+		</property>
+	</bean>
 
 </beans>

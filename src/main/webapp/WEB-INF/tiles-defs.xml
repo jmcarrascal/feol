@@ -1,129 +1,164 @@
 <!DOCTYPE tiles-definitions PUBLIC
 	       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
 	       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
-<tiles-definitions>
- 	
-	<definition name="definitionLogin" template="/tiles/defaultTemplate.jsp">
-  		<put-attribute name="title" value="FE/COT - Leaf" />
-		<put-attribute name="header" value="/tiles/headerTemplateLogin.jsp" />		
-  		<put-attribute name="footer" value="/tiles/footer.jsp" />
- 	</definition>
 
-	<definition name="definition" template="/tiles/defaultTemplate.jsp">
-  		<put-attribute name="title" value="FE/COT - Leaf " />
-		<put-attribute name="header" value="/tiles/headerTemplate.jsp" />		
-  		<put-attribute name="body" value="/pages/listFacturas.jsp" />
-  		<put-attribute name="footer" value="/tiles/footer.jsp" /> 
- 	</definition>
- 	
+<tiles-definitions>
+
+	<definition name="definitionLogin"
+		template="/tiles/defaultTemplate.jsp">
+		<put-attribute name="title" value="FE/COT - Leaf" />
+		<put-attribute name="header"
+			value="/tiles/headerTemplateLogin.jsp" />
+		<put-attribute name="footer" value="/tiles/footer.jsp" />
+	</definition>
+
+	<definition name="definition"
+		template="/tiles/defaultTemplate.jsp">
+		<put-attribute name="title" value="FE/COT - Leaf " />
+		<put-attribute name="header"
+			value="/tiles/headerTemplate.jsp" />
+		<put-attribute name="body"
+			value="/pages/listFacturas.jsp" />
+		<put-attribute name="footer" value="/tiles/footer.jsp" />
+	</definition>
+
 
 
 	<definition name="loginPage" extends="definitionLogin">
-   		<put-attribute name="body" value="/pages/login.jsp"/>
+		<put-attribute name="body" value="/pages/login.jsp" />
 	</definition>
-	
+
 	<definition name="failedAuthPage" extends="definitionLogin">
-   		<put-attribute name="body" value="/pages/failedAuth.jsp"/>
+		<put-attribute name="body" value="/pages/failedAuth.jsp" />
 	</definition>
-	
+
 
 	<definition name="listFacturasPage" extends="definition">
-   		<put-attribute name="body" value="/pages/listFacturas.jsp"/>
+		<put-attribute name="body"
+			value="/pages/listFacturas.jsp" />
 	</definition>
-	
+
 	<definition name="blackPage" extends="definition">
-   		<put-attribute name="body" value="/pages/blank.jsp"/>
+		<put-attribute name="body" value="/pages/blank.jsp" />
 	</definition>
-	
+
 	<definition name="blackTMPPage" extends="definitionLogin">
-   		<put-attribute name="body" value="/pages/blank.jsp"/>
+		<put-attribute name="body" value="/pages/blank.jsp" />
 	</definition>
-	
-	
-	
+
+
+
 	<definition name="listCotsPage" extends="definition">
-   		<put-attribute name="body" value="/pages/listCots.jsp"/>
+		<put-attribute name="body" value="/pages/listCots.jsp" />
 	</definition>
-	
-	<definition name="preparedListPatentePage" extends="definition">
-   		<put-attribute name="body" value="/pages/cot/preparedListPatente.jsp"/>
+
+	<definition name="preparedListPatentePage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/cot/preparedListPatente.jsp" />
 	</definition>
-	
-	<definition name="preparedNewPatentePage" extends="definition">
-   		<put-attribute name="body" value="/pages/cot/preparedNewPatente.jsp"/>
+
+	<definition name="preparedNewPatentePage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/cot/preparedNewPatente.jsp" />
 	</definition>
-	
-	<definition name="preparedCotizacionPage" extends="definition">
-   		<put-attribute name="body" value="/pages/cotizacion.jsp"/>
+
+	<definition name="preparedCotizacionPage"
+		extends="definition">
+		<put-attribute name="body" value="/pages/cotizacion.jsp" />
 	</definition>
-<definition name="funcionNoLicenciadaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/funcionNoLicenciada.jsp"/>
+	<definition name="funcionNoLicenciadaPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/funcionNoLicenciada.jsp" />
 	</definition>
 
 
-	<definition name="preparedCotizacionExpoPage" extends="definition">
-   		<put-attribute name="body" value="/pages/cotizacionExpo.jsp"/>
+	<definition name="preparedCotizacionExpoPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/cotizacionExpo.jsp" />
 	</definition>
-	
-	<definition name="preparedVerifAfipExpoPage" extends="definition">
-   		<put-attribute name="body" value="/pages/verifAfipExpo.jsp"/>
+
+	<definition name="preparedVerifAfipExpoPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/verifAfipExpo.jsp" />
 	</definition>
-		
-	
-	<definition name="preparedDownloadFacturaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/showFactura.jsp"/>
+
+
+	<definition name="preparedDownloadFacturaPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/showFactura.jsp" />
 	</definition>
-	
+
 	<definition name="preparedGetCaeaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/caea/getCaea.jsp"/>
+		<put-attribute name="body"
+			value="/pages/caea/getCaea.jsp" />
 	</definition>
-	
+
 	<definition name="historyCaeaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/caea/historyCaea.jsp"/>
+		<put-attribute name="body"
+			value="/pages/caea/historyCaea.jsp" />
 	</definition>
 
-	
 
 
 
-	<definition name="preparedDownloadFacturaExpoPage" extends="definition">
-   		<put-attribute name="body" value="/pages/showFacturaExpo.jsp"/>
-	</definition>
-	
-	<definition name="preparedListParametrizacionPage" extends="definition">
-   		<put-attribute name="body" value="/pages/listParametrizacion.jsp"/>
-	</definition>
-	
-	<definition name="preparedListEmpresaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/empresa/listEmpresa.jsp"/>
-	</definition>
-	
-	
-	<definition name="preparedViajesSinCotPage" extends="definition">
-   		<put-attribute name="body" value="/pages/cot/preparedViajesSinCot.jsp"/>
+
+	<definition name="preparedDownloadFacturaExpoPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/showFacturaExpo.jsp" />
 	</definition>
 
-		
+	<definition name="preparedListParametrizacionPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/listParametrizacion.jsp" />
+	</definition>
+
+	<definition name="preparedListEmpresaPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/empresa/listEmpresa.jsp" />
+	</definition>
+
+
+	<definition name="preparedViajesSinCotPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/cot/preparedViajesSinCot.jsp" />
+	</definition>
+
+
 	<definition name="tablasAFIPPage" extends="definition">
-   		<put-attribute name="body" value="/pages/tablasAFIP.jsp"/>
-	</definition>
-	
-	
-	
-	<definition name="preparedEditParametrizacionPage" extends="definition">
-   		<put-attribute name="body" value="/pages/editParametrizacion.jsp"/>
+		<put-attribute name="body" value="/pages/tablasAFIP.jsp" />
 	</definition>
 
-	<definition name="preparedEditEmpresaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/empresa/editEmpresa.jsp"/>
-	</definition>
-	
-	<definition name="preparedNewEmpresaPage" extends="definition">
-   		<put-attribute name="body" value="/pages/empresa/newEmpresa.jsp"/>
+
+
+	<definition name="preparedEditParametrizacionPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/editParametrizacion.jsp" />
 	</definition>
 
-	
+	<definition name="preparedEditEmpresaPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/empresa/editEmpresa.jsp" />
+	</definition>
+
+	<definition name="preparedNewEmpresaPage"
+		extends="definition">
+		<put-attribute name="body"
+			value="/pages/empresa/newEmpresa.jsp" />
+	</definition>
+
+
 
 
 </tiles-definitions>

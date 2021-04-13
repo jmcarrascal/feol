@@ -144,7 +144,7 @@ public class CertificateUtil {
 	private Usuario integridadOrganismoOrganizacional(String ou) {
 		Usuario usuario = new Usuario();
 		try{
-			String[] parrafos = ou.split("Se desempeña como ");
+			String[] parrafos = ou.split("Se desempena como ");
 			String[] titulos = parrafos[1].split("en la oficina ");
 			usuario.setCargo(titulos[0].trim());
 			usuario.setOficina(titulos[1].trim());

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	
 
-	<constant name="struts.custom.i18n.resources" value="global-messages" />
+
+	<constant name="struts.custom.i18n.resources"
+		value="global-messages" />
 	<constant name="struts.ui.theme" value="xhtml" />
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.objectFactory" value="spring" />
-	<constant name="struts.objectFactory.spring.autoWire" value="byName" />
-	<constant name="struts.convention.action.packages" value="gba.sgi.ui.struts.actions.json" />
-	
+	<constant name="struts.objectFactory.spring.autoWire"
+		value="byName" />
+	<constant name="struts.convention.action.packages"
+		value="gba.sgi.ui.struts.actions.json" />
+
 
 
 
@@ -23,7 +26,7 @@
 				class="org.apache.struts2.views.tiles.TilesResult" />
 		</result-types>
 
-		
+
 		<!-- Acciones de Solicitud -->
 
 		<action name="login" method="login" class="login">
@@ -42,199 +45,251 @@
 			<result name="exit" type="tiles">loginPage</result>
 			<result name="failedAuth" type="tiles">failedAuthPage</result>
 		</action>
-		
-		
-		<action name="preparedNewPatente" method="preparedNewPatente" class="services">
+
+
+		<action name="preparedNewPatente" method="preparedNewPatente"
+			class="services">
 			<result name="success" type="tiles">preparedNewPatentePage</result>
 		</action>
-		
+
 		<action name="saveCotTMP" method="saveCotTMP" class="services">
 			<result name="success" type="tiles">blackTMPPage</result>
 		</action>
 
 
-		<action name="deletePatente" method="deletePatente" class="services">
+		<action name="deletePatente" method="deletePatente"
+			class="services">
 			<result name="success" type="chain">preparedListPatente</result>
 		</action>
-		
+
 		<action name="newPatente" method="newPatente" class="services">
 			<result name="success" type="chain">preparedListPatente</result>
-		</action>		
-		
-		
-		<action name="preparedListPatente" method="preparedListPatente" class="services">
+		</action>
+
+
+		<action name="preparedListPatente" method="preparedListPatente"
+			class="services">
 			<result name="success" type="tiles">preparedListPatentePage</result>
 		</action>
-		
-		<action name="preparedListFacturas" method="preparedListFacturas" class="services">
+
+		<action name="preparedListFacturas"
+			method="preparedListFacturas" class="services">
 			<result name="success" type="tiles">listFacturasPage</result>
 		</action>
-		
-		<action name="preparedListCots" method="preparedListCots" class="services">
+
+		<action name="preparedListCots" method="preparedListCots"
+			class="services">
 			<result name="success" type="tiles">listCotsPage</result>
 		</action>
-		
-		
-		<action name="switchProcesoAfip" method="switchProcesoAfip" class="services">
-			<result name="success" type="chain">preparedListFacturas</result>			
-		</action>
-		
-		<action name="preparedViajesSinCot" method="preparedViajesSinCot" class="services">
-			<result name="success" type="tiles">preparedViajesSinCotPage</result>			
+
+
+		<action name="switchProcesoAfip" method="switchProcesoAfip"
+			class="services">
+			<result name="success" type="chain">preparedListFacturas</result>
 		</action>
 
-		<action name="preparedListParametrizacion" method="preparedListParametrizacion" class="services">
-			<result name="success" type="tiles">preparedListParametrizacionPage</result>			
+		<action name="preparedViajesSinCot"
+			method="preparedViajesSinCot" class="services">
+			<result name="success" type="tiles">preparedViajesSinCotPage</result>
 		</action>
 
-		<action name="preparedListEmpresa" method="preparedListEmpresa" class="services">
-			<result name="success" type="tiles">preparedListEmpresaPage</result>			
+		<action name="preparedListParametrizacion"
+			method="preparedListParametrizacion" class="services">
+			<result name="success" type="tiles">preparedListParametrizacionPage
+			</result>
 		</action>
 
-		<action name="preparedEditParametrizacion" method="preparedEditParametrizacion" class="services">
-			<result name="success" type="tiles">preparedEditParametrizacionPage</result>			
-		</action>		
+		<action name="preparedListEmpresa" method="preparedListEmpresa"
+			class="services">
+			<result name="success" type="tiles">preparedListEmpresaPage</result>
+		</action>
 
-		<action name="preparedEditEmpresa" method="preparedEditEmpresa" class="services">
-			<result name="success" type="tiles">preparedEditEmpresaPage</result>			
-		</action>		
-		
-		<action name="preparedNewEmpresa" method="preparedNewEmpresa" class="services">
-			<result name="success" type="tiles">preparedNewEmpresaPage</result>			
-		</action>		
+		<action name="preparedEditParametrizacion"
+			method="preparedEditParametrizacion" class="services">
+			<result name="success" type="tiles">preparedEditParametrizacionPage
+			</result>
+		</action>
 
-		<action name="editParametrizacion" method="editParametrizacion" class="services">
-			<result name="success" type="chain">preparedListParametrizacion</result>			
-		</action>		
+		<action name="preparedEditEmpresa" method="preparedEditEmpresa"
+			class="services">
+			<result name="success" type="tiles">preparedEditEmpresaPage</result>
+		</action>
 
-		<action name="editEmpresa" method="editEmpresa" class="services">
-			<result name="success" type="chain">preparedListEmpresa</result>			
-		</action>		
-		
-		<action name="removeEmpresa" method="removeEmpresa" class="services">
-			<result name="success" type="tiles">preparedListEmpresaPage</result>			
-		</action>		
+		<action name="preparedNewEmpresa" method="preparedNewEmpresa"
+			class="services">
+			<result name="success" type="tiles">preparedNewEmpresaPage</result>
+		</action>
+
+		<action name="editParametrizacion" method="editParametrizacion"
+			class="services">
+			<result name="success" type="chain">preparedListParametrizacion
+			</result>
+		</action>
+
+		<action name="editEmpresa" method="editEmpresa"
+			class="services">
+			<result name="success" type="chain">preparedListEmpresa</result>
+		</action>
+
+		<action name="removeEmpresa" method="removeEmpresa"
+			class="services">
+			<result name="success" type="tiles">preparedListEmpresaPage</result>
+		</action>
 
 		<action name="newEmpresa" method="newEmpresa" class="services">
-			<result name="success" type="tiles">preparedListEmpresaPage</result>			
-		</action>		
-		
-		<action name="preparedCotizacion" method="preparedCotizacion" class="services">
-			<result name="success" type="tiles">preparedCotizacionPage</result>			
-		</action>
-		
-		<action name="funcionNoLicenciada" method="funcionNoLicenciada" class="services">
-			<result name="success" type="tiles">funcionNoLicenciadaPage</result>			
-		</action>
-		
-		<action name="preparedCotizacionExpo" method="preparedCotizacionExpo" class="services">
-			<result name="success" type="tiles">preparedCotizacionExpoPage</result>			
+			<result name="success" type="tiles">preparedListEmpresaPage</result>
 		</action>
 
-		<action name="preparedVerifAfipExpo" method="preparedVerifAfipExpo" class="services">
-			<result name="success" type="tiles">preparedVerifAfipExpoPage</result>			
+		<action name="preparedCotizacion" method="preparedCotizacion"
+			class="services">
+			<result name="success" type="tiles">preparedCotizacionPage</result>
 		</action>
-		
-		<action name="preparedDownloadFactura" method="preparedDownloadFactura" class="services">
-			<result name="success" type="tiles">preparedDownloadFacturaPage</result>			
+
+		<action name="funcionNoLicenciada" method="funcionNoLicenciada"
+			class="services">
+			<result name="success" type="tiles">funcionNoLicenciadaPage</result>
 		</action>
-		
-		<action name="preparedGetCaea" method="preparedGetCaea" class="services">
-			<result name="success" type="tiles">preparedGetCaeaPage</result>			
-		</action>	
-		
-		<action name="historyCaea" method="historyCaea" class="services">
-			<result name="success" type="tiles">historyCaeaPage</result>			
-		</action>	
-		
-		<action name="getCaea" method="getCaea" class="services">					
-		</action>	
-	
+
+		<action name="preparedCotizacionExpo"
+			method="preparedCotizacionExpo" class="services">
+			<result name="success" type="tiles">preparedCotizacionExpoPage
+			</result>
+		</action>
+
+		<action name="preparedVerifAfipExpo"
+			method="preparedVerifAfipExpo" class="services">
+			<result name="success" type="tiles">preparedVerifAfipExpoPage</result>
+		</action>
+
+		<action name="preparedDownloadFactura"
+			method="preparedDownloadFactura" class="services">
+			<result name="success" type="tiles">preparedDownloadFacturaPage
+			</result>
+		</action>
+
+		<action name="preparedGetCaea" method="preparedGetCaea"
+			class="services">
+			<result name="success" type="tiles">preparedGetCaeaPage</result>
+		</action>
+
+		<action name="historyCaea" method="historyCaea"
+			class="services">
+			<result name="success" type="tiles">historyCaeaPage</result>
+		</action>
+
+		<action name="getCaea" method="getCaea" class="services">
+		</action>
+
 		<action name="tablasAFIP" method="tablasAFIP" class="services">
-			<result name="success" type="tiles">tablasAFIPPage</result>			
-		</action>		
-			
-		<action name="preparedDownloadFacturaExpo" method="preparedDownloadFacturaExpo" class="services">
-			<result name="success" type="tiles">preparedDownloadFacturaExpoPage</result>			
-		</action>		
-		
-		<action name="getFacturaAs" method="getFacturaAs" class="services">
-		</action>				
-
-		<action name="showCotizacion" method="showCotizacion" class="services">						
+			<result name="success" type="tiles">tablasAFIPPage</result>
 		</action>
 
-		<action name="verifAfipExpo" method="verifAfipExpo" class="services">						
-		</action>
-		
-		<action name="showCotizacionExpo" method="showCotizacionExpo" class="services">						
-		</action>
-		
-		
-		<action name="downloadFactura" method="downloadFactura" class="services">						
-		</action>
-		
-		<action name="autorizarViaje" method="autorizarViaje" class="services">						
-		</action>
-				
-		<action name="downloadFacturaExpo" method="downloadFacturaExpo" class="services">						
-		</action>
-		
-		<action name="downloadRemito" method="downloadRemito" class="services">						
-		</action>
-		
-		<action name="downloadFile" method="downloadFile" class="services">						
+		<action name="preparedDownloadFacturaExpo"
+			method="preparedDownloadFacturaExpo" class="services">
+			<result name="success" type="tiles">preparedDownloadFacturaExpoPage
+			</result>
 		</action>
 
-		<action name="downloadFileCot" method="downloadFileCot" class="services">						
+		<action name="getFacturaAs" method="getFacturaAs"
+			class="services">
 		</action>
 
-		<action name="facturasPerdidas" method="facturasPerdidas" class="services">						
-		</action>
-	
-		<action name="downloadRequest" method="downloadRequest" class="services">						
-		</action>
-		
-		<action name="validateUSR" method="validateUSR" class="services">
+		<action name="showCotizacion" method="showCotizacion"
+			class="services">
 		</action>
 
-		<action name="serviceSendMail" method="sendMail" class="services">
+		<action name="verifAfipExpo" method="verifAfipExpo"
+			class="services">
 		</action>
-		
+
+		<action name="showCotizacionExpo" method="showCotizacionExpo"
+			class="services">
+		</action>
+
+
+		<action name="downloadFactura" method="downloadFactura"
+			class="services">
+		</action>
+
+		<action name="autorizarViaje" method="autorizarViaje"
+			class="services">
+		</action>
+
+		<action name="downloadFacturaExpo" method="downloadFacturaExpo"
+			class="services">
+		</action>
+
+		<action name="downloadRemito" method="downloadRemito"
+			class="services">
+		</action>
+
+		<action name="downloadFile" method="downloadFile"
+			class="services">
+		</action>
+
+		<action name="downloadFileCot" method="downloadFileCot"
+			class="services">
+		</action>
+
+		<action name="facturasPerdidas" method="facturasPerdidas"
+			class="services">
+		</action>
+
+		<action name="downloadRequest" method="downloadRequest"
+			class="services">
+		</action>
+
+		<action name="validateUSR" method="validateUSR"
+			class="services">
+		</action>
+
+		<action name="serviceSendMail" method="sendMail"
+			class="services">
+		</action>
+
 		<action name="facturar" method="facturar" class="services">
 		</action>
 
-		<action name="get_facturacion" method="get_facturacion" class="services">
+		<action name="get_facturacion" method="get_facturacion"
+			class="services">
 		</action>
-		
+
 		<action name="setCheque" method="setCheque" class="services">
-		</action>		
-
-		<action name="checkFacturas" method="checkFacturas" class="services">
 		</action>
 
-		<action name="checkFileFacturas" method="checkFileFacturas" class="services">
+		<action name="checkFacturas" method="checkFacturas"
+			class="services">
+		</action>
+
+		<action name="checkFileFacturas" method="checkFileFacturas"
+			class="services">
 		</action>
 
 
-		<action name="checkGetImageCheque" method="checkGetImageCheque" class="services">
+		<action name="checkGetImageCheque" method="checkGetImageCheque"
+			class="services">
 		</action>
 
-		<action name="recuperarCheque" method="recuperarCheque" class="services">
+		<action name="recuperarCheque" method="recuperarCheque"
+			class="services">
 		</action>
 
-		<action name="saveAdjuntoFactura" method="saveAdjuntoFactura" class="services">
+		<action name="saveAdjuntoFactura" method="saveAdjuntoFactura"
+			class="services">
 		</action>
 
-		<action name="checkFacturasByFile" method="checkFacturasByFile" class="services">
+		<action name="checkFacturasByFile" method="checkFacturasByFile"
+			class="services">
 		</action>
-		
-		<action name="checkFacturasByFileExpov1" method="checkFacturasByFileExpov1" class="services">
+
+		<action name="checkFacturasByFileExpov1"
+			method="checkFacturasByFileExpov1" class="services">
 		</action>
-		
-		<action name="checkCotByFile" method="checkCotByFile" class="services">
+
+		<action name="checkCotByFile" method="checkCotByFile"
+			class="services">
 		</action>
-		
+
 
 
 	</package>

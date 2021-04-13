@@ -19,7 +19,7 @@ public class RespuestaAfip {
       <errores class="list">
         <error>
           <codigo>95</codigo>
-          <descripcion>El campo IMPORTE es inválido o inexistente.</descripcion>
+          <descripcion>El campo IMPORTE es invï¿½lido o inexistente.</descripcion>
         </error>
       </errores>
     </remito>
@@ -29,7 +29,7 @@ public class RespuestaAfip {
       <errores class="list">
         <error>
           <codigo>95</codigo>
-          <descripcion>El campo IMPORTE es inválido o inexistente.</descripcion>
+          <descripcion>El campo IMPORTE es invï¿½lido o inexistente.</descripcion>
         </error>
       </errores>
     </remito>

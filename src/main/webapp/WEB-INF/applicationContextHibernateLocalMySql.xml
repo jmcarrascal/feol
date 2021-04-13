@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
 "http://www.springframework.org/dtd/spring-beans.dtd">
-<beans> 
-  
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+<beans>
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName">
 			<value>com.mysql.jdbc.Driver</value>
 		</property>
@@ -15,7 +16,7 @@
 		</property>
 		<property name="password">
 			<value>root</value>
-		</property>		
+		</property>
 	</bean>
-	 
+
 </beans>

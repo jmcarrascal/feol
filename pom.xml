@@ -1,12 +1,16 @@
- <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Feolv1</groupId>
 	<artifactId>feolv1</artifactId>
+	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Feolv1</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -19,17 +23,33 @@
 			<artifactId>cglib</artifactId>
 			<version>2.2</version>
 		</dependency>
+
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>2.0.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.opensymphony.quartz</groupId>
 			<artifactId>quartz</artifactId>
 			<version>1.6.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.bouncycastle</groupId> -->
-<!-- 			<artifactId>bcprov-jdk15on</artifactId> -->
-<!-- 			<version>1.54</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.bouncycastle</groupId> -->
+		<!-- <artifactId>bcprov-jdk15on</artifactId> -->
+		<!-- <version>1.54</version> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -271,6 +291,18 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/jt400.jar</systemPath>
 		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/saaj/saaj -->
+		<dependency>
+			<groupId>saaj</groupId>
+			<artifactId>saaj</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/saaj.jar</systemPath>
+
+		</dependency>
+
 		<!-- <dependency> -->
 		<!-- <groupId>oracle</groupId> -->
 		<!-- <artifactId>oracle</artifactId> -->
@@ -342,20 +374,49 @@
 			<version>1.3.1</version>
 		</dependency>
 	</dependencies>
+
 	<build>
+		<finalName>FEOL</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include> *.properties</include>
+					<include> *.xml</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0-SNAPSHOT</version>
+				<configuration>
 					<excludes>
 						<exclude>*/.*</exclude>
 					</excludes>
+					<warSourceDirectory>
+						${project.build.directory}/${project.build.finalName}
+					</warSourceDirectory>
+					<warFile>target/${project.build.finalName}.war</warFile>
+					<path>/FEOL</path>
 				</configuration>
 			</plugin>
+
 		</plugins>
-		<finalName>FEOL</finalName>
 	</build>
 </project>

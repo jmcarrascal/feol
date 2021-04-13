@@ -46,12 +46,12 @@ public class MonitorConnAfipService implements Runnable {
 					// Chequeo funcionaiento AFIP
 					boolean connAFIP = false;
 					if (!connAFIP) {
-						// Pregunto si hace mas de una hora que lo envié si es
+						// Pregunto si hace mas de una hora que lo envi si es
 						// asi mando el correo
 						if (FileUtil.getHoursCompareEntryToNow(
 								fechaEnvioCorreo, 1)) {
 							// Envio el correo
-							sendMail("Error al intentar conectar con AFIP","Se detectó que el servicio de AFIP se encuentra bajo o no hay conexión con el mismo a las: " + new Timestamp(System.currentTimeMillis()),parametrizacionDAO);
+							sendMail("Error al intentar conectar con AFIP","Se detecto que el servicio de AFIP se encuentra bajo o no hay conexion con el mismo a las: " + new Timestamp(System.currentTimeMillis()),parametrizacionDAO);
 							// actualizo la fechaEnvioCorreo
 							fechaEnvioCorreo = new Timestamp(System.currentTimeMillis());							
 						}

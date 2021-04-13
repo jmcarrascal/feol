@@ -49,7 +49,7 @@ public final class FilterAccess implements Filter
 	   
 	   try{		   
 		   	/*
-		   	 * Pregunta si el usuario está logeado	   		   	
+		   	 * Pregunta si el usuario estï¿½ logeado	   		   	
 		   	 */
 		   	Usuario usuario = null;
 		   	try{
@@ -58,7 +58,7 @@ public final class FilterAccess implements Filter
 		   	
 		   	
 		   	/*
-			 * Validar el rol del usuario en base a su URL (Implementación fuera del ambiente de Prueba Piloto).
+			 * Validar el rol del usuario en base a su URL (Implementaciï¿½n fuera del ambiente de Prueba Piloto).
 			 */
 			
 		   	//System.out.println(requestHttp.getRequestURI());				
@@ -117,7 +117,7 @@ public final class FilterAccess implements Filter
 	 *  3- En el caso que sea igual a LOGIN_P tomo el certificado desde el request y autentico.
 	 *  4- Esta fuera de alcance
 	 *  
-	 *  Esta implementación va a ser modificadas cuando los roles sean persistentes en la base de datos
+	 *  Esta implementaciï¿½n va a ser modificadas cuando los roles sean persistentes en la base de datos
 	 *  FALTA ANALIZAR INVOCACION POR PARAMETROS PARA PODER FILTRAR	
      */
     public Integer getTipoRequest(String url)
@@ -133,7 +133,7 @@ public final class FilterAccess implements Filter
     		//tomo el ultimo requerimiento
     		urlAnalisis = listaCarpetas[listaCarpetas.length - 1];
     		//pregunto si esta divido por un punto analizando las exteniones
-    		//En el caso que tenga un punto analizo la extención
+    		//En el caso que tenga un punto analizo la extenciï¿½n
     		String[] listaPalabras = urlAnalisis.split("\\.");
     		
     		String extencion = "";

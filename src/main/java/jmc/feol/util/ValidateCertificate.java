@@ -26,7 +26,7 @@ import sun.security.x509.X509CertImpl;
 public class ValidateCertificate {
 	
 	/**
-	 * Valida un certificado digital (Expiración, CRL y CA permitida en ese orden  )
+	 * Valida un certificado digital (Expiraciï¿½n, CRL y CA permitida en ese orden  )
 	 * @param certificate
 	 * @param x509Certificate
 	 * @return
@@ -56,7 +56,7 @@ public class ValidateCertificate {
 	}
 	
 	/**
-	 * Valida un certificado digital (Expiración y CRL en ese orden)
+	 * Valida un certificado digital (Expiraciï¿½n y CRL en ese orden)
 	 * @param certificate
 	 * @param x509Certificate
 	 * @return

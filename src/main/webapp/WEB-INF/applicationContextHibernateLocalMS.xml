@@ -4,8 +4,9 @@
 
 
 <beans>
-    
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+
+	<bean id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass">
 			<value>net.sourceforge.jtds.jdbc.Driver</value>
 		</property>

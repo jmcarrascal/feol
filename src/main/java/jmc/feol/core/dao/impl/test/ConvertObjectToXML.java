@@ -22,7 +22,7 @@ public class ConvertObjectToXML {
 
     RespuestaAfipRemitoError rare = new RespuestaAfipRemitoError();
     rare.setCodigo("95");
-    rare.setDescripcion("El campo IMPORTE es inválido o inexistente.");
+    rare.setDescripcion("El campo IMPORTE es invalido o inexistente.");
     List<RespuestaAfipRemitoError> listRare = new ArrayList<RespuestaAfipRemitoError>();
     listRare.add(rare);
     

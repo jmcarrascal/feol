@@ -83,12 +83,12 @@ public class TestAddTextInImagev1 {
 		        Image reference = reader.read(0, param);
 
 			
-			//Tomo Tamaño de la imagen
+			//Tomo Tamaï¿½o de la imagen
 			int widthImg = reference.getWidth(null);
 			int heightImg = reference.getHeight(null);
 
 			//IndexColorModel i = new IndexColorModel(); 
-			//Creo imagen del mismo tamaño
+			//Creo imagen del mismo tamaï¿½o
 			BufferedImage bimg = new BufferedImage(widthImg, heightImg,BufferedImage.TYPE_BYTE_BINARY);
 
 			//Convierto imagen nueva en obbjeto Graphics2D	 
@@ -120,7 +120,7 @@ public class TestAddTextInImagev1 {
 			ImageIO.write(bimg, "jpeg", bas);
 			byte[] data = null;
 			data = bas.toByteArray();
-			System.out.println("Tamaño imagen final " + data.length);
+			System.out.println("Tamaï¿½o imagen final " + data.length);
 			try {
 				FileUtil.writeFile(data, "c://huellas_tocada1.jpg");
 			} catch (Exception e) {
@@ -151,16 +151,16 @@ public class TestAddTextInImagev1 {
 			//Tomo imagen y la convierto en byte[]
 			byte[] data = FileUtil.getBytesFromFile(new File(archivoOrig));
 			
-			//System.out.println("Tamaño imagen original " + data.length);
+			//System.out.println("Tamaï¿½o imagen original " + data.length);
 			
 			//Objeto Image  
 			Image reference = new ImageIcon(data).getImage();
 			
-			//Tomo Tamaño de la imagen
+			//Tomo Tamaï¿½o de la imagen
 			int widthImg = reference.getWidth(null);
 			int heightImg = reference.getHeight(null);
 
-			//Creo imagen del mismo tamaño
+			//Creo imagen del mismo tamaï¿½o
 			BufferedImage bimg = new BufferedImage(widthImg, heightImg,BufferedImage.TYPE_INT_RGB);
 
 			//Convierto imagen nueva en obbjeto Graphics2D 
