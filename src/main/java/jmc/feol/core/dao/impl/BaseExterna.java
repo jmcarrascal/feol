@@ -478,20 +478,20 @@ public class BaseExterna {
 
 			String prefijoAso = rs.getString("PrefijoAso");
 
-//			if (tipoCompAfipAso != 0) {
-//				CbteAsoc cbteAsoc = new CbteAsoc();
-//				cbteAsoc.setTipo(tipoCompAfipAso);
-//
-//				cbteAsoc.setPtoVta(Integer.parseInt(prefijoAso));
-//
-//				cbteAsoc.setNro(Long.parseLong(nrComprobAso));
-//
-//				CbteAsoc[] cbtesAsoc = new CbteAsoc[1];
-//				cbtesAsoc[0] = cbteAsoc;
-//				feReq.getFeDetReq()[0].setCbtesAsoc(cbtesAsoc);
-//
-//				System.out.println("Tiene Comprobante Asociado: " + prefijoAso + " - " + nrComprobAso);
-//			}
+			if (tipoCompAfipAso != 0) {
+				CbteAsoc cbteAsoc = new CbteAsoc();
+				cbteAsoc.setTipo(tipoCompAfipAso);
+
+				cbteAsoc.setPtoVta(Integer.parseInt(prefijoAso));
+
+				cbteAsoc.setNro(Long.parseLong(nrComprobAso));
+
+				CbteAsoc[] cbtesAsoc = new CbteAsoc[1];
+				cbtesAsoc[0] = cbteAsoc;
+				feReq.getFeDetReq()[0].setCbtesAsoc(cbtesAsoc);
+
+				System.out.println("Tiene Comprobante Asociado: " + prefijoAso + " - " + nrComprobAso);
+			}
 
 		} catch (Exception e) {
 			System.out.println("No tiene Comprobante Asociado");
