@@ -484,7 +484,7 @@ public class BaseExterna {
 
 				cbteAsoc.setPtoVta(Integer.parseInt(prefijoAso));
 
-				cbteAsoc.setNro(Long.parseLong(nrComprobAso));
+				cbteAsoc.setNro(Long.parseLong(nrComprobAso.replace("*", "")));
 
 				CbteAsoc[] cbtesAsoc = new CbteAsoc[1];
 				cbtesAsoc[0] = cbteAsoc;
